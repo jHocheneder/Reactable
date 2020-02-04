@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Reactable demo</title>
+
+    <!-- Babylon.js -->
+    <script src="https://code.jquery.com/pep/0.4.2/pep.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+    <script src="https://preview.babylonjs.com/ammo.js"></script>
+    <script src="https://preview.babylonjs.com/cannon.js"></script>
+    <script src="https://preview.babylonjs.com/Oimo.js"></script>
+    <script src="https://preview.babylonjs.com/gltf_validator.js"></script>
+    <script src="https://preview.babylonjs.com/earcut.min.js"></script>
+    <script src="https://preview.babylonjs.com/babylon.js"></script>
+    <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+    <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+    <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+    <script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+    <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+
+    <style>
+      html,
+      body {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #renderCanvas {
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas id="renderCanvas"></canvas>
+    <script>
+      var canvas = document.getElementById("renderCanvas");
+      var engine = new BABYLON.Engine(canvas, true, {
+        preserveDrawingBuffer: true,
+        stencil: true
+      });
+
+      var createScene = function() {
+        //Hintergrundsszene:
+        var scene = new BABYLON.Scene(engine);
+
+        var light = new BABYLON.HemisphericLight(
+          "HemiLight",
+          new BABYLON.Vector3(0, 10, 0),
+          scene
+        );
+        var camera = new BABYLON.ArcRotateCamera(
+          "Camera",
+          0,
+          0.8,
+          100,
+          new BABYLON.Vector3.Zero(),
+          scene
+        );
+        camera.attachControl(canvas, true);
+        scene.clearColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+
+        var box = [];
+        for (let i = 0; i < 27; i++) {
+          box[i] = BABYLON.Mesh.CreateBox("Box" + i, 10.0, scene);
+          if (i == 2) {
+            box[i - 2].position.x -= 10;
+            box[i - 1].position.z = 10;
+            var wuerfel = BABYLON.Mesh.MergeMeshes([
+              box[i],
+              box[i - 1],
+              box[i - 2]
+            ]);
+            var materialBox = new BABYLON.StandardMaterial(
+              "texture" + i,
+              scene
+            );
+            materialBox.diffuseColor = new BABYLON.Color3(
+              Math.random(),
+              Math.random(),
+              Math.random()
+            );
+            wuerfel.material = materialBox;
+            wuerfel.position.x = 40;
+            wuerfel.position.y -= 40;
+          }
+
+          if (i == 6) {
+            box[i - 1].position.x = -10;
+            box[i - 2].position.z -= -10;
+            box[i - 3].position.z = 10;
+            box[i - 3].position.x -= -10;
+            box[i - 3].position.x = 10;
+            var wuerfel = BABYLON.Mesh.MergeMeshes([
+              box[i],
+              box[i - 1],
+              box[i - 2],
+              box[i - 3]
+            ]);
+            var materialBox = new BABYLON.StandardMaterial(
+              "texture" + i,
+              scene
+            );
+            materialBox.diffuseColor = new BABYLON.Color3(
+              Math.random(),
+              Math.random(),
+              Math.random()
+            );
+            wuerfel.material = materialBox;
+            wuerfel.position.x -= 40;
+            wuerfel.position.y -= 40;
+          }
+
+          if (i == 10) {
+            box[i - 2].position.x -= 10;
+            box[i - 1].position.z = 10;
+            box[i - 3].position.y = 10;
+            var wuerfel = BABYLON.Mesh.MergeMeshes([
+              box[i],
+              box[i - 1],
+              box[i - 2],
+              box[i - 3]
+            ]);
+            var materialBox = new BABYLON.StandardMaterial(
+              "texture" + i,
+              scene
+            );
+            materialBox.diffuseColor = new BABYLON.Color3(
+              Math.random(),
+              Math.random(),
+              Math.random()
+            );
+            wuerfel.material = materialBox;
+            wuerfel.position.x = 50;
+          }
+
+          if (i == 14) {
+            box[i - 2].position.x -= 10;
+            box[i - 1].position.z = 10;
+            box[i - 3].position.y = 10;
+            box[i - 3].position.x -= 10;
+            var wuerfel = BABYLON.Mesh.MergeMeshes([
+              box[i],
+              box[i - 1],
+              box[i - 2],
+              box[i - 3]
+            ]);
+            var materialBox = new BABYLON.StandardMaterial(
+              "texture" + i,
+              scene
+            );
+            materialBox.diffuseColor = new BABYLON.Color3(
+              Math.random(),
+              Math.random(),
+              Math.random()
+            );
+            wuerfel.material = materialBox;
+            wuerfel.position.x -= 50;
+          }
+
+          if (i == 18) {
+            box[i - 2].position.x -= 10;
+            box[i - 1].position.x = 10;
+            box[i - 3].position.x = 10;
+            box[i - 3].position.z = 10;
+            var wuerfel = BABYLON.Mesh.MergeMeshes([
+              box[i],
+              box[i - 1],
+              box[i - 2],
+              box[i - 3]
+            ]);
+            var materialBox = new BABYLON.StandardMaterial(
+              "texture" + i,
+              scene
+            );
+            materialBox.diffuseColor = new BABYLON.Color3(
+              Math.random(),
+              Math.random(),
+              Math.random()
+            );
+            wuerfel.material = materialBox;
+            wuerfel.position.z = 40;
+          }
+
+          if (i == 22) {
+            box[i - 1].position.y = 10;
+            box[i - 2].position.z = 10;
+            box[i - 3].position.z = 10;
+            box[i - 3].position.x = 10;
+            var wuerfel = BABYLON.Mesh.MergeMeshes([
+              box[i],
+              box[i - 1],
+              box[i - 2],
+              box[i - 3]
+            ]);
+            var materialBox = new BABYLON.StandardMaterial(
+              "texture" + i,
+              scene
+            );
+            materialBox.diffuseColor = new BABYLON.Color3(
+              Math.random(),
+              Math.random(),
+              Math.random()
+            );
+            wuerfel.material = materialBox;
+            wuerfel.position.z -= 40;
+          }
+
+          if (i == 26) {
+            box[i - 2].position.x -= 10;
+            box[i - 1].position.x = 10;
+            box[i - 3].position.z = 10;
+            var wuerfel = BABYLON.Mesh.MergeMeshes([
+              box[i],
+              box[i - 1],
+              box[i - 2],
+              box[i - 3]
+            ]);
+            var materialBox = new BABYLON.StandardMaterial(
+              "texture" + i,
+              scene
+            );
+            materialBox.diffuseColor = new BABYLON.Color3(
+              Math.random(),
+              Math.random(),
+              Math.random()
+            );
+            wuerfel.material = materialBox;
+            wuerfel.position.z -= 30;
+            wuerfel.position.y -= 40;
+          }
+        }
+
+        // show axis
+        var size = 5;
+        var showAxis = function(size) {
+          var makeTextPlane = function(text, color, size) {
+            var dynamicTexture = new BABYLON.DynamicTexture(
+              "DynamicTexture",
+              50,
+              scene,
+              true
+            );
+            dynamicTexture.hasAlpha = true;
+            dynamicTexture.drawText(
+              text,
+              5,
+              40,
+              "bold 36px Arial",
+              color,
+              "transparent",
+              true
+            );
+            var plane = new BABYLON.Mesh.CreatePlane(
+              "TextPlane",
+              size,
+              scene,
+              true
+            );
+            plane.material = new BABYLON.StandardMaterial(
+              "TextPlaneMaterial",
+              scene
+            );
+            plane.material.backFaceCulling = false;
+            plane.material.specularColor = new BABYLON.Color3(0, 0, 0);
+            plane.material.diffuseTexture = dynamicTexture;
+            return plane;
+          };
+
+          var axisX = BABYLON.Mesh.CreateLines(
+            "axisX",
+            [
+              new BABYLON.Vector3.Zero(),
+              new BABYLON.Vector3(size, 0, 0),
+              new BABYLON.Vector3(size * 0.95, 0.05 * size, 0),
+              new BABYLON.Vector3(size, 0, 0),
+              new BABYLON.Vector3(size * 0.95, -0.05 * size, 0)
+            ],
+            scene
+          );
+          axisX.color = new BABYLON.Color3(1, 0, 0);
+          var xChar = makeTextPlane("X", "red", size / 10);
+          xChar.position = new BABYLON.Vector3(0.9 * size, -0.05 * size, 0);
+          var axisY = BABYLON.Mesh.CreateLines(
+            "axisY",
+            [
+              new BABYLON.Vector3.Zero(),
+              new BABYLON.Vector3(0, size, 0),
+              new BABYLON.Vector3(-0.05 * size, size * 0.95, 0),
+              new BABYLON.Vector3(0, size, 0),
+              new BABYLON.Vector3(0.05 * size, size * 0.95, 0)
+            ],
+            scene
+          );
+          axisY.color = new BABYLON.Color3(0, 1, 0);
+          var yChar = makeTextPlane("Y", "green", size / 10);
+          yChar.position = new BABYLON.Vector3(0, 0.9 * size, -0.05 * size);
+          var axisZ = BABYLON.Mesh.CreateLines(
+            "axisZ",
+            [
+              new BABYLON.Vector3.Zero(),
+              new BABYLON.Vector3(0, 0, size),
+              new BABYLON.Vector3(0, -0.05 * size, size * 0.95),
+              new BABYLON.Vector3(0, 0, size),
+              new BABYLON.Vector3(0, 0.05 * size, size * 0.95)
+            ],
+            scene
+          );
+          axisZ.color = new BABYLON.Color3(0, 0, 1);
+          var zChar = makeTextPlane("Z", "blue", size / 10);
+          zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
+        };
+
+        showAxis(25);
+
+        //grid
+        var gridBox = BABYLON.Mesh.CreateBox("boxGrid", 30, scene, false);
+        gridBox.isPickable = false;
+        var gridmat = new BABYLON.GridMaterial("grid", scene);
+        gridmat.mainColor = new BABYLON.Color4(0, 1, 1, 1);
+        gridmat.opacity = 0.5;
+        gridmat.gridRatio = 10;
+        gridmat.gridOffset = new BABYLON.Vector3(5, 5, 5);
+
+        gridBox.material = gridmat;
+
+        //bewegen
+        var selected = null;
+        var safe = null;
+        scene.onPointerObservable.add(function(evt) {
+          if (selected) {
+            selected.material.alpha = 1;
+            selected = null;
+          }
+          if (
+            evt.pickInfo.hit &&
+            evt.pickInfo.pickedMesh &&
+            evt.event.button === 0
+          ) {
+            selected = evt.pickInfo.pickedMesh;
+
+            console.log("picked Info", evt.pickInfo.pickedMesh.name);
+            selected.material.alpha = 0.8;
+
+            scene.registerBeforeRender(function() {
+              if (selected) {
+                if (isWPressed) {
+                  selected.position.z += 10;
+                  isWPressed = false;
+                }
+
+                if (isSPressed) {
+                  selected.position.z -= 10;
+                  isSPressed = false;
+                }
+
+                if (isAPressed) {
+                  selected.position.x -= 10;
+                  isAPressed = false;
+                }
+
+                if (isDPressed) {
+                  selected.position.x += 10;
+                  isDPressed = false;
+                }
+
+                if (isRPressed) {
+                  selected.position.y += 10;
+                  isRPressed = false;
+                }
+
+                if (isFPressed) {
+                  selected.position.y -= 10;
+                  isFPressed = false;
+                }
+
+                if (isXPressed) {
+                  selected.rotation.x += BABYLON.Tools.ToRadians(90);
+                  isXPressed = false;
+                }
+
+                if (isYPressed) {
+                  selected.rotation.y += BABYLON.Tools.ToRadians(90);
+                  isYPressed = false;
+                }
+
+                if (isZPressed) {
+                  selected.rotation.z += BABYLON.Tools.ToRadians(90);
+                  isZPressed = false;
+                }
+              }
+            });
+          }
+        }, BABYLON.PointerEventTypes.POINTERUP);
+
+        let isWPressed = false;
+        let isSPressed = false;
+        let isAPressed = false;
+        let isDPressed = false;
+        let isRPressed = false;
+        let isFPressed = false;
+
+        let isXPressed = false;
+        let isYPressed = false;
+        let isZPressed = false;
+
+        document.addEventListener("keydown", e => {
+          if (selected) {
+            switch (e.keyCode) {
+              case 87:
+                isWPressed = true;
+                break;
+              case 83:
+                isSPressed = true;
+                break;
+              case 65:
+                isAPressed = true;
+                break;
+              case 68:
+                isDPressed = true;
+                break;
+              case 82:
+                isRPressed = true;
+                break;
+              case 70:
+                isFPressed = true;
+                break;
+              case 88:
+                isXPressed = true;
+                break;
+              case 89:
+                isYPressed = true;
+                break;
+              case 90:
+                isZPressed = true;
+                break;
+            }
+          }
+        });
+
+        return scene;
+      };
+
+      var scene = createScene();
+
+      engine.runRenderLoop(function() {
+        if (scene) {
+          scene.render();
+        }
+      });
+
+      // Resize
+      window.addEventListener("resize", function() {
+        engine.resize();
+      });
+    </script>
+  </body>
+</html>
