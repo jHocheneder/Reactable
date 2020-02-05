@@ -11,22 +11,23 @@ import * as BABYLON from '@babylonjs/core/Legacy/legacy';
 export class AppComponent {
   title = 'Reactable';
   canvas: any;
-  engine: any;
+  engine: BABYLON.Engine;
   box: any;
+  scene: BABYLON.Scene;
 
   ngOnInit(){
       this.canvas = document.getElementById("renderCanvas");
   
 
-      this.engine = new BABYLON.Engine(this.canvas, true, { preserveDrawingBuffer: true, stencil: true });
-      var createScene = function () {
-      var scene = new BABYLON.Scene(this.engine);
+      this.engine = new BABYLON.Engine(<HTMLCanvasElement> this.canvas, true, { preserveDrawingBuffer: true, stencil: true });
+      this.scene = new BABYLON.Scene(this.engine);
+      
 
       //var light = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 100, 100), scene);
-      var light = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 1, 0), scene);
-      var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 100, BABYLON.Vector3.Zero(), scene);
-      camera.attachControl(this.canvas, true);
-      this.scene.clearColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+      var light = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 1, 0), this.scene);
+      var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 100, BABYLON.Vector3.Zero(), this.scene);
+      camera.attachControl(document.getElementById("renderCanvas"), true);
+      this.scene.clearColor = new BABYLON.Color4(0.1, 0.1, 0.1, 0.1);
 
       //Boxes
       //var box1 = BABYLON.Mesh.CreateBox("Box1", 10.0, scene);
@@ -34,7 +35,7 @@ export class AppComponent {
 
       var box = [];
       for (let i = 0; i < 27; i++) {
-          box[i] = BABYLON.Mesh.CreateBox("Box" + i, 10.0, scene);
+          box[i] = BABYLON.Mesh.CreateBox("Box" + i, 10.0, this.scene);
           if (i == 2) {
               box[i - 2].position.x -= 10;
               box[i - 1].position.z = 10;
@@ -134,15 +135,15 @@ export class AppComponent {
 
       var boxes = BABYLON.Mesh.MergeMeshes([boxQ, boxQ2, box1]);
       */
-      var materialBox = new BABYLON.StandardMaterial("texture1", scene);
+      var materialBox = new BABYLON.StandardMaterial("texture1", this.scene);
       materialBox.diffuseColor = new BABYLON.Color3(0, 1, 0);//Green
-      var materialBox1 = new BABYLON.StandardMaterial("texture1", scene);
+      var materialBox1 = new BABYLON.StandardMaterial("texture1", this.scene);
       materialBox1.diffuseColor = new BABYLON.Color3(1, 1, 1);//Green
-      var materialBoxN = new BABYLON.StandardMaterial("texture1", scene);
+      var materialBoxN = new BABYLON.StandardMaterial("texture1", this.scene);
       materialBoxN.diffuseColor = new BABYLON.Color3(0, 0, 0);//Green
-      var materialBox2 = new BABYLON.StandardMaterial("texture2", scene);
+      var materialBox2 = new BABYLON.StandardMaterial("texture2", this.scene);
 
-      this.box = BABYLON.Mesh.CreateBox("box", 30, scene, false);
+      this.box = BABYLON.Mesh.CreateBox("box", 30, this.scene, false);
       this.box.isPickable = false;
       var actbox;
 
@@ -151,7 +152,7 @@ export class AppComponent {
       var size = 5;
 
       // show axis
-      var showAxis = function (size) {
+      var showAxis = function (size, scene) {
           var makeTextPlane = function (text, color, size) {
               var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 50, scene, true);
               dynamicTexture.hasAlpha = true;
@@ -188,7 +189,7 @@ export class AppComponent {
           zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
       };
 
-      showAxis(25);
+      showAxis(25, this.scene);
 
 
       /*box1.actionManager = new BABYLON.ActionManager(scene);
@@ -213,7 +214,7 @@ export class AppComponent {
 
       var selected = null;
       var safe = null;
-      scene.onPointerObservable.add(function (evt) {
+      this.scene.onPointerObservable.add(function (evt) {
           if (selected) {
               selected.material.diffuseColor = BABYLON.Color3.Gray();
               selected.material = materialBox1;
@@ -228,7 +229,7 @@ export class AppComponent {
               //evt.pickInfo.pickedMesh.position.x += 10;
               //evt.pickInfo.pickedMesh.material.diffuseColor = BABYLON.Color3.Green();
 
-              scene.registerBeforeRender(function () {
+              this.scene.registerBeforeRender(function () {
                   if (selected) {
 
                       if (isWPressed) {
@@ -403,17 +404,9 @@ export class AppComponent {
 
       var a = 0; // for oscillation
 
-
-      return scene;
-  }
-
-  var scene = createScene();
-
-
-
-  this.engine.runRenderLoop(function () {
-      if (scene) {
-          scene.render();
+ this.engine.runRenderLoop(function () {
+      if (this.scene) {
+          this.scene.render();
       }
   });
 
