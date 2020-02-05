@@ -432,19 +432,4 @@ export class Playground {
                 engine.resize();
               });
           }
-
-
-  /*
-      var scene = createScene();
-  
-      engine.runRenderLoop(function() {
-        if (scene) {
-          scene.render();
-        }
-      });
-  
-      // Resize
-      window.addEventListener("resize", function() {
-        engine.resize();
-      });*/
 }
