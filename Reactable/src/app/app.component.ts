@@ -9,10 +9,15 @@ import { Time } from '@angular/common';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+    profilClicked=true;
     title = 'Reactable';
     hours = 0;
     minutes = 0;
     seconds = 0;
+
+    isProfile() {
+        return this.profilClicked;
+    }
 
     ngOnInit() {
         Playground.CreateScene();

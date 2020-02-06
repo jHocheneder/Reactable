@@ -6,6 +6,7 @@
     top:0px;
     left:0px;
     z-index: 10;
+    opacity: 0.8;
 }
 
 #logo {
@@ -13,7 +14,7 @@
     height: 55.84px;
     background-image: url("../assets/reactableLogo.svg");
     background-repeat: no-repeat;
-    z-index: 100;
+    z-index: 50;
     position: absolute;
     bottom:2px;
     left:2px;
@@ -44,7 +45,7 @@
 #zeit {
     font-size: 30px;
     color: #8A304E;
-    z-index: 100;
+    z-index: 50;
     position: absolute;
     bottom:2px;
     right:2px;
@@ -67,3 +68,4 @@
     left:50%;
     transform: translateX(-50%);
 }
+

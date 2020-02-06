@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-
 import { AppComponent } from '../app.component';
 
 //Angular Material Components
@@ -75,7 +74,8 @@ import {MatNativeDateModule} from '@angular/material';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+
   ],
   exports: [
     MatCheckboxModule,
