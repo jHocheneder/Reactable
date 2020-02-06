@@ -11,9 +11,7 @@ export class AppComponent {
     title = 'Reactable';
 
     ngOnInit() {
-        Playground.CreateScene(
-            
-            );
+        Playground.CreateScene();
     }
 
 }
