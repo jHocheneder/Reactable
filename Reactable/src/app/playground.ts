@@ -17,7 +17,7 @@ export class Playground {
   
         var light = new BABYLON.HemisphericLight(
           "HemiLight",
-          new BABYLON.Vector3(0, 10, 0),
+          new BABYLON.Vector3(0, 10, 5),
           scene
         );
 
