@@ -5,7 +5,7 @@ import { MenueComponent } from './menue/menue.component';
 
 
 const routes: Routes = [
-  { path: "profil", component: ProfilComponent },
+  { path: "profil/:id", component: ProfilComponent },
   { path: "menue", component: MenueComponent }//,
 //  { path: "", redirectTo: "profil", pathMatch: "full" }
 ];

@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Profil } from '../profil';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'profil',
@@ -8,20 +9,22 @@ import { Profil } from '../profil';
 })
 export class ProfilComponent implements OnInit {
 
-//  @Input() benutzer: Profil = new Profil();
-//  @Output() schliessen: EventEmitter<Profil> = new EventEmitter<Profil>();
-
+  route: ActivatedRoute;
   benutzer: Profil = new Profil();
-
+  id;
   constructor() { }
 
   ngOnInit() {
+    //let id = this.route.snapshot.paramMap.get('id');
+    
+    //alert(this.id);
+    document.getElementById("Slogan").innerHTML = "your profil"
   }
 
- /* onSchliessen() {
-    console.log("emit");
-    this.schliessen.emit(this.benutzer);
-  }*/
+  changeSlogan() {
+    document.getElementById('Slogan').innerHTML = 'solve the puzzle';
+  }
+
 
 }
 

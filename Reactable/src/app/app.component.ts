@@ -8,21 +8,15 @@ import { Profil } from './profil';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    profilClicked=false;
     title = 'Reactable';
     hours = 0;
     minutes = 0;
     seconds = 0;
-
-    isProfile() {
-        return this.profilClicked;
-    }
-
-    public onClose() {
-        this.profilClicked=false;
-    }
+    benutzer:Profil = new Profil();
 
     ngOnInit() {
+        this.benutzer.id = 0;
+        document.getElementById("Slogan").innerHTML = "solve the puzzle"
         Playground.CreateScene();
         setInterval(()=> {
             this.seconds++;
