@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Profil } from '../profil';
 
 @Component({
   selector: 'profil',
@@ -9,13 +8,20 @@ import {ErrorStateMatcher} from '@angular/material/core';
 })
 export class ProfilComponent implements OnInit {
 
-  //@Output() closed: EventEmitter<Profil> = new EventEmitter<Profil>();
+//  @Input() benutzer: Profil = new Profil();
+//  @Output() schliessen: EventEmitter<Profil> = new EventEmitter<Profil>();
 
+  benutzer: Profil = new Profil();
 
   constructor() { }
 
   ngOnInit() {
   }
+
+ /* onSchliessen() {
+    console.log("emit");
+    this.schliessen.emit(this.benutzer);
+  }*/
 
 }
 

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Playground } from './playground';
-import * as BABYLON from '@babylonjs/core/Legacy/legacy';
-import { Time } from '@angular/common';
+import { Profil } from './profil';
 
 @Component({
     selector: 'app-root',
@@ -9,7 +8,7 @@ import { Time } from '@angular/common';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    profilClicked=true;
+    profilClicked=false;
     title = 'Reactable';
     hours = 0;
     minutes = 0;
@@ -17,6 +16,10 @@ export class AppComponent {
 
     isProfile() {
         return this.profilClicked;
+    }
+
+    public onClose() {
+        this.profilClicked=false;
     }
 
     ngOnInit() {
