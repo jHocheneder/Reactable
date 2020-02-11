@@ -1,0 +1,53 @@
+#all {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(25, 27, 31);
+    opacity: 0.8;
+    z-index: 75;
+    position: absolute;
+    top: 0;
+    left:0;
+}
+
+#mitte {
+    width: 60%;
+    height: 75vh;
+    background-color: rgb(25, 27, 31);
+    z-index: 200;
+    position: absolute;
+    bottom: 5vh;
+    left: 20vw;
+    opacity:1;
+    border: solid 1px rgb(46, 50, 56);
+}
+
+#menue-div {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top:0;
+  /*  transform: translateY(-50%);*/
+    text-align: center;
+}
+
+#menue-div button {
+    background: none;
+    outline: none;
+    color: white;
+    border: none;
+    font-size: 200%;
+}
+
+#menue-div h1 {
+    color: white;
+    font-size: 250%;
+    font-weight: lighter;
+}
+
+#menue-inhalt-div {
+    width: 100%;
+    height: fit-content;
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+}

@@ -9,11 +9,13 @@ import { myMaterialModules } from './myMaterialModules/myMaterialModules.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfilComponent } from './profil/profil.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MenueComponent } from './menue/menue.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProfilComponent
+    ProfilComponent,
+    MenueComponent
   ],
   imports: [
     BrowserModule,
