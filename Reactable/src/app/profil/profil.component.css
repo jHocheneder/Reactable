@@ -1,0 +1,64 @@
+#all {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(25, 27, 31);
+    opacity: 0.8;
+    z-index: 75;
+    position: absolute;
+    top: 0;
+    left:0;
+}
+
+#mitte {
+    width: 60%;
+    height: 75vh;
+    background-color: rgb(25, 27, 31);
+    z-index: 200;
+    position: absolute;
+    bottom: 5vh;
+    left: 20vw;
+    opacity:1;
+    border: solid 1px rgb(46, 50, 56);
+}
+
+#profil-div {
+    position: relative;
+    top:50%;
+    transform: translateY(-50%);
+}
+
+.profil-form {
+    width: 100%;
+    height: 100%;
+}
+
+.profil-input {
+    margin: 2.5% 0%;
+    font-size: 2.5vh;
+    width: 80%;
+    position: relative;
+    left:10%;
+    background: none;
+    border:none;
+    outline: none;
+    color: white;
+    border-bottom: solid 1.5px rgb(77,108,155);
+}
+
+.profil-input::placeholder {
+    color: rgb(77, 108, 155);
+}
+
+.profil-button {
+    position: absolute;
+    right: 10%;
+    bottom: -20%;
+    padding: 2%;
+    outline: none;
+    color:white;
+    background: none;
+    background-color: rgb(77, 108, 155);
+    border: none;
+    font-weight: lighter;
+    width: 20%;
+}
