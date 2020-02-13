@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Chakra+Petch&display=swap');
+
 html, body {
     overflow: hidden;
     width: 100%;
@@ -8,5 +10,5 @@ html, body {
 }
 
 * {
-    font-family: Chakra Petch Regular;
+    font-family: Chakra Petch Regular, 'Chakra Petch';
 }
