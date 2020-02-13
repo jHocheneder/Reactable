@@ -391,7 +391,6 @@ export class Playground {
       xChar.isPickable = false;
       zChar.isPickable = false;
  
-//    axis.isPickable = false;
   }//showAxis(size)
 
   private static makeTextPlane(text, color, size, scene) {
