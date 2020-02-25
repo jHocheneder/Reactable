@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reactable | Websocket Test</title>
+    <style>
+        /* Globale Schriftart setzen (weniger "schnörkelig") */
+        
+        body {
+            font-family: sans-serif;
+        }
+        /* Chat-Seite initial ausblenden */
+        
+        .game.page {
+            display: none;
+        }
+        /* Format für Benutzernamen bei der Ausgabe einer Chat-Nachricht */
+        
+        .username {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<!-- Programmcode auf der Client-Seite -->
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="./newMain.js"></script>
+<script>
+    let user;
+    let roomName;
+    let pathparam = (location.pathname + location.search).substr(1);
+    pathparam = pathparam.slice(1, pathparam.length);
+    console.log(pathparam);
+
+    $(function() {
+        let socket = io.connect('', {
+            query: {
+                "room": pathparam
+            }
+        });
+
+        $('form').submit(function(e) {
+            e.preventDefault();
+            user = $('#uInput').val();
+            socket.emit('user login', $('#uInput').val());
+
+            socket.on('returnLogin', function(users) {
+                $('.game.page').css('display', 'inline');
+                $('.login.page').css('display', 'none');
+                fillList(users);
+            });
+
+            socket.on('connectGamer', function(users) {
+                fillList(users);
+            });
+
+            socket.on('disconnectGamer', function(users) {
+                fillList(users);
+            });
+
+            socket.on('connectedToRoom', function(data) {
+                console.log("hallooaosdfoa")
+                $(document).remove();
+                document.write(data);
+            });
+
+            $('#uInput').val('');
+            return false;
+        })
+
+
+    });
+
+    function fillList(users) {
+        $('.onlineOpponents').empty();
+        users.forEach(element => {
+            if (element != user) {
+                $('.onlineOpponents').append('<li>' + element + '</li>');
+            }
+        });
+    }
+
+    function fillOpponent(opponent) {
+        $('.oInput').val() = $('#opponent' + opponent).val();
+    }
+
+    function sendGameRequest() {
+        socket.emit('inviteGamer', $('#oInput').val());
+    }
+
+    /*roomName = 'room/' + $('#oInput').val() + '/' + user;
+    socket.emit('create', roomName);*/
+
+    function gameInvite() {
+        let opponentUser = $('.oInput').val();
+        socket.emit('inviteGamer', opponentUser);
+    }
+
+    function invitePlayer(opponentUser) {
+        if (usr == opponentUser) {
+
+        }
+    }
+
+    function joinRoom() {
+        socket.emit('create', roomName);
+    }
+
+    function createRoom() {
+        roomName = 'room' + user;
+        $('.oRoomName').val() = 'localhost:3000/?' + roomName;
+    }
+</script>
+
+<body>
+
+    <!-- Login-Seite -->
+    <div class="login page">
+        <h2>Login Page</h2>
+        <h3 class="title">Wie ist dein Name?</h3>
+        <form action="">
+            <input id="uInput" maxlength="14" />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <!-- Game-Seite (initial ausgeblendet) -->
+    <div class="game page">
+        <h3 class="title">Gegen wen möchtest du spielen?</h3>
+        <input class="oInput" placeholder="Type here..." /><button click="gameInvite()" id="gameInvite">Einladen</button>
+        <ul class="onlineOpponents"></ul>
+        <br>
+        <h3 class="gameroom">Neuen Game-Room erstellen</h3>
+        <input class="oRoomName" placeholder="localhost:3000/?roomMaxi" readonly/>
+        <br>
+        <button click="createRoom()" id="createRoom">Erstellen</button>
+        <button click="joinRoom()">Beitreten</button>
+    </div>
+
+    <h4>HALSDOFE</h4>
+</body>
+
+</html>
