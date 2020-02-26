@@ -17,8 +17,9 @@ io.on('connection', function(socket) {
 
     if (socket.handshake.query.room != "") {
         console.log(socket.handshake.query.room);
-        socket.join(socket);
+        socket.join(socket.handshake.query.room);
 
+        console.log(socket);
         console.log(socket.rooms);
 
         io.to(socket.rooms[1]).emit('connectedToRoom', 'You are in room ' + socket.handshake.query.room);
@@ -32,14 +33,15 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('connectGamer', users);
     })
 
-    socket.on('inviteGamer', function(usr) {
+    socket.on('invite Gamer', function(usr) {
         console.log('Invited User: ' + usr);
         socket.broadcast.emit('invitePlayer', usr);
     })
 
-    socket.on('create', function(room) {
-        socket.join(room);
-        io.to(room).emit('connectedToRoom', 'You are in room ' + room);
+    socket.on('join Room', function(roomName) {
+        console.log(roomName);
+        socket.join(roomName);
+        io.to(roomName).emit('connectedToRoom', 'You are in ' + roomName);
     })
 
     socket.on('disconnect', function() {

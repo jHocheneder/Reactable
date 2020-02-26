@@ -29,14 +29,15 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="./newMain.js"></script>
 <script>
+    let socket;
     let user;
-    let roomName;
+    let roomName = "roomMaxi";
     let pathparam = (location.pathname + location.search).substr(1);
     pathparam = pathparam.slice(1, pathparam.length);
     console.log(pathparam);
 
     $(function() {
-        let socket = io.connect('', {
+        socket = io.connect('', {
             query: {
                 "room": pathparam
             }
@@ -61,15 +62,15 @@
                 fillList(users);
             });
 
-            socket.on('connectedToRoom', function(data) {
-                console.log("hallooaosdfoa")
-                $(document).remove();
-                document.write(data);
-            });
-
             $('#uInput').val('');
             return false;
         })
+
+        socket.on('connectedToRoom', function(data) {
+            console.log("hallooaosdfoa")
+            $(document).remove();
+            document.write(data);
+        });
 
 
     });
@@ -88,7 +89,7 @@
     }
 
     function sendGameRequest() {
-        socket.emit('inviteGamer', $('#oInput').val());
+        socket.emit('invite Gamer', $('#oInput').val());
     }
 
     /*roomName = 'room/' + $('#oInput').val() + '/' + user;
@@ -96,7 +97,7 @@
 
     function gameInvite() {
         let opponentUser = $('.oInput').val();
-        socket.emit('inviteGamer', opponentUser);
+        socket.emit('invite Gamer', opponentUser);
     }
 
     function invitePlayer(opponentUser) {
@@ -106,13 +107,13 @@
     }
 
     function joinRoom() {
-        socket.emit('create', roomName);
+        socket.emit('join Room', roomName);
     }
 
-    function createRoom() {
+    /*function createRoom() {
         roomName = 'room' + user;
         $('.oRoomName').val() = 'localhost:3000/?' + roomName;
-    }
+    }*/
 </script>
 
 <body>
@@ -136,11 +137,9 @@
         <h3 class="gameroom">Neuen Game-Room erstellen</h3>
         <input class="oRoomName" placeholder="localhost:3000/?roomMaxi" readonly/>
         <br>
-        <button click="createRoom()" id="createRoom">Erstellen</button>
-        <button click="joinRoom()">Beitreten</button>
+        <button id="createRoom">Erstellen</button>
+        <button onclick="joinRoom()">Beitreten</button>
     </div>
-
-    <h4>HALSDOFE</h4>
 </body>
 
 </html>
