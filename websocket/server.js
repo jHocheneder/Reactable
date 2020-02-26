@@ -16,13 +16,8 @@ io.on('connection', function(socket) {
     console.log('a user connected');
 
     if (socket.handshake.query.room != "") {
-        console.log(socket.handshake.query.room);
         socket.join(socket.handshake.query.room);
-
-        console.log(socket);
-        console.log(socket.rooms);
-
-        io.to(socket.rooms[1]).emit('connectedToRoom', 'You are in room ' + socket.handshake.query.room);
+        io.to(socket.handshake.query.room).emit('connectedToRoom', 'You are in ' + socket.handshake.query.room);
     }
 
     socket.on('user login', function(usr) {
@@ -39,7 +34,6 @@ io.on('connection', function(socket) {
     })
 
     socket.on('join Room', function(roomName) {
-        console.log(roomName);
         socket.join(roomName);
         io.to(roomName).emit('connectedToRoom', 'You are in ' + roomName);
     })

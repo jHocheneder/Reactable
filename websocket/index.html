@@ -31,7 +31,7 @@
 <script>
     let socket;
     let user;
-    let roomName = "roomMaxi";
+    let roomName;
     let pathparam = (location.pathname + location.search).substr(1);
     pathparam = pathparam.slice(1, pathparam.length);
     console.log(pathparam);
@@ -110,10 +110,10 @@
         socket.emit('join Room', roomName);
     }
 
-    /*function createRoom() {
+    function createRoom() {
         roomName = 'room' + user;
-        $('.oRoomName').val() = 'localhost:3000/?' + roomName;
-    }*/
+        $('.oRoomName').val('localhost:3000/?' + roomName);
+    }
 </script>
 
 <body>
@@ -135,9 +135,9 @@
         <ul class="onlineOpponents"></ul>
         <br>
         <h3 class="gameroom">Neuen Game-Room erstellen</h3>
-        <input class="oRoomName" placeholder="localhost:3000/?roomMaxi" readonly/>
+        <input class="oRoomName" readonly/>
         <br>
-        <button id="createRoom">Erstellen</button>
+        <button onclick="createRoom()" id="createRoom">Erstellen</button>
         <button onclick="joinRoom()">Beitreten</button>
     </div>
 </body>
