@@ -67,7 +67,7 @@
         })
 
         socket.on('connectedToRoom', function(data) {
-            console.log("hallooaosdfoa")
+            console.log("hallooaosdfoa");
             $(document).remove();
             document.write(data);
         });
@@ -112,7 +112,7 @@
 
     function createRoom() {
         roomName = 'room' + user;
-        $('.oRoomName').val('localhost:3000/?' + roomName);
+        $('.oRoomName').val('172.17.208.76:3000/?' + roomName);
     }
 </script>
 
