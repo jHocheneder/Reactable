@@ -3,6 +3,15 @@ let http = require('http').createServer(app);
 let io = require('socket.io')(http);
 let users = new Array();
 let sockets = new Array();
+let db = mysql.createConnection({
+    host: 'localhost', //Datenbankverbindung verändern
+    user: 'reactable',
+    database: 'reactable'
+})
+
+db.connect(function(err) {
+    if (err) console.log(err)
+})
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');

@@ -1,15 +1,15 @@
 <div id="all"></div>
 <div id="mitte">
-  <div id="profil-div">
-    <form class="profil-form">
-      <input id="firstInput" class="profil-input" type="text" placeholder="Benutzername">
-      <input class="profil-input" type="text" placeholder="Vorname">
-      <input class="profil-input" type="text" placeholder="Nachname">
-      <input class="profil-input" type="date" placeholder="Gebutstag">
-      <input class="profil-input" type="email" placeholder="E-Mail">
-    </form>
-    <a routerLink="">
-    <button id="close" (click)="changeSlogan()" class="profil-button">Schließen</button>
-    </a>
-  </div>
+    <div id="profil-div">
+        <form class="profil-form">
+            <input id="firstInput" class="profil-input" type="text" placeholder="Benutzername" [(ngModel)]="benutzer.username">
+            <input class="profil-input" type="text" placeholder="Vorname" [(ngModel)]="benutzer.firstname">
+            <input class="profil-input" type="text" placeholder="Nachname" [(ngModel)]="benutzer.lastname">
+            <input class="profil-input" type="date" placeholder="Gebutstag" [(ngModel)]="benutzer.date">
+            <input class="profil-input" type="email" placeholder="E-Mail" [(ngModel)]="benutzer.email">
+        </form>
+        <a routerLink="">
+            <button id="close" (click)="changeSlogan()" class="profil-button">Schließen</button>
+        </a>
+    </div>
 </div>
