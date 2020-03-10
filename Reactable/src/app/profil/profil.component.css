@@ -52,7 +52,7 @@
 .profil-button {
     position: absolute;
     right: 10%;
-    bottom: -20%;
+   /* bottom: -20%;*/
     padding: 2%;
     outline: none;
     color:white;
@@ -61,4 +61,8 @@
     border: none;
     font-weight: lighter;
     width: 20%;
+}
+
+#closeReg {
+    top: 10% !important;
 }

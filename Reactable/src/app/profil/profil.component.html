@@ -1,15 +1,62 @@
 <div id="all"></div>
 <div id="mitte">
-  <div id="profil-div">
+  <div id="profil-div"  *ngIf="dataService.angemeldet">
     <form class="profil-form">
-      <input id="firstInput" class="profil-input" type="text" placeholder="Benutzername">
-      <input class="profil-input" type="text" placeholder="Vorname">
-      <input class="profil-input" type="text" placeholder="Nachname">
-      <input class="profil-input" type="date" placeholder="Gebutstag">
-      <input class="profil-input" type="email" placeholder="E-Mail">
+      <input
+        id="firstInput"
+        class="profil-input"
+        type="text"
+        placeholder="Benutzername"
+      />
+      <input class="profil-input" type="text" placeholder="Vorname" />
+      <input class="profil-input" type="text" placeholder="Nachname" />
+      <input class="profil-input" type="date" placeholder="Gebutstag" />
+      <input class="profil-input" type="email" placeholder="E-Mail" />
     </form>
     <a routerLink="">
-    <button id="close" (click)="changeSlogan()" class="profil-button">Schließen</button>
+      <button class="closeProf" (click)="changeSlogan()" class="profil-button">
+        Schließen
+      </button>
     </a>
   </div>
+  <div *ngIf="!dataService.angemeldet">
+    <div id="registrier-div" *ngIf="!registriert">
+      <form class="profil-form">
+        <input
+          id="firstInput"
+          class="profil-input"
+          type="text"
+          placeholder="Benutzername"
+        />
+        <input class="profil-input" type="text" placeholder="Vorname" />
+        <input class="profil-input" type="text" placeholder="Nachname" />
+        <input class="profil-input" type="date" placeholder="Gebutstag" />
+        <input class="profil-input" type="email" placeholder="E-Mail" />
+        <input class="profil-input" type="password" placeholder="Passwort" />
+        <input class="profil-input" type="password" placeholder="Passwort wiederholen" />
+      </form>
+      <a routerLink="">
+        <button class="closeReg" (click)="changeSlogan()" class="profil-button">
+          Registrieren
+        </button>
+      </a>
+    </div>
+    <div id="login-div" *ngIf="registriert">
+      <form class="profil-form">
+        <input
+          id="firstInput"
+          class="profil-input"
+          type="text"
+          placeholder="Benutzername"
+        />
+        <input class="profil-input" type="password" placeholder="Passwort" />
+      </form>
+      <a routerLink="">
+        <button id="closeLog" (click)="changeSlogan()" class="profil-button">
+          Login
+        </button>
+      </a>
+    </div>
+  </div>
+  
 </div>
