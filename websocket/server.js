@@ -1,11 +1,13 @@
 let app = require('express')();
 let http = require('http').createServer(app);
 let io = require('socket.io')(http);
+let mysql = require('mysql');
 let users = new Array();
 let sockets = new Array();
 let db = mysql.createConnection({
     host: 'localhost', //Datenbankverbindung verändern
     user: 'reactable',
+    password: 'passme01',
     database: 'reactable'
 })
 
@@ -45,6 +47,16 @@ io.on('connection', function(socket) {
     socket.on('join Room', function(roomName) {
         socket.join(roomName);
         io.to(roomName).emit('connectedToRoom', 'You are in ' + roomName);
+    })
+
+    socket.on("insert", function(usr) {
+        //let usr = JSON.parse(user);
+        let sql = "insert into player (vName, nName, username) values ('" + usr.vName + "', '" + usr.nName + "', '" + usr.username + "');";
+
+        db.query(sql, function(err, result) {
+            if (err) console.log(err);
+            console.log("1 record inserted");
+        });
     })
 
     socket.on('disconnect', function() {

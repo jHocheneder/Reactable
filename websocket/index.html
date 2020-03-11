@@ -114,6 +114,15 @@
         roomName = 'room' + user;
         $('.oRoomName').val('172.17.208.76:3000/?' + roomName);
     }
+
+    function insertKacke() {
+        let user = {
+            "vName": "Hannes",
+            "nName": "Reichelt",
+            "username": "hannesR" + Math.random()
+        };
+        socket.emit("insert", user);
+    }
 </script>
 
 <body>
@@ -139,6 +148,7 @@
         <br>
         <button onclick="createRoom()" id="createRoom">Erstellen</button>
         <button onclick="joinRoom()">Beitreten</button>
+        <button onclick="insertKacke()">InsertKacke</button>
     </div>
 </body>
 
