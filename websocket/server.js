@@ -5,18 +5,18 @@ let fs = require('fs');
 let mysql = require('mysql');
 let users = new Array();
 let sockets = new Array();
-//let db = mysql.createConnection({
-//    host: 'localhost', //Datenbankverbindung verändern
-//    user: 'reactable',
-//    password: 'passme01',
-//    database: 'reactable'
-//})
+let db = mysql.createConnection({
+    host: 'localhost', //Datenbankverbindung verändern
+    user: 'reactable',
+    password: 'passme01',
+    database: 'reactable'
+})
 
-//db.connect(function(err) {
-//    if (err) console.log(err)
-//})
+db.connect(function(err) {
+    if (err) console.log(err)
+})
 
-let obj=[];
+//let obj=[];
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
@@ -54,14 +54,14 @@ io.on('connection', function(socket) {
 
     socket.on("insert", function(usr) {
         //let usr = JSON.parse(user);
-        //let sql = "insert into player (vName, nName, username) values ('" + usr.vName + "', '" + usr.nName + "', '" + usr.username + "');";
+        let sql = "insert into player (vName, nName, username) values ('" + usr.vName + "', '" + usr.nName + "', '" + usr.username + "');";
 
-        //db.query(sql, function(err, result) {
-        //    if (err) console.log(err);
-        //    console.log("1 record inserted");
-        //});
+        db.query(sql, function(err, result) {
+            if (err) console.log(err);
+            console.log("1 record inserted");
+        });
 
-        fs.readFile('list.json', 'utf8', function readFileCallback(err, data){
+        /*fs.readFile('list.json', 'utf8', function readFileCallback(err, data){
             if (err){
                 console.log(err);
             } else {
@@ -74,7 +74,7 @@ io.on('connection', function(socket) {
                 }
                 console.log("The file was saved!");
             }); 
-        }});
+        }});*/
     })
 
     socket.on('disconnect', function() {
