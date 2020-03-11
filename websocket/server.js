@@ -1,19 +1,22 @@
 let app = require('express')();
 let http = require('http').createServer(app);
 let io = require('socket.io')(http);
+let fs = require('fs');
 let mysql = require('mysql');
 let users = new Array();
 let sockets = new Array();
-let db = mysql.createConnection({
-    host: 'localhost', //Datenbankverbindung verändern
-    user: 'reactable',
-    password: 'passme01',
-    database: 'reactable'
-})
+//let db = mysql.createConnection({
+//    host: 'localhost', //Datenbankverbindung verändern
+//    user: 'reactable',
+//    password: 'passme01',
+//    database: 'reactable'
+//})
 
-db.connect(function(err) {
-    if (err) console.log(err)
-})
+//db.connect(function(err) {
+//    if (err) console.log(err)
+//})
+
+let obj=[];
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
@@ -51,12 +54,27 @@ io.on('connection', function(socket) {
 
     socket.on("insert", function(usr) {
         //let usr = JSON.parse(user);
-        let sql = "insert into player (vName, nName, username) values ('" + usr.vName + "', '" + usr.nName + "', '" + usr.username + "');";
+        //let sql = "insert into player (vName, nName, username) values ('" + usr.vName + "', '" + usr.nName + "', '" + usr.username + "');";
 
-        db.query(sql, function(err, result) {
-            if (err) console.log(err);
-            console.log("1 record inserted");
-        });
+        //db.query(sql, function(err, result) {
+        //    if (err) console.log(err);
+        //    console.log("1 record inserted");
+        //});
+
+        fs.readFile('list.json', 'utf8', function readFileCallback(err, data){
+            if (err){
+                console.log(err);
+            } else {
+            //obj = JSON.parse(data); //now it an object
+            obj.push(usr); //add some data
+            json = JSON.stringify(obj, null, 2); //convert it back to json
+            fs.writeFile("list.json", json, function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+                console.log("The file was saved!");
+            }); 
+        }});
     })
 
     socket.on('disconnect', function() {
