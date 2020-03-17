@@ -1,32 +1,13 @@
--- phpMyAdmin SQL Dump
--- version 4.8.3
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Erstellungszeit: 26. Feb 2020 um 14:35
--- Server-Version: 10.1.35-MariaDB
--- PHP-Version: 7.2.9
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Datenbank: `reactable`
---
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `game`
---
 
 CREATE TABLE `game` (
   `id` int(11) NOT NULL,
@@ -36,22 +17,12 @@ CREATE TABLE `game` (
   `modellid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `modell`
---
-
 CREATE TABLE `modell` (
   `id` int(11) NOT NULL,
   `schwierigkeit` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `player`
---
+INSERT INTO `modell` (`id`, `schwierigkeit`) VALUES(1, 'Soma-Medium');
 
 CREATE TABLE `player` (
   `id` int(11) NOT NULL,
@@ -60,22 +31,18 @@ CREATE TABLE `player` (
   `username` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `teil`
---
-
 CREATE TABLE `teil` (
   `id` int(11) NOT NULL,
   `modellid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `teil_wuerfel`
---
+INSERT INTO `teil` (`id`, `modellid`) VALUES(1, 1);
+INSERT INTO `teil` (`id`, `modellid`) VALUES(2, 1);
+INSERT INTO `teil` (`id`, `modellid`) VALUES(3, 1);
+INSERT INTO `teil` (`id`, `modellid`) VALUES(4, 1);
+INSERT INTO `teil` (`id`, `modellid`) VALUES(5, 1);
+INSERT INTO `teil` (`id`, `modellid`) VALUES(6, 1);
+INSERT INTO `teil` (`id`, `modellid`) VALUES(7, 1);
 
 CREATE TABLE `teil_wuerfel` (
   `id` int(11) NOT NULL,
@@ -83,11 +50,33 @@ CREATE TABLE `teil_wuerfel` (
   `teilid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `wuerfel`
---
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(1, 3, 1);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(2, 6, 1);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(3, 15, 1);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(4, 11, 2);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(5, 14, 2);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(6, 5, 2);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(7, 8, 2);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(8, 10, 3);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(9, 19, 3);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(10, 20, 3);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(11, 22, 3);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(12, 12, 4);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(13, 21, 4);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(14, 23, 4);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(15, 24, 4);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(16, 9, 5);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(17, 18, 5);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(18, 26, 5);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(19, 27, 5);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(20, 1, 6);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(21, 2, 6);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(22, 4, 6);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(23, 13, 6);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(24, 7, 7);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(25, 16, 7);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(26, 17, 7);
+INSERT INTO `teil_wuerfel` (`id`, `wuerfelid`, `teilid`) VALUES(27, 25, 7);
 
 CREATE TABLE `wuerfel` (
   `id` int(11) NOT NULL,
@@ -96,138 +85,85 @@ CREATE TABLE `wuerfel` (
   `z_pos` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `wuerfel`
---
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(1, 1, 1, 1);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(2, 2, 1, 1);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(3, 3, 1, 1);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(4, 1, 2, 1);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(5, 2, 2, 1);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(6, 3, 2, 1);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(7, 1, 3, 1);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(8, 2, 3, 1);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(9, 3, 3, 1);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(10, 1, 1, 2);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(11, 2, 1, 2);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(12, 3, 1, 2);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(13, 1, 2, 2);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(14, 2, 2, 2);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(15, 3, 2, 2);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(16, 1, 3, 2);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(17, 2, 3, 2);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(18, 3, 3, 2);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(19, 1, 1, 3);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(20, 2, 1, 3);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(21, 3, 1, 3);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(22, 1, 2, 3);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(23, 2, 2, 3);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(24, 3, 2, 3);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(25, 1, 3, 3);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(26, 2, 3, 3);
+INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES(27, 3, 3, 3);
 
-INSERT INTO `wuerfel` (`id`, `x_pos`, `y_pos`, `z_pos`) VALUES
-(1, 1, 1, 1),
-(2, 2, 1, 1),
-(3, 3, 1, 1),
-(4, 1, 2, 1),
-(5, 2, 2, 1),
-(6, 3, 2, 1),
-(7, 1, 3, 1),
-(8, 2, 3, 1),
-(9, 3, 3, 1),
-(10, 1, 1, 2),
-(11, 2, 1, 2),
-(12, 3, 1, 2),
-(13, 1, 2, 2),
-(14, 2, 2, 2),
-(15, 3, 2, 2),
-(16, 1, 3, 2),
-(17, 2, 3, 2),
-(18, 3, 3, 2),
-(19, 1, 1, 3),
-(20, 2, 1, 3),
-(21, 3, 1, 3),
-(22, 1, 2, 3),
-(23, 2, 2, 3),
-(24, 3, 2, 3),
-(25, 1, 3, 3),
-(26, 2, 3, 3),
-(27, 3, 3, 3);
 
---
--- Indizes der exportierten Tabellen
---
-
---
--- Indizes für die Tabelle `game`
---
 ALTER TABLE `game`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `usergame` (`userid`) USING BTREE,
-  ADD KEY `modellgame` (`modellid`);
+  ADD KEY `modellgame` (`modellid`),
+  ADD KEY `user_modell` (`userid`);
 
---
--- Indizes für die Tabelle `modell`
---
 ALTER TABLE `modell`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `player`
---
 ALTER TABLE `player`
   ADD PRIMARY KEY (`id`);
 
---
--- Indizes für die Tabelle `teil`
---
 ALTER TABLE `teil`
   ADD PRIMARY KEY (`id`),
   ADD KEY `modellteil` (`modellid`);
 
---
--- Indizes für die Tabelle `teil_wuerfel`
---
 ALTER TABLE `teil_wuerfel`
   ADD PRIMARY KEY (`id`),
   ADD KEY `wuerfelt` (`wuerfelid`),
   ADD KEY `teilw` (`teilid`);
 
---
--- Indizes für die Tabelle `wuerfel`
---
 ALTER TABLE `wuerfel`
   ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT für exportierte Tabellen
---
 
---
--- AUTO_INCREMENT für Tabelle `game`
---
 ALTER TABLE `game`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT für Tabelle `modell`
---
 ALTER TABLE `modell`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `player`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT für Tabelle `teil`
---
 ALTER TABLE `teil`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
---
--- AUTO_INCREMENT für Tabelle `teil_wuerfel`
---
 ALTER TABLE `teil_wuerfel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
---
--- AUTO_INCREMENT für Tabelle `wuerfel`
---
 ALTER TABLE `wuerfel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
---
--- Constraints der exportierten Tabellen
---
 
---
--- Constraints der Tabelle `game`
---
 ALTER TABLE `game`
   ADD CONSTRAINT `modell_game` FOREIGN KEY (`modellid`) REFERENCES `modell` (`id`),
-  ADD CONSTRAINT `user_game` FOREIGN KEY (`userid`) REFERENCES `player` (`id`);
+  ADD CONSTRAINT `user_modell` FOREIGN KEY (`userid`) REFERENCES `player` (`id`);
 
---
--- Constraints der Tabelle `teil`
---
 ALTER TABLE `teil`
   ADD CONSTRAINT `modell_teil` FOREIGN KEY (`modellid`) REFERENCES `modell` (`id`);
 
---
--- Constraints der Tabelle `teil_wuerfel`
---
 ALTER TABLE `teil_wuerfel`
   ADD CONSTRAINT `ttw` FOREIGN KEY (`teilid`) REFERENCES `teil` (`id`),
   ADD CONSTRAINT `wtw` FOREIGN KEY (`wuerfelid`) REFERENCES `wuerfel` (`id`);
