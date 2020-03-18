@@ -26,9 +26,9 @@ INSERT INTO `modell` (`id`, `schwierigkeit`) VALUES(1, 'Soma-Medium');
 
 CREATE TABLE `player` (
   `id` int(11) NOT NULL,
-  `vName` varchar(50) NOT NULL,
-  `nName` varchar(60) NOT NULL,
-  `username` varchar(25) NOT NULL
+  `email` varchar(50) NOT NULL,
+  `username` varchar(25) NOT NULL,
+  `password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `teil` (

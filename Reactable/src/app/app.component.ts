@@ -20,11 +20,11 @@ export class AppComponent {
         Playground.CreateScene();
         setInterval(() => {
             this.seconds++;
-            if (this.seconds == 60) {
+            if (this.seconds === 60) {
                 this.minutes++;
                 this.seconds = 0;
             }
-            if (this.minutes == 60) {
+            if (this.minutes === 60) {
                 this.hours++;
                 this.minutes = 0;
             }

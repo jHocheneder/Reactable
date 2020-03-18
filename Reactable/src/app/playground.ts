@@ -36,7 +36,7 @@ export class Playground {
     const box = [];
     for (let i = 0; i < 27; i++) {
       box[i] = BABYLON.Mesh.CreateBox('Box' + i, 10.0, scene);
-      if (i == 2) {
+      if (i === 2) {
         box[i - 2].position.x -= 10;
         box[i - 1].position.z = 10;
         const wuerfel = BABYLON.Mesh.MergeMeshes([
@@ -58,7 +58,7 @@ export class Playground {
         wuerfel.position.y -= 40;
       }
 
-      if (i == 6) {
+      if (i === 6) {
         box[i - 1].position.x = -10;
         box[i - 2].position.z -= -10;
         box[i - 3].position.z = 10;
@@ -84,7 +84,7 @@ export class Playground {
         wuerfel.position.y -= 40;
       }
 
-      if (i == 10) {
+      if (i === 10) {
         box[i - 2].position.x -= 10;
         box[i - 1].position.z = 10;
         box[i - 3].position.y = 10;
@@ -107,7 +107,7 @@ export class Playground {
         wuerfel.position.x = 50;
       }
 
-      if (i == 14) {
+      if (i === 14) {
         box[i - 2].position.x -= 10;
         box[i - 1].position.z = 10;
         box[i - 3].position.y = 10;
@@ -131,7 +131,7 @@ export class Playground {
         wuerfel.position.x -= 50;
       }
 
-      if (i == 18) {
+      if (i === 18) {
         box[i - 2].position.x -= 10;
         box[i - 1].position.x = 10;
         box[i - 3].position.x = 10;
@@ -155,7 +155,7 @@ export class Playground {
         wuerfel.position.z = 40;
       }
 
-      if (i == 22) {
+      if (i === 22) {
         box[i - 1].position.y = 10;
         box[i - 2].position.z = 10;
         box[i - 3].position.z = 10;
@@ -179,7 +179,7 @@ export class Playground {
         wuerfel.position.z -= 40;
       }
 
-      if (i == 26) {
+      if (i === 26) {
         box[i - 2].position.x -= 10;
         box[i - 1].position.x = 10;
         box[i - 3].position.z = 10;

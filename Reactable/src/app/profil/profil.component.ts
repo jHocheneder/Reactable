@@ -13,7 +13,7 @@ export class ProfilComponent implements OnInit {
   route: ActivatedRoute;
   benutzer: Profil = new Profil();
   id;
-  registriert: Boolean = true;
+  registriert = true;
   constructor(public dataService: DataService) { }
 
   ngOnInit() {

@@ -114,4 +114,4 @@ import {MatNativeDateModule} from '@angular/material';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class myMaterialModules { }
+export class MyMaterialModules { }
