@@ -13,15 +13,15 @@ export class ProfilComponent implements OnInit {
   route: ActivatedRoute;
   benutzer: Profil = new Profil();
   id;
-  registriert:Boolean = true;
+  registriert = true;
   constructor(public dataService: DataService) { }
 
   ngOnInit() {
-    //let id = this.route.snapshot.paramMap.get('id');
+    // let id = this.route.snapshot.paramMap.get('id');
 
-    //alert(this.id);
+    // alert(this.id);
 
-    document.getElementById("Slogan").innerHTML = this.dataService.angemeldet ? "your profile" : this.registriert ? "login" : "sign in";
+    document.getElementById('Slogan').innerHTML = this.dataService.angemeldet ? 'your profile' : this.registriert ? 'login' : 'sign in';
   }
 
   changeSlogan() {
@@ -29,7 +29,7 @@ export class ProfilComponent implements OnInit {
   }
 
   switchLoginReg() {
-    document.getElementById("Slogan").innerHTML = this.registriert ? "login" : "sign in";
+    document.getElementById('Slogan').innerHTML = this.registriert ? 'login' : 'sign in';
   }
 
 }

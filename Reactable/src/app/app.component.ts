@@ -12,19 +12,19 @@ export class AppComponent {
     hours = 0;
     minutes = 0;
     seconds = 0;
-    benutzer:Profil = new Profil();
+    benutzer: Profil = new Profil();
 
     ngOnInit() {
         this.benutzer.id = 0;
-        document.getElementById("Slogan").innerHTML = "solve the puzzle"
+        document.getElementById('Slogan').innerHTML = 'solve the puzzle';
         Playground.CreateScene();
-        setInterval(()=> {
+        setInterval(() => {
             this.seconds++;
-            if(this.seconds == 60) {
+            if (this.seconds === 60) {
                 this.minutes++;
                 this.seconds = 0;
             }
-            if(this.minutes == 60) {
+            if (this.minutes === 60) {
                 this.hours++;
                 this.minutes = 0;
             }

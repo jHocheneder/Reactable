@@ -7,6 +7,8 @@
       "severity": "warning"
     },
     "component-class-suffix": true,
+    "only-arrow-functions": false,
+    "use-life-cycle-interface": false,
     "contextual-lifecycle": true,
     "directive-class-suffix": true,
     "directive-selector": [
@@ -18,8 +20,7 @@
     "component-selector": [
       true,
       "element",
-      "app",
-      "kebab-case"
+      "app"
     ],
     "import-blacklist": [
       true,
@@ -82,7 +83,6 @@
     "no-outputs-metadata-property": true,
     "template-banana-in-box": true,
     "template-no-negated-async": true,
-    "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true
   },
   "rulesDirectory": [

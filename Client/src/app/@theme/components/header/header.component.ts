@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     {
       value: 'origin',
       name: 'Origin',
-    }
+    },
   ];
 
   currentTheme = 'default';
