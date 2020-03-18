@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
   template: `
     <span class="attribution">
-      
+
   <a class="logo-font" routerLink="/">Reactable</a>
       &copy; {{ today | date: 'yyyy' }}
       An interactive 3D project from <a href="https://htl-leonding.ac.at">HTL</a>.
