@@ -7,7 +7,7 @@ import { Profil } from './profil';
 export class DataService {
 
   public benutzer: Profil;
-  public angemeldet: boolean = false;
-  
+  public angemeldet = false;
+
   constructor() { }
 }

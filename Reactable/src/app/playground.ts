@@ -12,17 +12,17 @@ export class Playground {
     this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement;
     this.engine = new BABYLON.Engine(this.canvas, true, { preserveDrawingBuffer: true, stencil: true });
 
-    //Scene:
-    let scene = new BABYLON.Scene(this.engine);
+    // Scene:
+    const scene = new BABYLON.Scene(this.engine);
 
-    var light = new BABYLON.HemisphericLight(
-      "HemiLight",
+    const light = new BABYLON.HemisphericLight(
+      'HemiLight',
       new BABYLON.Vector3(0, 10, 5),
       scene
     );
 
-    var camera = new BABYLON.ArcRotateCamera(
-      "Camera",
+    const camera = new BABYLON.ArcRotateCamera(
+      'Camera',
       0,
       0.8,
       100,
@@ -33,19 +33,19 @@ export class Playground {
 
     scene.clearColor = new BABYLON.Color4(0.1, 0.1, 0.1);
 
-    var box = [];
+    const box = [];
     for (let i = 0; i < 27; i++) {
-      box[i] = BABYLON.Mesh.CreateBox("Box" + i, 10.0, scene);
+      box[i] = BABYLON.Mesh.CreateBox('Box' + i, 10.0, scene);
       if (i == 2) {
         box[i - 2].position.x -= 10;
         box[i - 1].position.z = 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
+        const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
           box[i - 2]
         ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
+        const materialBox = new BABYLON.StandardMaterial(
+          'texture' + i,
           scene
         );
         materialBox.diffuseColor = new BABYLON.Color3(
@@ -64,14 +64,14 @@ export class Playground {
         box[i - 3].position.z = 10;
         box[i - 3].position.x -= -10;
         box[i - 3].position.x = 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
+        const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
           box[i - 2],
           box[i - 3]
         ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
+        const materialBox = new BABYLON.StandardMaterial(
+          'texture' + i,
           scene
         );
         materialBox.diffuseColor = new BABYLON.Color3(
@@ -88,14 +88,14 @@ export class Playground {
         box[i - 2].position.x -= 10;
         box[i - 1].position.z = 10;
         box[i - 3].position.y = 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
+        const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
           box[i - 2],
           box[i - 3]
         ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
+        const materialBox = new BABYLON.StandardMaterial(
+          'texture' + i,
           scene
         );
         materialBox.diffuseColor = new BABYLON.Color3(
@@ -112,14 +112,14 @@ export class Playground {
         box[i - 1].position.z = 10;
         box[i - 3].position.y = 10;
         box[i - 3].position.x -= 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
+        const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
           box[i - 2],
           box[i - 3]
         ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
+        const materialBox = new BABYLON.StandardMaterial(
+          'texture' + i,
           scene
         );
         materialBox.diffuseColor = new BABYLON.Color3(
@@ -136,14 +136,14 @@ export class Playground {
         box[i - 1].position.x = 10;
         box[i - 3].position.x = 10;
         box[i - 3].position.z = 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
+        const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
           box[i - 2],
           box[i - 3]
         ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
+        const materialBox = new BABYLON.StandardMaterial(
+          'texture' + i,
           scene
         );
         materialBox.diffuseColor = new BABYLON.Color3(
@@ -160,14 +160,14 @@ export class Playground {
         box[i - 2].position.z = 10;
         box[i - 3].position.z = 10;
         box[i - 3].position.x = 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
+        const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
           box[i - 2],
           box[i - 3]
         ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
+        const materialBox = new BABYLON.StandardMaterial(
+          'texture' + i,
           scene
         );
         materialBox.diffuseColor = new BABYLON.Color3(
@@ -183,14 +183,14 @@ export class Playground {
         box[i - 2].position.x -= 10;
         box[i - 1].position.x = 10;
         box[i - 3].position.z = 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
+        const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
           box[i - 2],
           box[i - 3]
         ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
+        const materialBox = new BABYLON.StandardMaterial(
+          'texture' + i,
           scene
         );
         materialBox.diffuseColor = new BABYLON.Color3(
@@ -205,15 +205,15 @@ export class Playground {
     }
 
     // show axis
-    var size = 25;
-    var axis = this.showAxis(size, scene);
+    const size = 25;
+    const axis = this.showAxis(size, scene);
 
 
 
-    //grid
-    var gridBox = BABYLON.Mesh.CreateBox("boxGrid", 30, scene, false);
+    // grid
+    const gridBox = BABYLON.Mesh.CreateBox('boxGrid', 30, scene, false);
     gridBox.isPickable = false;
-    var gridmat = new BABYLONMat.GridMaterial("grid", scene);
+    const gridmat = new BABYLONMat.GridMaterial('grid', scene);
     gridmat.mainColor = new BABYLON.Color3(0, 1, 1);
     gridmat.opacity = 0.5;
     gridmat.gridRatio = 10;
@@ -221,10 +221,10 @@ export class Playground {
 
     gridBox.material = gridmat;
 
-    //bewegen
-    var selected = null;
-    var safe = null;
-    scene.onPointerObservable.add(function (evt) {
+    // bewegen
+    let selected = null;
+    const safe = null;
+    scene.onPointerObservable.add(function(evt) {
       if (selected) {
         selected.material.alpha = 1;
         selected = null;
@@ -236,7 +236,7 @@ export class Playground {
       ) {
         selected = evt.pickInfo.pickedMesh;
 
-        console.log("picked Info", evt.pickInfo.pickedMesh.name);
+        console.log('picked Info', evt.pickInfo.pickedMesh.name);
         selected.material.alpha = 0.8;
 
         scene.registerBeforeRender(() => {
@@ -301,7 +301,7 @@ export class Playground {
     let isYPressed = false;
     let isZPressed = false;
 
-    document.addEventListener("keydown", e => {
+    document.addEventListener('keydown', e => {
       if (selected) {
         switch (e.keyCode) {
           case 87:
@@ -338,10 +338,10 @@ export class Playground {
     // return scene;
   }
 
-  private static showAxis(size, scene) {//.isPickable = false;
+  private static showAxis(size, scene) {// .isPickable = false;
 
-    var axisX = BABYLON.Mesh.CreateLines(
-      "axisX",
+    const axisX = BABYLON.Mesh.CreateLines(
+      'axisX',
       [
         new BABYLON.Vector3(0, 0, 0),
         new BABYLON.Vector3(size, 0, 0),
@@ -352,10 +352,10 @@ export class Playground {
       scene
     );
     axisX.color = new BABYLON.Color3(1, 0, 0);
-    var xChar = this.makeTextPlane("X", "red", size / 10, scene);
+    const xChar = this.makeTextPlane('X', 'red', size / 10, scene);
     xChar.position = new BABYLON.Vector3(0.9 * size, -0.05 * size, 0);
-    var axisY = BABYLON.Mesh.CreateLines(
-      "axisY",
+    const axisY = BABYLON.Mesh.CreateLines(
+      'axisY',
       [
         new BABYLON.Vector3(0, 0, 0),
         new BABYLON.Vector3(0, size, 0),
@@ -366,10 +366,10 @@ export class Playground {
       scene
     );
     axisY.color = new BABYLON.Color3(0, 1, 0);
-    var yChar = this.makeTextPlane("Y", "green", size / 10, scene);
+    const yChar = this.makeTextPlane('Y', 'green', size / 10, scene);
     yChar.position = new BABYLON.Vector3(0, 0.9 * size, -0.05 * size);
-    var axisZ = BABYLON.Mesh.CreateLines(
-      "axisZ",
+    const axisZ = BABYLON.Mesh.CreateLines(
+      'axisZ',
       [
         new BABYLON.Vector3(0, 0, 0),
         new BABYLON.Vector3(0, 0, size),
@@ -380,22 +380,22 @@ export class Playground {
       scene
     );
     axisZ.color = new BABYLON.Color3(0, 0, 1);
-    var zChar = this.makeTextPlane("Z", "blue", size / 10, scene);
+    const zChar = this.makeTextPlane('Z', 'blue', size / 10, scene);
     zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
 
-      axisX.isPickable = false;
-      axisY.isPickable = false;
-      axisZ.isPickable = false;
-      
-      yChar.isPickable = false;
-      xChar.isPickable = false;
-      zChar.isPickable = false;
- 
-  }//showAxis(size)
+    axisX.isPickable = false;
+    axisY.isPickable = false;
+    axisZ.isPickable = false;
+
+    yChar.isPickable = false;
+    xChar.isPickable = false;
+    zChar.isPickable = false;
+
+  }// showAxis(size)
 
   private static makeTextPlane(text, color, size, scene) {
-    var dynamicTexture = new BABYLON.DynamicTexture(
-      "DynamicTexture",
+    const dynamicTexture = new BABYLON.DynamicTexture(
+      'DynamicTexture',
       50,
       scene,
       true
@@ -405,20 +405,20 @@ export class Playground {
       text,
       5,
       40,
-      "bold 36px Arial",
+      'bold 36px Arial',
       color,
-      "transparent",
+      'transparent',
       true
     );
-    var plane = BABYLON.Mesh.CreatePlane(
-      "TextPlane",
+    const plane = BABYLON.Mesh.CreatePlane(
+      'TextPlane',
       size,
       scene,
       true
     );
 
-    var material = new BABYLON.StandardMaterial(
-      "TextPlaneMaterial",
+    const material = new BABYLON.StandardMaterial(
+      'TextPlaneMaterial',
       scene
     );
     plane.material = material;
@@ -426,18 +426,18 @@ export class Playground {
     material.specularColor = new BABYLON.Color3(0, 0, 0);
     material.diffuseTexture = dynamicTexture;
     return plane;
-  }//makeTextPlane(text, color, size)
+  }// makeTextPlane(text, color, size)
 
 
   private static build(engine, scene) {
-    engine.runRenderLoop(function () {
+    engine.runRenderLoop(function() {
       if (scene) {
         scene.render();
       }
     });
 
     // Resize
-    window.addEventListener("resize", function () {
+    window.addEventListener('resize', function() {
       engine.resize();
     });
   }

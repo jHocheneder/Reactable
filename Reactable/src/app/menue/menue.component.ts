@@ -10,7 +10,7 @@ export class MenueComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    document.getElementById("Slogan").innerHTML = "change Mode"
+    document.getElementById('Slogan').innerHTML = 'change Mode';
   }
   changeSlogan() {
     document.getElementById('Slogan').innerHTML = 'solve the puzzle';
