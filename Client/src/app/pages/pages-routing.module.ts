@@ -5,6 +5,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { StatisticComponent } from './statistic/statistic.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [{
   path: '',
@@ -17,6 +18,10 @@ const routes: Routes = [{
     {
       path: 'statistic',
       component: StatisticComponent,
+    },
+    {
+      path: 'about',
+      component: AboutComponent,
     },
     {
       path: '',
