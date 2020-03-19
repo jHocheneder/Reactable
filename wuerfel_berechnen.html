@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html>
     <button onclick="generieren()">Wuerfel generieren</button>
-    <div id="arr"></div>
+    <div id="arr"></div><br>
+    <div id="zufza"></div>
     <script>
         var w = new Array();
-
+        var c = 0;
         for(var i = 1; i <= 3; i++){
             w[i] = new Array();
+            //document.getElementById("arr").innerHTML += 'i: '+i+', ';
             for(var j = 1; j <= 3; j++){
+                //document.getElementById("arr").innerHTML += 'j: '+j+', ';
                 w[i][j] = new Array();
                 for(var k = 1; k <= 3; k++){
                     w[i][j][k] = i+''+j+''+k;
-                    document.getElementById("arr").innerHTML = w;
+                    document.getElementById("arr").innerHTML += 'x: '+k+', '+'y: '+j+', '+'z: '+i+', ';
+                    c++;
+                    document.getElementById("arr").innerHTML += '<br>';
                 }
-                document.getElementById("arr").innerHTML += '<br>';
+                
             }
+            
         }
 
+        document.getElementById("arr").innerHTML += '<br>';
+        document.getElementById("arr").innerHTML += 'Anzahl: '+c;
 
         function generieren(){
-
+            var z = Math.round(6 + Math.random()*3)
+            //alert(z);
+            document.getElementById("zufza").innerHTML = z;
         }
+
     </script>
 </html>
