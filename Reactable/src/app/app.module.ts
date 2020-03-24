@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { CubeComponent } from './cube/cube.component';
+
 
 import { MyMaterialModules } from './myMaterialModules/myMaterialModules.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,7 +17,8 @@ import { MenueComponent } from './menue/menue.component';
   declarations: [
     AppComponent,
     ProfilComponent,
-    MenueComponent
+    MenueComponent,
+    CubeComponent
   ],
   imports: [
     BrowserModule,
