@@ -35,8 +35,8 @@ export class Playground {
 
     var box = [];
     for (let i = 0; i < 27; i++) {
-      box[i] = BABYLON.Mesh.CreateBox("Box" + i, 10.0, scene);
-      if (i == 2) {
+      box[i] = BABYLON.Mesh.CreateBox('Box' + i, 10.0, scene);
+      if (i === 2) {
         box[i - 2].position.x -= 10;
         box[i - 1].position.z = 10;
         var wuerfel = BABYLON.Mesh.MergeMeshes([
