@@ -1,36 +1,137 @@
 <!DOCTYPE html>
 <html>
-    <button onclick="generieren()">Wuerfel generieren</button>
-    <div id="arr"></div><br>
-    <div id="zufza"></div>
-    <script>
-        var w = new Array();
-        var c = 0;
-        for(var i = 1; i <= 3; i++){
-            w[i] = new Array();
-            //document.getElementById("arr").innerHTML += 'i: '+i+', ';
-            for(var j = 1; j <= 3; j++){
-                //document.getElementById("arr").innerHTML += 'j: '+j+', ';
-                w[i][j] = new Array();
-                for(var k = 1; k <= 3; k++){
-                    w[i][j][k] = i+''+j+''+k;
-                    document.getElementById("arr").innerHTML += 'x: '+k+', '+'y: '+j+', '+'z: '+i+', ';
-                    c++;
-                    document.getElementById("arr").innerHTML += '<br>';
+    <head>
+        <style>
+            td {
+                border-style: inset;
+            }
+        </style>
+    </head>
+    <body>
+        <button onclick="generieren()">Wuerfel generieren</button>
+        <div id="arr"></div><br>
+        <div id="zufza"></div><br>
+        <div id="tables"></div>
+        <!--y = 1
+        <table>
+            <tr>
+                <td id="">0</td>
+                <td id="">0</td>
+                <td id="">0</td>
+            </tr>
+            <tr>
+                <td id="">0</td>
+                <td id="">0</td>
+                <td id="">0</td>
+            </tr>
+            <tr>
+                <td id="">0</td>
+                <td id="">0</td>
+                <td id="">0</td>
+            </tr>
+        </table>
+        y = 2
+        <table>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+        </table>
+        y = 3
+        <table>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+        </table>-->
+        <div id="anz"></div>
+        <script>
+            var w = new Array();
+            var c = 0;
+            for(var i = 1; i <= 3; i++){
+                w[i] = new Array();
+                //document.getElementById("arr").innerHTML += 'i: '+i+', ';
+                for(var j = 1; j <= 3; j++){
+                    //document.getElementById("arr").innerHTML += 'j: '+j+', ';
+                    w[i][j] = new Array();
+                    for(var k = 1; k <= 3; k++){
+                        w[i][j][k] = i+''+j+''+k;
+                        
+                        document.getElementById("arr").innerHTML += 'x: '+k+', '+'y: '+j+', '+'z: '+i+', ';
+                        c++;
+                        document.getElementById("arr").innerHTML += '<br>';
+                    }
+                    
                 }
                 
             }
-            
-        }
 
-        document.getElementById("arr").innerHTML += '<br>';
-        document.getElementById("arr").innerHTML += 'Anzahl: '+c;
+            for(var i = 1; i <= 3; i++){
+                document.getElementById("tables").innerHTML += i+'.Tabelle <table id="'+i+'"></table>';
+                for(var j = 1; j <= 3; j++){
+                    document.getElementById(i).innerHTML += '<tr id="'+i+''+j+'"></tr>';
+                    for(var k = 1; k <= 3; k++){
+                        document.getElementById(i+''+j).innerHTML += '<td id="'+i+''+j+''+k+'">0</td>';
+                    }
+                }
+            }
+    
+            document.getElementById("arr").innerHTML += '<br>';
+            document.getElementById("arr").innerHTML += 'Anzahl: '+c;
+    
+            function generieren(){
+                document.getElementById("anz").innerHTML = '';
+                var z = Math.round(6 + Math.random()*3)
+                var anz = new Array();
+                
+                document.getElementById("zufza").innerHTML = z;
 
-        function generieren(){
-            var z = Math.round(6 + Math.random()*3)
-            //alert(z);
-            document.getElementById("zufza").innerHTML = z;
-        }
-
-    </script>
+                for(var s = 1; s<=z; s++){
+                    anz[s] = 0;
+                    for(var i = 1; i <= 3; i++){
+                        for(var j = 1; j <= 3; j++){
+                            for(var k = 1; k <= 3; k++){
+                                if(Math.random()*(z+1) >= s ){
+                                    anz[document.getElementById(i+''+j+''+k).innerHTML]--;
+                                    document.getElementById(i+''+j+''+k).innerHTML = s;
+                                    anz[s]++;
+                                }
+                            }
+                        }
+                    }
+                }
+                for(var s = 1; s<=z; s++){
+                    document.getElementById("anz").innerHTML += s+': '+anz[s]+'<br>';
+                }
+                var dummy = anz;
+                dummy.sort();
+                for(var s = 1; s<=z; s++){
+                    document.getElementById("anz").innerHTML += s+': '+dummy[s]+'<br>';
+                }
+            }
+    
+        </script>
+    </body>
 </html>
