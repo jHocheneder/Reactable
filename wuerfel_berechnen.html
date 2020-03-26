@@ -127,8 +127,9 @@
                 }
                 var dummy = anz;
                 dummy.sort();
+                document.getElementById("anz").innerHTML += '<br>';
                 for(var s = 1; s<=z; s++){
-                    document.getElementById("anz").innerHTML += s+': '+dummy[s]+'<br>';
+                    document.getElementById("anz").innerHTML += s+': '+dummy[s-1]+'<br>';
                 }
             }
     
