@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfilComponent } from './profil/profil.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenueComponent } from './menue/menue.component';
+import { CubeComponent } from './cube/cube.component';
 
 @NgModule({
   declarations: [
