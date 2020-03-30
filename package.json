@@ -15,5 +15,6 @@
   "bugs": {
     "url": "https://github.com/jHocheneder/Reactable/issues"
   },
-  "homepage": "https://github.com/jHocheneder/Reactable#readme"
+  "homepage": "https://github.com/jHocheneder/Reactable#readme",
+  "dependencies": {}
 }
