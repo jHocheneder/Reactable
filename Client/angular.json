@@ -144,5 +144,8 @@
       "styleext": "scss"
     },
     "@schematics/angular:directive": {}
+  },
+  "cli": {
+    "analytics": false
   }
 }
