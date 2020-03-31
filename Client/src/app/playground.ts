@@ -1,7 +1,6 @@
 import * as BABYLON from '@babylonjs/core/Legacy/legacy';
 import * as BABYLONMat from '@babylonjs/materials';
 //import * as BABYLONMat from 'babylonjs-materials';
-
 export class Playground {
 
   // private static scene : BABYLON.Scene;

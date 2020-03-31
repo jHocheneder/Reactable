@@ -4,7 +4,7 @@ import { Playground } from '../../playground';
 @Component({
   selector: 'ngx-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.scss']
 
 })
 export class DashboardComponent {
