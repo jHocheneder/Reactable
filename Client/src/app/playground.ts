@@ -2,6 +2,7 @@ import * as BABYLON from '@babylonjs/core/Legacy/legacy';
 import * as BABYLONMat from '@babylonjs/materials';
 //import * as BABYLONMat from 'babylonjs-materials';
 export class Playground {
+  
 
   // private static scene : BABYLON.Scene;
   private static engine: BABYLON.Engine;
@@ -240,6 +241,7 @@ export class Playground {
         selected.material.alpha = 0.8;
 
         scene.registerBeforeRender(() => {
+          
           if (selected) {
             if (isWPressed) {
               selected.position.z += 10;
