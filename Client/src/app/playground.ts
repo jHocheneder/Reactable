@@ -32,7 +32,7 @@ export class Playground {
     );
     camera.attachControl(this.canvas, true);
 
-    scene.clearColor = new BABYLON.Color4(0.1, 0.1, 0.1);
+    scene.clearColor = new BABYLON.Color4(0.0, 0.0, 0.0);
 
     var box = [];
     for (let i = 0; i < 27; i++) {
