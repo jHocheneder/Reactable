@@ -19,16 +19,19 @@ import {
   NbSidebarModule,
   NbToastrModule,
   NbWindowModule,
+  NbCardModule,
 } from '@nebular/theme';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     HttpClientJsonpModule,
     AppRoutingModule,
+    NbCardModule,
 
     ThemeModule.forRoot(),
 
