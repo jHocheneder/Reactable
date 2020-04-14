@@ -1,32 +1,108 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Reactable</title>
-  <base href="/Reactable/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Chakra+Petch&display=swap" rel="stylesheet">
+<html>
 
-  <script src="https://code.jquery.com/pep/0.4.2/pep.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
-  <script src="https://preview.babylonjs.com/ammo.js"></script>
-  <script src="https://preview.babylonjs.com/cannon.js"></script>
-  <script src="https://preview.babylonjs.com/Oimo.js"></script>
-  <script src="https://preview.babylonjs.com/gltf_validator.js"></script>
-  <script src="https://preview.babylonjs.com/earcut.min.js"></script>
-  <script src="https://preview.babylonjs.com/babylon.js"></script>
-  <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
-  <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
-  <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
-  <script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
-  <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
-  <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
-  <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="styles.12df88773b83a47ea39e.css"></head>
+<head>
+    <meta charset="utf-8">
+    <title>Reactable</title>
+
+    <base href="Reactable">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="favicon.png" sizes="128x128">
+    <!--link rel="icon" type="image/x-icon" href="favicon.ico"-->
+<link rel="stylesheet" href="styles.2a61bc479631d50a7667.css"></head>
+
 <body>
-  <app-root></app-root>
-<script src="runtime-es2015.edb2fcf2778e7bf1d426.js" type="module"></script><script src="runtime-es5.edb2fcf2778e7bf1d426.js" nomodule defer></script><script src="polyfills-es5.ef4b1e1fc703b3ff76e3.js" nomodule defer></script><script src="polyfills-es2015.2987770fde9daa1d8a2e.js" type="module"></script><script src="main-es2015.8446e2abaf488b2c87c7.js" type="module"></script><script src="main-es5.8446e2abaf488b2c87c7.js" nomodule defer></script></body>
+    <ngx-app>Loading...</ngx-app>
+
+    <style>
+        @-webkit-keyframes spin {
+            0% {
+                transform: rotate(0)
+            }
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+        
+        @-moz-keyframes spin {
+            0% {
+                -moz-transform: rotate(0)
+            }
+            100% {
+                -moz-transform: rotate(360deg)
+            }
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0)
+            }
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+        
+        .spinner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1003;
+            background: #000000;
+            overflow: hidden
+        }
+        
+        .spinner div:first-child {
+            display: block;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            width: 150px;
+            height: 150px;
+            margin: -75px 0 0 -75px;
+            border-radius: 50%;
+            box-shadow: 0 3px 3px 0 rgba(227, 58, 84, 1);
+            transform: translate3d(0, 0, 0);
+            animation: spin 2s linear infinite
+        }
+        
+        .spinner div:first-child:after,
+        .spinner div:first-child:before {
+            content: '';
+            position: absolute;
+            border-radius: 50%
+        }
+        
+        .spinner div:first-child:before {
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            box-shadow: 0 3px 3px 0 rgb(138, 48, 79);
+            -webkit-animation: spin 3s linear infinite;
+            animation: spin 3s linear infinite
+        }
+        
+        .spinner div:first-child:after {
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            box-shadow: 0 3px 3px 0 rgba(80, 36, 70, 1);
+            animation: spin 1.5s linear infinite
+        }
+    </style>
+    <div id="nb-global-spinner" class="spinner">
+        <div class="blob blob-0"></div>
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+    </div>
+    <!--Test Commit + Push-->
+<script src="runtime-es2015.9e8511cd8b0d64d597fd.js" type="module"></script><script src="polyfills-es2015.1d1a96066548b4695cee.js" type="module"></script><script src="runtime-es5.6c22e9775477e1c75195.js" nomodule></script><script src="polyfills-es5.b73438624454fbdc714f.js" nomodule></script><script src="scripts.d0e48bb6bd68da60f5db.js"></script><script src="main-es2015.f0dcd438db34c1225875.js" type="module"></script><script src="main-es5.a086ffb312eb27a85ecb.js" nomodule></script></body>
+
 </html>
