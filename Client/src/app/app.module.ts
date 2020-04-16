@@ -21,12 +21,14 @@ import {
   NbWindowModule,
   NbCardModule,
   NbInputModule,
-  NbButtonModule
+  NbButtonModule,
+  NbCheckboxModule
 } from '@nebular/theme';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -36,6 +38,7 @@ import { LoginComponent } from './login/login.component';
     NbCardModule,
     NbInputModule,
     NbButtonModule,
+    NbCheckboxModule,
 
     ThemeModule.forRoot(),
 
