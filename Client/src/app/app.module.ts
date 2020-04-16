@@ -20,6 +20,8 @@ import {
   NbToastrModule,
   NbWindowModule,
   NbCardModule,
+  NbInputModule,
+  NbButtonModule
 } from '@nebular/theme';
 import { LoginComponent } from './login/login.component';
 
@@ -32,6 +34,8 @@ import { LoginComponent } from './login/login.component';
     HttpClientJsonpModule,
     AppRoutingModule,
     NbCardModule,
+    NbInputModule,
+    NbButtonModule,
 
     ThemeModule.forRoot(),
 
