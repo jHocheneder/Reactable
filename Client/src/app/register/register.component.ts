@@ -27,14 +27,14 @@ export class RegisterComponent implements OnInit {
   }
 
   checkUsername(){
-
+    return true;
   }
 
   checkEmail(){
-
+    return true;
   }
   checkPassword(){
-
+    return true;
 
   }
 

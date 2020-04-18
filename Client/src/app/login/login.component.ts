@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   login(){
     if(this.username.length >= 3 && this.password.length >=8){
-      this.http.login();
+      //this.http.login();
     }
     else{
       if(this.username.length<3){
