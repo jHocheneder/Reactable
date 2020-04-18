@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    if(this.username.length >= 3 && this.password.length >=6){
+    if(this.username.length >= 3 && this.password.length >=8){
       this.http.login();
     }
     else{
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
         this.warning = "Der Username muss mindestend 3 Zeichen lang sein.";
       }
       if(this.password.length<6){
-        this.warning = "Das Passwort muss mindestens 6 Zeichen lang sein."
+        this.warning = "Das Passwort muss mindestens 8 Zeichen lang sein."
       }
       else{
         this.warning = "Fehler, bitte versuchen Sie es erneut."
