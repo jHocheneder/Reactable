@@ -2,6 +2,7 @@ import * as BABYLON from '@babylonjs/core/Legacy/legacy';
 import * as BABYLONMat from '@babylonjs/materials';
 import { Wuerfel } from './wuerfel';
 import { Teil } from './teil';
+import { LiteralMapEntry } from '@angular/compiler/src/output/output_ast';
 
 export class Playground {
 
@@ -103,7 +104,7 @@ export class Playground {
       wuerfelDT[i].box = box[i]
       if (i === 2) {
         teilDT[tId] = new Teil(tId)
-        wuerfelDT[i - 2].teilId = wuerfelDT[i - 1].teilId = wuerfelDT[i].teilId = tId
+        wuerfelDT[i - 2].teil = wuerfelDT[i - 1].teil = wuerfelDT[i].teil = teilDT[tId]
         box[i - 2].position.x = wuerfelDT[i - 2].x_pos = -10
         box[i - 1].position.z = wuerfelDT[i - 1].z_pos = 10
         teilDT[tId].wuerfel = [wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
@@ -119,41 +120,47 @@ export class Playground {
           scene
         )
 
-        materialBox.diffuseColor = teilDT[tId].farbe
+        materialBox.diffuseColor = teilDT[tId].farbe = new BABYLON.Color3(0,10,0)
 
-        box[i].material = materialBox;
-        box[i].position.x = 40;
+
+        box[i].material = box[i-1].material = box[i-2].material = materialBox;
+        box[i].position.x += 40;
         box[i].position.y -= 40;
-        box[i-1].material = materialBox;
-        box[i-1].position.x = 40;
+        box[i-1].position.x += 40;
         box[i-1].position.y -= 40;
-        box[i-2].material = materialBox;
-        box[i-2].position.x = 40;
+        box[i-2].position.x += 40;
         box[i-2].position.y -= 40;
         tId += 1
       }
 
       if (i === 6) {
         teilDT[tId] = new Teil(tId)
-        wuerfelDT[i - 3].teilId = wuerfelDT[i - 2].teilId = wuerfelDT[i - 1].teilId = wuerfelDT[i].teilId = tId
+        wuerfelDT[i - 3].teil = wuerfelDT[i - 2].teil = wuerfelDT[i - 1].teil = wuerfelDT[i].teil = teilDT[tId]
         wuerfelDT[i - 1].x_pos = box[i - 1].position.x = -10
         wuerfelDT[i - 2].z_pos = wuerfelDT[i - 3].z_pos = box[i - 2].position.z = box[i - 3].position.z = box[i - 3].position.x = 10
         teilDT[tId].wuerfel = [wuerfelDT[i - 3], wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
 
-        const wuerfel = BABYLON.Mesh.MergeMeshes([
+     /*   const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
           box[i - 2],
           box[i - 3]
-        ]);
+        ]);*/
         const materialBox = new BABYLON.StandardMaterial(
           'texture' + i,
           scene
         );
-        materialBox.diffuseColor = teilDT[tId].farbe
-        wuerfel.material = materialBox;
-        wuerfel.position.x -= 40;
-        wuerfel.position.y -= 40;
+        materialBox.diffuseColor = teilDT[tId].farbe = new BABYLON.Color3(0,0,5)
+
+        box[i].material = box[i-1].material = box[i-2].material = box[i-3].material = materialBox;
+        box[i].position.x -= 40;
+        box[i].position.y -= 40;
+        box[i-1].position.x -= 40;
+        box[i-1].position.y -= 40;
+        box[i-2].position.x -= 40;
+        box[i-2].position.y -= 40;
+        box[i-3].position.x -= 40;
+        box[i-3].position.y -= 40;
         tId += 1
       }
 
@@ -162,20 +169,24 @@ export class Playground {
         wuerfelDT[i - 3].y_pos = box[i - 3].position.y = wuerfelDT[i - 1].z_pos = box[i - 1].position.z = 10
         wuerfelDT[i - 2].x_pos = box[i - 2].position.x = -10
         teilDT[tId].wuerfel = [wuerfelDT[i - 3], wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
+        wuerfelDT[i - 3].teil = wuerfelDT[i - 2].teil = wuerfelDT[i - 1].teil = wuerfelDT[i].teil = teilDT[tId]
 
-        const wuerfel = BABYLON.Mesh.MergeMeshes([
+   /*     const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
           box[i - 2],
           box[i - 3]
-        ]);
+        ]);*/
         const materialBox = new BABYLON.StandardMaterial(
           'texture' + i,
           scene
         );
-        materialBox.diffuseColor = teilDT[tId].farbe
-        wuerfel.material = materialBox;
-        wuerfel.position.x = 50;
+        materialBox.diffuseColor = teilDT[tId].farbe = new BABYLON.Color3(10,0,0)
+        box[i].material = box[i-1].material = box[i-2].material = box[i-3].material = materialBox;
+        box[i].position.x = 50;
+        box[i-1].position.x = 50;
+        box[i-2].position.x = 50;
+        box[i-3].position.x = 50;
         tId += 1
       }
 
@@ -185,6 +196,7 @@ export class Playground {
         wuerfelDT[i - 2].x_pos = wuerfelDT[i - 3].x_pos = box[i - 2].position.x = box[i - 3].position.x = -10
         wuerfelDT[i - 1].z_pos = wuerfelDT[i - 3].y_pos = box[i - 1].position.z = box[i - 3].position.y = 10
         teilDT[tId].wuerfel = [wuerfelDT[i - 3], wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
+        wuerfelDT[i - 3].teil = wuerfelDT[i - 2].teil = wuerfelDT[i - 1].teil = wuerfelDT[i].teil = teilDT[tId]
 
 
         const wuerfel = BABYLON.Mesh.MergeMeshes([
@@ -208,6 +220,7 @@ export class Playground {
         wuerfelDT[i - 2].x_pos = box[i - 2].position.x = -10;
         wuerfelDT[i - 3].z_pos = box[i - 3].position.z = wuerfelDT[i - 3].x_pos = box[i - 3].position.x = wuerfelDT[i - 1].x_pos = box[i - 1].position.x = 10;
         teilDT[tId].wuerfel = [wuerfelDT[i - 3], wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
+        wuerfelDT[i - 3].teil = wuerfelDT[i - 2].teil = wuerfelDT[i - 1].teil = wuerfelDT[i].teil = teilDT[tId]
 
         const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
@@ -229,6 +242,7 @@ export class Playground {
         teilDT[tId] = new Teil(tId)
         wuerfelDT[i - 1].y_pos = box[i - 1].position.y = wuerfelDT[i - 2].z_pos = box[i - 2].position.z = wuerfelDT[i - 3].z_pos = box[i - 3].position.z = wuerfelDT[i - 3].x_pos = box[i - 3].position.x = 10;
         teilDT[tId].wuerfel = [wuerfelDT[i - 3], wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
+        wuerfelDT[i - 3].teil = wuerfelDT[i - 2].teil = wuerfelDT[i - 1].teil = wuerfelDT[i].teil = teilDT[tId]
 
         const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
@@ -248,6 +262,8 @@ export class Playground {
 
       if (i === 26) {
         teilDT[tId] = new Teil(tId)
+        wuerfelDT[i - 3].teil = wuerfelDT[i - 2].teil = wuerfelDT[i - 1].teil = wuerfelDT[i].teil = teilDT[tId]
+
         wuerfelDT[i - 2].x_pos = box[i - 2].position.x = -10
         wuerfelDT[i - 1].x_pos = box[i - 1].position.x = wuerfelDT[i - 3].z_pos = box[i - 3].position.z = 10
         teilDT[tId].wuerfel = [wuerfelDT[i - 3], wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
@@ -288,10 +304,25 @@ export class Playground {
 
     // bewegen
     let selected = null;
+    let teil :Teil = null
     const safe = null;
+    const materialBoxSelected = new BABYLON.StandardMaterial(
+      'textureSelected',
+      scene
+    );
+      materialBoxSelected.diffuseColor = new BABYLON.Color3(0,0,0)
     scene.onPointerObservable.add(function (evt) {
+     // if()
+     
       if (selected) {
-        selected.material.alpha = 1;
+        //deselect
+        if(teil) {
+          teil.wuerfel.forEach(w => {
+            alert(w.teil.farbe)
+            materialBoxSelected.diffuseColor = w.teil.farbe
+            w.box.material = materialBoxSelected
+           })
+         }
         selected = null;
       }
       if (
@@ -300,14 +331,32 @@ export class Playground {
         evt.event.button === 0
       ) {
         selected = evt.pickInfo.pickedMesh;
-
+        teilDT.forEach(t => {
+          t.wuerfel.forEach(w => {
+            if(selected === w.box) {
+              alert(t.id)
+              teil = t
+              return
+            }
+          })
+        });
+        
+        if(teil) {
+         teil.wuerfel.forEach(w => {
+           w.box.material  = materialBoxSelected
+          })
+        }
+        
         console.log('picked Info', evt.pickInfo.pickedMesh.name);
-        selected.material.alpha = 0.8;
+     //   selected.material.alpha = 0.8;
 
         scene.registerBeforeRender(() => {
           if (selected) {
             if (isWPressed) {
-              selected.position.z += 10;
+              teil.wuerfel.forEach(w=>{
+                w.box.position.z +=10
+              })
+        //      selected.position.z += 10;
               isWPressed = false;
             }
 
