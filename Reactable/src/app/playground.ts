@@ -1,5 +1,7 @@
 import * as BABYLON from '@babylonjs/core/Legacy/legacy';
 import * as BABYLONMat from '@babylonjs/materials';
+import { Wuerfel } from './wuerfel';
+import { Teil } from './teil';
 
 export class Playground {
 
@@ -7,7 +9,65 @@ export class Playground {
   private static engine: BABYLON.Engine;
   private static canvas: HTMLCanvasElement;
 
-  public static CreateScene(/*engine: BABYLON.Engine, canvas: HTMLCanvasElement*/)/*: BABYLON.Scene*/ {
+  public static CreateScene() {
+    let wuerfelDT: Array<Wuerfel>
+    wuerfelDT = []
+    let teilDT: Array<Teil>
+    teilDT = []
+    document.getElementById("fertigButton").addEventListener("click", pruefen)
+    //pruefen ob fertig 
+    function pruefen() {
+      let cube =
+        [
+          [[false, false, false], [false, false, false], [false, false, false]],
+          [[false, false, false], [false, false, false], [false, false, false]],
+          [[false, false, false], [false, false, false], [false, false, false]]
+        ]
+
+      /*
+      x:
+      -10  0  10
+
+      y:
+      -10  
+        0  
+       10 
+
+       z:
+       10
+       0
+       -10
+
+      */
+
+      /*
+      0 -10    0*10-10     -10=x*10-10
+      1   0    1*10-10       0=x*10
+      2  10    2*10-10       0=x
+      
+      */
+
+
+      teilDT.forEach(t => {
+        t.wuerfel.forEach(w => {
+          if (w.box.position.x <= 10 && w.box.position.x >= -10
+            && w.box.position.y <= 10 && w.box.position.y >= -10
+            && w.box.position.z <= 10 && w.box.position.z >= -10) {
+              alert(w.id)
+            cube[(w.box.position.x + 10) / 10][(w.box.position.y + 10) / 10][(w.box.position.z + 10) / 10] = true
+          }
+         // alert(w.box.position.x)
+        })
+      });
+      for (let x = 0; x < 3; x++) {
+        for (let y = 0; y < 3; y++) {
+          for (let z = 0; z < 3; z++) {
+            alert(x + " | " + y + " | " + z + ": " + cube[x][y][z])
+          }
+        }
+      }
+    }
+
 
     this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement;
     this.engine = new BABYLON.Engine(this.canvas, true, { preserveDrawingBuffer: true, stencil: true });
@@ -32,38 +92,54 @@ export class Playground {
     camera.attachControl(this.canvas, true);
 
     scene.clearColor = new BABYLON.Color4(0.1, 0.1, 0.1);
+    //modell erstellen alt
 
-    const box = [];
+    //let box: Array<BABYLON.Mesh>
+    const box = []
+    let tId = 0
     for (let i = 0; i < 27; i++) {
-      box[i] = BABYLON.Mesh.CreateBox('Box' + i, 10.0, scene);
+      box[i] = BABYLON.Mesh.CreateBox('Box' + i, 10.0, scene)
+      wuerfelDT[i] = new Wuerfel(i)
+      wuerfelDT[i].box = box[i]
       if (i === 2) {
-        box[i - 2].position.x -= 10;
-        box[i - 1].position.z = 10;
-        const wuerfel = BABYLON.Mesh.MergeMeshes([
+        teilDT[tId] = new Teil(tId)
+        wuerfelDT[i - 2].teilId = wuerfelDT[i - 1].teilId = wuerfelDT[i].teilId = tId
+        box[i - 2].position.x = wuerfelDT[i - 2].x_pos = -10
+        box[i - 1].position.z = wuerfelDT[i - 1].z_pos = 10
+        teilDT[tId].wuerfel = [wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
+     //   box[i].position.x = 50
+
+    /*    const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
           box[i - 2]
-        ]);
+        ])*/
         const materialBox = new BABYLON.StandardMaterial(
           'texture' + i,
           scene
-        );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
-        wuerfel.material = materialBox;
-        wuerfel.position.x = 40;
-        wuerfel.position.y -= 40;
+        )
+
+        materialBox.diffuseColor = teilDT[tId].farbe
+
+        box[i].material = materialBox;
+        box[i].position.x = 40;
+        box[i].position.y -= 40;
+        box[i-1].material = materialBox;
+        box[i-1].position.x = 40;
+        box[i-1].position.y -= 40;
+        box[i-2].material = materialBox;
+        box[i-2].position.x = 40;
+        box[i-2].position.y -= 40;
+        tId += 1
       }
 
       if (i === 6) {
-        box[i - 1].position.x = -10;
-        box[i - 2].position.z -= -10;
-        box[i - 3].position.z = 10;
-        box[i - 3].position.x -= -10;
-        box[i - 3].position.x = 10;
+        teilDT[tId] = new Teil(tId)
+        wuerfelDT[i - 3].teilId = wuerfelDT[i - 2].teilId = wuerfelDT[i - 1].teilId = wuerfelDT[i].teilId = tId
+        wuerfelDT[i - 1].x_pos = box[i - 1].position.x = -10
+        wuerfelDT[i - 2].z_pos = wuerfelDT[i - 3].z_pos = box[i - 2].position.z = box[i - 3].position.z = box[i - 3].position.x = 10
+        teilDT[tId].wuerfel = [wuerfelDT[i - 3], wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
+
         const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
@@ -74,20 +150,19 @@ export class Playground {
           'texture' + i,
           scene
         );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
+        materialBox.diffuseColor = teilDT[tId].farbe
         wuerfel.material = materialBox;
         wuerfel.position.x -= 40;
         wuerfel.position.y -= 40;
+        tId += 1
       }
 
       if (i === 10) {
-        box[i - 2].position.x -= 10;
-        box[i - 1].position.z = 10;
-        box[i - 3].position.y = 10;
+        teilDT[tId] = new Teil(tId)
+        wuerfelDT[i - 3].y_pos = box[i - 3].position.y = wuerfelDT[i - 1].z_pos = box[i - 1].position.z = 10
+        wuerfelDT[i - 2].x_pos = box[i - 2].position.x = -10
+        teilDT[tId].wuerfel = [wuerfelDT[i - 3], wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
+
         const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
@@ -98,20 +173,20 @@ export class Playground {
           'texture' + i,
           scene
         );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
+        materialBox.diffuseColor = teilDT[tId].farbe
         wuerfel.material = materialBox;
         wuerfel.position.x = 50;
+        tId += 1
       }
 
       if (i === 14) {
-        box[i - 2].position.x -= 10;
-        box[i - 1].position.z = 10;
-        box[i - 3].position.y = 10;
-        box[i - 3].position.x -= 10;
+        teilDT[tId] = new Teil(tId)
+
+        wuerfelDT[i - 2].x_pos = wuerfelDT[i - 3].x_pos = box[i - 2].position.x = box[i - 3].position.x = -10
+        wuerfelDT[i - 1].z_pos = wuerfelDT[i - 3].y_pos = box[i - 1].position.z = box[i - 3].position.y = 10
+        teilDT[tId].wuerfel = [wuerfelDT[i - 3], wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
+
+
         const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
@@ -122,20 +197,18 @@ export class Playground {
           'texture' + i,
           scene
         );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
+        materialBox.diffuseColor = teilDT[tId].farbe
         wuerfel.material = materialBox;
         wuerfel.position.x -= 50;
+        tId += 1
       }
 
       if (i === 18) {
-        box[i - 2].position.x -= 10;
-        box[i - 1].position.x = 10;
-        box[i - 3].position.x = 10;
-        box[i - 3].position.z = 10;
+        teilDT[tId] = new Teil(tId)
+        wuerfelDT[i - 2].x_pos = box[i - 2].position.x = -10;
+        wuerfelDT[i - 3].z_pos = box[i - 3].position.z = wuerfelDT[i - 3].x_pos = box[i - 3].position.x = wuerfelDT[i - 1].x_pos = box[i - 1].position.x = 10;
+        teilDT[tId].wuerfel = [wuerfelDT[i - 3], wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
+
         const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
@@ -146,20 +219,17 @@ export class Playground {
           'texture' + i,
           scene
         );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
+        materialBox.diffuseColor = teilDT[tId].farbe
         wuerfel.material = materialBox;
         wuerfel.position.z = 40;
+        tId += 1
       }
 
       if (i === 22) {
-        box[i - 1].position.y = 10;
-        box[i - 2].position.z = 10;
-        box[i - 3].position.z = 10;
-        box[i - 3].position.x = 10;
+        teilDT[tId] = new Teil(tId)
+        wuerfelDT[i - 1].y_pos = box[i - 1].position.y = wuerfelDT[i - 2].z_pos = box[i - 2].position.z = wuerfelDT[i - 3].z_pos = box[i - 3].position.z = wuerfelDT[i - 3].x_pos = box[i - 3].position.x = 10;
+        teilDT[tId].wuerfel = [wuerfelDT[i - 3], wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
+
         const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
@@ -170,19 +240,17 @@ export class Playground {
           'texture' + i,
           scene
         );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
+        materialBox.diffuseColor = teilDT[tId].farbe
         wuerfel.material = materialBox;
         wuerfel.position.z -= 40;
+        tId += 1
       }
 
       if (i === 26) {
-        box[i - 2].position.x -= 10;
-        box[i - 1].position.x = 10;
-        box[i - 3].position.z = 10;
+        teilDT[tId] = new Teil(tId)
+        wuerfelDT[i - 2].x_pos = box[i - 2].position.x = -10
+        wuerfelDT[i - 1].x_pos = box[i - 1].position.x = wuerfelDT[i - 3].z_pos = box[i - 3].position.z = 10
+        teilDT[tId].wuerfel = [wuerfelDT[i - 3], wuerfelDT[i - 2], wuerfelDT[i - 1], wuerfelDT[i]]
         const wuerfel = BABYLON.Mesh.MergeMeshes([
           box[i],
           box[i - 1],
@@ -193,14 +261,11 @@ export class Playground {
           'texture' + i,
           scene
         );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
+        materialBox.diffuseColor = teilDT[tId].farbe
         wuerfel.material = materialBox;
         wuerfel.position.z -= 30;
         wuerfel.position.y -= 40;
+        tId += 1
       }
     }
 
@@ -224,7 +289,7 @@ export class Playground {
     // bewegen
     let selected = null;
     const safe = null;
-    scene.onPointerObservable.add(function(evt) {
+    scene.onPointerObservable.add(function (evt) {
       if (selected) {
         selected.material.alpha = 1;
         selected = null;
@@ -430,14 +495,14 @@ export class Playground {
 
 
   private static build(engine, scene) {
-    engine.runRenderLoop(function() {
+    engine.runRenderLoop(function () {
       if (scene) {
         scene.render();
       }
     });
 
     // Resize
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
       engine.resize();
     });
   }
