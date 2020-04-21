@@ -151,7 +151,7 @@ export class Playground {
         box[i - 1].position.x = 10
         box[i - 3].position.x = 10
         box[i - 3].position.z = 10
-        
+
         //Material hinzufügen
         box[i].material = box[i - 1].material = box[i - 2].material = box[i - 3].material = teilDT[teilID].material
 
@@ -177,7 +177,7 @@ export class Playground {
         box[i - 2].position.z = 10
         box[i - 3].position.z = 10
         box[i - 3].position.x = 10
-        
+
         //Material hinzufügen
         box[i].material = box[i - 1].material = box[i - 2].material = box[i - 3].material = teilDT[teilID].material
 
@@ -225,71 +225,108 @@ export class Playground {
     }
 
     // show axis
-    var size = 25;
-    var axis = this.showAxis(size, scene);
-
-
+    let axisSize = 25
+    let axis = this.showAxis(axisSize, scene)
 
     //grid
-    var gridBox = BABYLON.Mesh.CreateBox("boxGrid", 30, scene, false);
-    gridBox.isPickable = false;
-    var gridmat = new BABYLONMat.GridMaterial("grid", scene);
-    gridmat.mainColor = new BABYLON.Color3(0, 1, 1);
-    gridmat.opacity = 0.5;
-    gridmat.gridRatio = 10;
-    gridmat.gridOffset = new BABYLON.Vector3(5, 5, 5);
-
-    gridBox.material = gridmat;
+    let gridBox = BABYLON.Mesh.CreateBox("boxGrid", 30, scene, false)
+    gridBox.isPickable = false
+    let gridmat = new BABYLONMat.GridMaterial("grid", scene)
+    gridmat.mainColor = new BABYLON.Color3(0, 1, 1)
+    gridmat.opacity = 0.5
+    gridmat.gridRatio = 10
+    gridmat.gridOffset = new BABYLON.Vector3(5, 5, 5)
+    gridBox.material = gridmat
 
     //bewegen
-    var selected = null;
-    var safe = null;
+    let selected = null
+    let selTeil: Teil = null
+    const selMat = new BABYLON.StandardMaterial('selectedMat', scene)
+    selMat.diffuseColor = new BABYLON.Color3(1, 1, 1) //white
+
+    //Mesh wählen
     scene.onPointerObservable.add(function (evt) {
-      if (selected) {
-        selected.material.alpha = 1;
-        selected = null;
+      if (selected) { //deselect
+        selected = null
       }
+      if (selTeil) { //deselect
+        selTeil.wuerfel.forEach(w => {
+          w.material = selTeil.material
+        })
+      }
+
       if (
         evt.pickInfo.hit &&
         evt.pickInfo.pickedMesh &&
         evt.event.button === 0
-      ) {
-        selected = evt.pickInfo.pickedMesh;
+      ) { //selected
 
-        console.log("picked Info", evt.pickInfo.pickedMesh.name);
-        selected.material.alpha = 0.8;
+        //mesh zuweisen
+        selected = evt.pickInfo.pickedMesh
+
+        //Teil finden
+        teilDT.forEach(t => {
+          t.wuerfel.forEach(w => {
+            //gleicher würfel?
+            if (selected === w) {
+              selTeil = t
+              return
+            }
+          })
+        })
+
+        //neues Material
+        if (selTeil) {
+          selTeil.wuerfel.forEach(w => {
+            w.material = selMat
+          })
+        }
+
+        console.log("picked Info", evt.pickInfo.pickedMesh.name)
 
         scene.registerBeforeRender(() => {
 
           if (selected) {
             if (isWPressed) {
-              selected.position.z += 10;
-              isWPressed = false;
+              selTeil.wuerfel.forEach(w => {
+                w.position.z += 10
+              })
+              isWPressed = false
             }
 
             if (isSPressed) {
-              selected.position.z -= 10;
-              isSPressed = false;
+              selTeil.wuerfel.forEach(w => {
+                w.position.z -= 10
+              })
+              isSPressed = false
             }
 
             if (isAPressed) {
-              selected.position.x -= 10;
-              isAPressed = false;
+              selTeil.wuerfel.forEach(w => {
+                w.position.x -= 10
+              })
+              isAPressed = false
             }
 
             if (isDPressed) {
-              selected.position.x += 10;
-              isDPressed = false;
+              selTeil.wuerfel.forEach(w => {
+                w.position.x += 10
+              })
+              isDPressed = false
             }
 
             if (isRPressed) {
-              selected.position.y += 10;
-              isRPressed = false;
+              selTeil.wuerfel.forEach(w => {
+                w.position.y += 10
+              })
+              isRPressed = false
             }
 
             if (isFPressed) {
-              selected.position.y -= 10;
-              isFPressed = false;
+              selTeil.wuerfel.forEach(w => {
+                w.position.y -= 10
+              })              
+              isFPressed = false
             }
 
             if (isXPressed) {
