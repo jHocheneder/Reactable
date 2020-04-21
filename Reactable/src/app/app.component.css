@@ -51,6 +51,14 @@
     right:2px;
 }
 
+#buttonDiv {
+    width: fit-content;
+    z-index: 50;
+    position: absolute;
+    bottom:2px;
+    right:50%;
+}
+
 #Slogan {
     font-size: 5vh;
     color: #E33953;
