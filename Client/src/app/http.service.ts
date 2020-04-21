@@ -1,19 +1,36 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import * as io from 'socket.io-client';
+import { Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
 
-  constructor(public http: HttpClient) {
+  socket: any;
+  readonly url: string = "ws://localhost:3000";
+
+  constructor() {
+    this.socket = io(this.url)
   }
 
-  public login() {
+  listen(eventName: string) {
+    return new Observable((subscriber) => {
+      this.socket.on(eventName, (data) => {
+        subscriber.next(data);
+      })
+    });
+  }
+
+  emit(eventName: string, data: any) {
+    this.socket.emit(eventName, data);
+  }
+
+  public login(user) {
 
   }
 
-  public register() {
+  public register(user) {
 
   }
 }
