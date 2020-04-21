@@ -36,6 +36,38 @@ export class Playground {
     const box = []
     let teilID = 0
 
+    document.getElementById("fertigButton").addEventListener("click", pruefen)
+    //pruefen ob fertig 
+    function pruefen() {
+      let cube =
+        [
+          [[false, false, false], [false, false, false], [false, false, false]],
+          [[false, false, false], [false, false, false], [false, false, false]],
+          [[false, false, false], [false, false, false], [false, false, false]]
+        ] //nix drin = false
+
+      teilDT.forEach(t => {
+        t.wuerfel.forEach(w => {
+          if (w.position.x <= 10 && w.position.x >= -10
+            && w.position.y <= 10 && w.position.y >= -10
+            && w.position.z <= 10 && w.position.z >= -10) {
+
+            cube[(w.position.x + 10) / 10][(w.position.y + 10) / 10][(w.position.z + 10) / 10] = true
+          }
+
+        })
+      })
+      for (let x = 0; x < 3; x++) {
+        for (let y = 0; y < 3; y++) {
+          for (let z = 0; z < 3; z++) {
+            alert(x + " | " + y + " | " + z + ": " + cube[x][y][z])
+          }
+        }
+      }
+    }
+
+
+
     for (let i = 0; i < 27; i++) {
       box[i] = BABYLON.Mesh.CreateBox('Box' + i, 10.0, scene)
       if (i === 2) {
