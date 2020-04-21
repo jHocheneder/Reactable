@@ -3,6 +3,7 @@
     <nb-card-body class="example-items-col">
         <input type="text" nbInput fullWidth status="primary" placeholder="Username">
         <input type="password" nbInput fullWidth status="primary" placeholder="Password">
-        <button nbButton status="primary">Login</button>
+        <button nbButton status="primary" (click)="login()">Login</button>
+        <div style="color: red;">{{warning}}</div>
     </nb-card-body>
 </nb-card>

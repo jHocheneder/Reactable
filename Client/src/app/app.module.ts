@@ -10,6 +10,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
+import {FormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import {
   NbChatModule,
@@ -32,6 +33,7 @@ import { RegisterComponent } from './register/register.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     HttpClientModule,
     HttpClientJsonpModule,
     AppRoutingModule,
