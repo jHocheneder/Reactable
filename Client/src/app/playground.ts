@@ -36,9 +36,9 @@ export class Playground {
     const box = []
     let teilID = 0
 
-    document.getElementById("fertigButton").addEventListener("click", pruefen)
     //pruefen ob fertig 
     function pruefen() {
+      let fertig = true;
       let cube =
         [
           [[false, false, false], [false, false, false], [false, false, false]],
@@ -57,14 +57,22 @@ export class Playground {
 
         })
       })
+
+    
       for (let x = 0; x < 3; x++) {
         for (let y = 0; y < 3; y++) {
           for (let z = 0; z < 3; z++) {
-            alert(x + " | " + y + " | " + z + ": " + cube[x][y][z])
-          }
-        }
+            if(!cube[x][y][z]){//nicht komplett
+              fertig = false;
+              return
+            }//if
+          }//for z
+        }//for y
+      }//for x
+      if(fertig) {
+        alert("FERTIG!!!")
       }
-    }
+    } //pruefen()
 
 
 
@@ -375,8 +383,9 @@ export class Playground {
               selected.rotation.z += BABYLON.Tools.ToRadians(90);
               isZPressed = false;
             }
+            pruefen()
           }
-        });
+        })
       }
     }, BABYLON.PointerEventTypes.POINTERUP);
 
