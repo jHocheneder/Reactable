@@ -31,6 +31,6 @@ export class HttpService {
   }
 
   public register(user) {
-
+    this.socket.emit('register', user);
   }
 }

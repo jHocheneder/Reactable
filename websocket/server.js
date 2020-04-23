@@ -1,7 +1,6 @@
 let app = require('express')();
 let http = require('http').createServer(app);
 let io = require('socket.io')(http);
-let fs = require('fs');
 let mysql = require('mysql');
 let users = new Array();
 let sockets = new Array();
@@ -16,12 +15,6 @@ db.connect(function(err) {
     if (err) console.log(err)
 })
 
-//let obj=[];
-
-app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/index.html');
-});
-
 http.listen(3000, function() {
     console.log('listening on localhost:3000');
 });
@@ -34,14 +27,6 @@ io.on('connection', function(socket) {
         io.to(socket.handshake.query.room).emit('connectedToRoom', 'You are in ' + socket.handshake.query.room);
     }
 
-    socket.on('user login', function(usr) {
-        console.log('User: ' + usr);
-        users.push(usr);
-        sockets.push(socket);
-        socket.emit('returnLogin', users);
-        socket.broadcast.emit('connectGamer', users);
-    })
-
     socket.on('invite Gamer', function(usr) {
         console.log('Invited User: ' + usr);
         socket.broadcast.emit('invitePlayer', usr);
@@ -52,29 +37,31 @@ io.on('connection', function(socket) {
         io.to(roomName).emit('connectedToRoom', 'You are in ' + roomName);
     })
 
-    socket.on("insert", function(usr) {
-        //let usr = JSON.parse(user);
-        let sql = "insert into player (vName, nName, username) values ('" + usr.vName + "', '" + usr.nName + "', '" + usr.username + "');";
+    socket.on('login', function(usr) {
+        console.log('User: ' + usr);
+        users.push(usr);
+        sockets.push(socket);
+
+        let sql = "select password from player where username = '" + usr.username + "'";
+
+        db.query(sql, function(err, result) {
+            if (err) socket.emit('returnLogin', 'error, not found');
+
+            if (result == usr.password) {
+                socket.emit('returnLogin', 'logged in');
+            } else {
+                socket.emit('returnLogin', 'error');
+            }
+        });
+    })
+
+    socket.on("register", function(usr) {
+        let sql = "insert into player ('username', 'email', 'password') values ('" + usr.username + "', '" + usr.email + "', '" + usr.password + "');";
 
         db.query(sql, function(err, result) {
             if (err) console.log(err);
             console.log("1 record inserted");
         });
-
-        /*fs.readFile('list.json', 'utf8', function readFileCallback(err, data){
-            if (err){
-                console.log(err);
-            } else {
-            //obj = JSON.parse(data); //now it an object
-            obj.push(usr); //add some data
-            json = JSON.stringify(obj, null, 2); //convert it back to json
-            fs.writeFile("list.json", json, function(err) {
-                if(err) {
-                    return console.log(err);
-                }
-                console.log("The file was saved!");
-            }); 
-        }});*/
     })
 
     socket.on('disconnect', function() {
