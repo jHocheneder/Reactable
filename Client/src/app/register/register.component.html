@@ -4,7 +4,7 @@
         <nb-card style="color: red;" *ngIf="checkUsername()"><!--{{userwarn}} --></nb-card>
         <input type="email" nbInput fullWidth status="primary" placeholder="Email Addresse"[(ngModel)]="email">
         <nb-card style="color: red;" *ngIf="checkEmail()"><!--{{emailwarn}}--></nb-card>
-        <input type="password" nbInput fullWidth status="primary" placeholder="Passwordd" [(ngModel)]="password">
+        <input type="password" nbInput fullWidth status="primary" placeholder="Password" [(ngModel)]="password">
         <nb-card style="color: red;" *ngIf="checkPassword()"><!--{{passwordwarn}}--></nb-card>
         <input type="password" nbInput fullWidth status="primary" placeholder="Confirm Password" [(ngModel)]="conpassword">
         <nb-card style="color: red;" *ngIf="checkConPwd()"><!--{{conpwdwarn}}--></nb-card>

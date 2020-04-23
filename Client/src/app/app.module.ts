@@ -27,6 +27,8 @@ import {
 } from '@nebular/theme';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+//services
+import { HttpService } from './services/http.service';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, RegisterComponent],
@@ -55,6 +57,7 @@ import { RegisterComponent } from './register/register.component';
     }),
     CoreModule.forRoot(),
   ],
+  providers: [HttpService],  //services
   bootstrap: [AppComponent],
 })
 export class AppModule {

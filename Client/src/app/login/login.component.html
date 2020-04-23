@@ -1,8 +1,10 @@
 <nb-card>
     <nb-card-body class="example-items-col">
-        <input type="text" nbInput fullWidth status="primary" placeholder="Username">
-        <input type="password" nbInput fullWidth status="primary" placeholder="Password">
-        <button nbButton status="primary" (click)="login()">Login</button>
-        <div style="color: red;">{{warning}}</div>
+        <form (ngSubmit)="login()">
+            <input type="text" nbInput fullWidth status="primary" placeholder="Username">
+            <input type="password" nbInput fullWidth status="primary" placeholder="Password">
+            <button type="submit" nbButton status="primary" (click)="login()">Login</button>
+            <div style="color: red;">{{warning}}</div>
+        </form>
     </nb-card-body>
 </nb-card>
