@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
 
   username: String = "";
   password: String = "";
-
+  
   warning: String = "";
 
   constructor(private http: HttpService) {
@@ -26,18 +26,23 @@ export class LoginComponent implements OnInit {
 
   login(){
     if(this.username.length >= 3 && this.password.length >=8){
-      //this.http.login();
+      this.warning = "";
+      const loginData = { 
+        "username" : this.username, 
+        "password": this.password 
+      };
+      this.http.login(loginData);
     }
     else{
       if(this.username.length<3){
         this.warning = "Der Username muss mindestend 3 Zeichen lang sein.";
       }
-      if(this.password.length<6){
+      else{if(this.password.length<6){
         this.warning = "Das Passwort muss mindestens 8 Zeichen lang sein."
       }
       else{
         this.warning = "Fehler, bitte versuchen Sie es erneut."
-      }
+      }}
     }
   }
 }

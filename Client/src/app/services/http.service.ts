@@ -23,14 +23,23 @@ export class HttpService {
   }
 
   emit(eventName: string, data: any) {
-    this.socket.emit(eventName, data);
+    //this.socket.emit(eventName, data);
+  }
+
+  on(eventName: string, data: any) {
+    
+    console.log(data);
+    this.socket.on(eventName, function(msg) {
+      console.log(msg);
+    });
   }
 
   public login(user) {
-
+    console.log(user);
+    this.emit('login', user);
   }
 
   public register(user) {
-
+    this.socket.emit('register', user);
   }
 }

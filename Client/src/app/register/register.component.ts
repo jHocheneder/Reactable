@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'register',
@@ -15,23 +16,31 @@ export class RegisterComponent implements OnInit {
   terms: Boolean = false;
 
   userwarn: String = "";
-  emailwarn: String = "";
+  emailwarn: String = "Ungültige Email";
   passwordwarn: String = "";
   conpwdwarn: String = "";
+
 
   constructor(public http:HttpClient) {
 
   }
 
   ngOnInit() {
+    
   }
 
   checkUsername(){
-    return true;
+    if(this.username.length<3 || this.username.length>25){
+      this.userwarn = "Der Username muss zwischen 3 und 25 Zeichen lang sein."
+      return true;
+    }
+
+    return false;
   }
 
   checkEmail(){
-    return true;
+    
+      return true;
   }
   checkPassword(){
     return true;
