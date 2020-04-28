@@ -1,11 +1,10 @@
 <nb-card>
-    
     <nb-card-body class="example-items-col">
         <h1 id="title" class="title">Login</h1>
         <form (ngSubmit)="login()" aria-labelledby="title">
             <input type="text" name="username" nbInput fullWidth status="primary" required minlength="3" maxlength="20" placeholder="Username" [(ngModel)]="username">
             <input type="password" name="passowrd" nbInput fullWidth status="primary" minlength="8" placeholder="Password" [(ngModel)]="password">
-            <input type="submit" nbButton status="primary" (click)="login()">
+            <input type="submit" nbButton status="primary">
             <div style="color: red;">{{warning}}</div>
         </form>
     </nb-card-body>

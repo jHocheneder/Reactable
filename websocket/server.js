@@ -48,7 +48,7 @@ io.on('connection', function(socket) {
             //if (err) socket.emit('returnLogin', 'error, not found');
             if (err) console.log(err);
 
-            if (result == usr.password) {
+            if (result[0].password == usr.password) {
                 socket.emit('returnLogin', 'logged in');
             } else {
                 socket.emit('returnLogin', 'error');
@@ -57,11 +57,14 @@ io.on('connection', function(socket) {
     })
 
     socket.on("register", function(usr) {
-        let sql = "insert into player ('username', 'email', 'password') values ('" + usr.username + "', '" + usr.email + "', '" + usr.password + "');";
+        let sql = "insert into player (username, email, password) values ('" + usr.username + "', '" + usr.email + "', '" + usr.password + "');";
 
         db.query(sql, function(err, result) {
-            if (err) console.log(err);
-            console.log("1 record inserted");
+            if (err) socket.emit('returnRegister', 'error');
+
+            console.log("1 person inserted");
+
+            socket.emit('returnRegister', 'got Registered');
         });
     })
 

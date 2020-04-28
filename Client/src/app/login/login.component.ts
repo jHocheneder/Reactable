@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../services/http.service';
+import { sha512 } from 'js-sha512';
 
 
 @Component({
@@ -13,15 +14,19 @@ export class LoginComponent implements OnInit {
   password: String = "";
   
   warning: String = "";
+  loggedIn: String = "";
+
 
   constructor(private http: HttpService) {
 
   }
 
   ngOnInit() {
-    this.http.listen('test event').subscribe((data) => {
-      console.log(data);
-    });
+    this.http
+      .returnLogin()
+      .subscribe((msg: string) => {
+        this.loggedIn = msg;
+      });
   }
 
   login(){
@@ -29,7 +34,7 @@ export class LoginComponent implements OnInit {
       this.warning = "";
       const loginData = { 
         "username" : this.username, 
-        "password": this.password 
+        "password": sha512(this.password+"")  
       };
       this.http.login(loginData);
     }
