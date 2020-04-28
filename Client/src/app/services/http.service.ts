@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -23,21 +23,29 @@ export class HttpService {
   }
 
   emit(eventName: string, data: any) {
-    //this.socket.emit(eventName, data);
+    this.socket.emit(eventName, data);
   }
 
   on(eventName: string, data: any) {
-    
     console.log(data);
-    this.socket.on(eventName, function(msg) {
+    /*this.socket.on(eventName, function(msg) {
       console.log(msg);
-    });
+    });*/
   }
 
   public login(user) {
     console.log(user);
     this.emit('login', user);
   }
+
+  public returnLogin = () => {
+    return Observable.create((observer) => {
+        this.socket.on('returnLogin', (message) => {
+            console.log(message);
+            observer.next(message);
+        });
+    });
+}
 
   public register(user) {
     this.socket.emit('register', user);

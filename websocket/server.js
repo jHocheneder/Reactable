@@ -48,7 +48,7 @@ io.on('connection', function(socket) {
             //if (err) socket.emit('returnLogin', 'error, not found');
             if (err) console.log(err);
 
-            if (result == usr.password) {
+            if (result[0].password == usr.password) {
                 socket.emit('returnLogin', 'logged in');
             } else {
                 socket.emit('returnLogin', 'error');

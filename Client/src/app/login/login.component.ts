@@ -13,15 +13,19 @@ export class LoginComponent implements OnInit {
   password: String = "";
   
   warning: String = "";
+  loggedIn: String = "";
+
 
   constructor(private http: HttpService) {
 
   }
 
   ngOnInit() {
-    this.http.listen('test event').subscribe((data) => {
-      console.log(data);
-    });
+    this.http
+      .returnLogin()
+      .subscribe((msg: string) => {
+        this.loggedIn = msg;
+      });
   }
 
   login(){
