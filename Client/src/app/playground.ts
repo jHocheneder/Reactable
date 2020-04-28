@@ -36,11 +36,6 @@ export class Playground {
     const box = []
     let teilID = 0
 
-    //pruefen ob fertig 
-    //this.pruefen(teilDT)
-
-
-
     for (let i = 0; i < 27; i++) {
       box[i] = BABYLON.Mesh.CreateBox('Box' + i, 10.0, scene)
       if (i === 2) {
@@ -336,18 +331,17 @@ export class Playground {
 
             if (isXPressed) {
               Playground.rotateX(selTeil)
-              selected.rotation.x += BABYLON.Tools.ToRadians(90);
-              isXPressed = false;
+              isXPressed = false
             }
 
             if (isYPressed) {
-              selected.rotation.y += BABYLON.Tools.ToRadians(90);
-              isYPressed = false;
+              Playground.rotateY(selTeil)
+              isYPressed = false
             }
 
             if (isZPressed) {
-              selected.rotation.z += BABYLON.Tools.ToRadians(90);
-              isZPressed = false;
+              Playground.rotateZ(selTeil)
+              isZPressed = false
             }
             Playground.pruefen(teilDT)
           }
@@ -543,7 +537,7 @@ export class Playground {
     }
   } //pruefen()
 
-  private static rotateX(teil: Teil) {
+  private static rotateY(teil: Teil) {
     let gX = teil.wuerfel[0].position.x
     let kX = teil.wuerfel[0].position.x
     let kZ = teil.wuerfel[0].position.z
@@ -564,7 +558,7 @@ export class Playground {
 
       let posX = w.position.x
       let posZ = w.position.z
-      alert(posZ)
+
       switch (posZ) {
         case kZ:
           w.position.x = kX
@@ -589,6 +583,120 @@ export class Playground {
           break
         case gX - 20:
           w.position.z = kZ + 20
+          break
+
+        default:
+          break
+      }
+
+    })
+
+
+  }
+
+  private static rotateX(teil: Teil) {
+    let gY = teil.wuerfel[0].position.y
+    let kY = teil.wuerfel[0].position.y
+    let kZ = teil.wuerfel[0].position.z
+
+    teil.wuerfel.forEach(w => {
+      if (w.position.y > gY) {
+        gY = w.position.y
+      }
+      if (w.position.y < kY) {
+        kY = w.position.y
+      }
+      if (w.position.z < kZ) {
+        kZ = w.position.z
+      }
+    })
+
+    teil.wuerfel.forEach(w => {
+
+      let posY = w.position.y
+      let posZ = w.position.z
+
+      switch (posZ) {
+        case kZ:
+          w.position.y = kY
+          break
+        case kZ + 10:
+          w.position.y = kY + 10
+          break
+        case kZ + 20:
+          w.position.y = kY + 20
+          break
+
+        default:
+          break
+      }
+
+      switch (posY) {
+        case gY:
+          w.position.z = kZ
+          break
+        case gY - 10:
+          w.position.z = kZ + 10
+          break
+        case gY - 20:
+          w.position.z = kZ + 20
+          break
+
+        default:
+          break
+      }
+
+    })
+
+
+  }
+
+  private static rotateZ(teil: Teil) {
+    let gX = teil.wuerfel[0].position.x
+    let kX = teil.wuerfel[0].position.x
+    let kY = teil.wuerfel[0].position.y
+
+    teil.wuerfel.forEach(w => {
+      if (w.position.x > gX) {
+        gX = w.position.x
+      }
+      if (w.position.x < kX) {
+        kX = w.position.x
+      }
+      if (w.position.y < kY) {
+        kY = w.position.y
+      }
+    })
+
+    teil.wuerfel.forEach(w => {
+
+      let posX = w.position.x
+      let posY = w.position.y
+
+      switch (posY) {
+        case kY:
+          w.position.x = kX
+          break
+        case kY + 10:
+          w.position.x = kX + 10
+          break
+        case kY + 20:
+          w.position.x = kX + 20
+          break
+
+        default:
+          break
+      }
+
+      switch (posX) {
+        case gX:
+          w.position.y = kY
+          break
+        case gX - 10:
+          w.position.y = kY + 10
+          break
+        case gX - 20:
+          w.position.y = kY + 20
           break
 
         default:
