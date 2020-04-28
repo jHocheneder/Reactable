@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
 
   login(){
     if(this.username.length >= 3 && this.password.length >=8){
+      this.warning = "";
       const loginData = { 
         "username" : this.username, 
         "password": this.password 
@@ -36,12 +37,12 @@ export class LoginComponent implements OnInit {
       if(this.username.length<3){
         this.warning = "Der Username muss mindestend 3 Zeichen lang sein.";
       }
-      if(this.password.length<6){
+      else{if(this.password.length<6){
         this.warning = "Das Passwort muss mindestens 8 Zeichen lang sein."
       }
       else{
         this.warning = "Fehler, bitte versuchen Sie es erneut."
-      }
+      }}
     }
   }
 }
