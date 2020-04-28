@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { sha512 } from 'js-sha512';
+import { HttpService } from '../services/http.service';
 
 @Component({
   selector: 'register',
@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
   conpwdwarn: String = "";
 
 
-  constructor(public http:HttpClient) {
+  constructor(public http:HttpService) {
 
   }
 
@@ -39,12 +39,21 @@ export class RegisterComponent implements OnInit {
   }
 
   checkEmail(){
-    
+      if(this.email.includes("@") && this.email.includes(".", this.email.indexOf("@")+2)){
+        if(this.email.indexOf("@")>0 && this.email.length > this.email.indexOf(".", this.email.indexOf("@")+2)+2){
+          return false;
+        }
+
+        return true;
+      }
       return true;
   }
   checkPassword(){
-    return true;
-
+    if(this.password.length<8){
+      this.passwordwarn = "Das Passwort muss mindestens 8 Zeichen lang sein."
+      return true;
+    }
+    return false;
   }
 
   checkConPwd(){
@@ -58,7 +67,16 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    
+    console.log(sha512("sdf"));
+    console.log("test")
+    if(this.checkUsername() && this.checkEmail() && this.checkPassword() && this.checkConPwd()){
+      const loginData = { 
+        "username" : this.username,
+        "email" : this.email, 
+        "password": sha512(this.password+"") 
+      };
+      this.http.register(loginData);
+    }
   }
 
 }
