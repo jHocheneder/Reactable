@@ -38,16 +38,26 @@ export class HttpService {
     this.emit('login', user);
   }
 
-  public returnLogin = () => {
-    return Observable.create((observer) => {
-        this.socket.on('returnLogin', (message) => {
-            console.log(message);
-            observer.next(message);
+  public returnLogin() {
+    return Observable.create((subscriber) => {
+        this.socket.on('returnLogin', (msg) => {
+            console.log(msg);
+            subscriber.next(msg);
         });
     });
-}
+  }
 
   public register(user) {
+    console.log(user);
     this.socket.emit('register', user);
+  }
+
+  public returnRegister() {
+    return Observable.create((subscriber) => {
+      this.socket.on('returnRegister', (msg) => {
+        console.log(msg);
+        subscriber.next(msg);
+      });
+    });
   }
 }

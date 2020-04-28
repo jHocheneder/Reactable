@@ -92,6 +92,14 @@
         socket.emit('invite Gamer', $('#oInput').val());
     }
 
+    function register() {
+        socket.emit('register', {
+            username: "hannes",
+            email: "hannes@LeckMichAmArsch.com",
+            password: "passme01"
+        });
+    }
+
     /*roomName = 'room/' + $('#oInput').val() + '/' + user;
     socket.emit('create', roomName);*/
 
@@ -130,6 +138,7 @@
     <!-- Login-Seite -->
     <div class="login page">
         <h2>Login Page</h2>
+        <button click="register">Register</button>
         <h3 class="title">Wie ist dein Name?</h3>
         <form action="">
             <input id="uInput" maxlength="14" />

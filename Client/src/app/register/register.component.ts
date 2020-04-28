@@ -20,13 +20,20 @@ export class RegisterComponent implements OnInit {
   passwordwarn: String = "";
   conpwdwarn: String = "";
 
+  registered: string = "";
 
-  constructor(public http:HttpService) {
+
+  constructor(public http: HttpService) {
 
   }
 
   ngOnInit() {
-    
+    this.http
+      .returnRegister()
+      .subscribe((msg: string) => {
+        console.log(msg);
+        this.registered = msg;
+      });
   }
 
   checkUsername(){
@@ -69,12 +76,13 @@ export class RegisterComponent implements OnInit {
   register(){
     console.log(sha512("sdf"));
     console.log("test")
-    if(this.checkUsername() && this.checkEmail() && this.checkPassword() && this.checkConPwd()){
+    if(!this.checkUsername() && !this.checkEmail() && !this.checkPassword() && !this.checkConPwd()){
       const loginData = { 
         "username" : this.username,
         "email" : this.email, 
         "password": sha512(this.password+"") 
       };
+      console.log(loginData);
       this.http.register(loginData);
     }
   }
