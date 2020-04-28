@@ -37,42 +37,7 @@ export class Playground {
     let teilID = 0
 
     //pruefen ob fertig 
-    function pruefen() {
-      let fertig = true;
-      let cube =
-        [
-          [[false, false, false], [false, false, false], [false, false, false]],
-          [[false, false, false], [false, false, false], [false, false, false]],
-          [[false, false, false], [false, false, false], [false, false, false]]
-        ] //nix drin = false
-
-      teilDT.forEach(t => {
-        t.wuerfel.forEach(w => {
-          if (w.position.x <= 10 && w.position.x >= -10
-            && w.position.y <= 10 && w.position.y >= -10
-            && w.position.z <= 10 && w.position.z >= -10) {
-
-            cube[(w.position.x + 10) / 10][(w.position.y + 10) / 10][(w.position.z + 10) / 10] = true
-          }
-
-        })
-      })
-
-    
-      for (let x = 0; x < 3; x++) {
-        for (let y = 0; y < 3; y++) {
-          for (let z = 0; z < 3; z++) {
-            if(!cube[x][y][z]){//nicht komplett
-              fertig = false;
-              return
-            }//if
-          }//for z
-        }//for y
-      }//for x
-      if(fertig) {
-        alert("FERTIG!!!")
-      }
-    } //pruefen()
+    //this.pruefen(teilDT)
 
 
 
@@ -365,11 +330,12 @@ export class Playground {
             if (isFPressed) {
               selTeil.wuerfel.forEach(w => {
                 w.position.y -= 10
-              })              
+              })
               isFPressed = false
             }
 
             if (isXPressed) {
+              Playground.rotateX(selTeil)
               selected.rotation.x += BABYLON.Tools.ToRadians(90);
               isXPressed = false;
             }
@@ -383,7 +349,7 @@ export class Playground {
               selected.rotation.z += BABYLON.Tools.ToRadians(90);
               isZPressed = false;
             }
-            pruefen()
+            Playground.pruefen(teilDT)
           }
         })
       }
@@ -539,5 +505,98 @@ export class Playground {
     window.addEventListener("resize", function () {
       engine.resize();
     });
+  }
+  private static pruefen(teilDT: Array<Teil>) {
+    let fertig = true;
+    let cube =
+      [
+        [[false, false, false], [false, false, false], [false, false, false]],
+        [[false, false, false], [false, false, false], [false, false, false]],
+        [[false, false, false], [false, false, false], [false, false, false]]
+      ] //nix drin = false
+
+    teilDT.forEach(t => {
+      t.wuerfel.forEach(w => {
+        if (w.position.x <= 10 && w.position.x >= -10
+          && w.position.y <= 10 && w.position.y >= -10
+          && w.position.z <= 10 && w.position.z >= -10) {
+
+          cube[(w.position.x + 10) / 10][(w.position.y + 10) / 10][(w.position.z + 10) / 10] = true
+        }
+
+      })
+    })
+
+
+    for (let x = 0; x < 3; x++) {
+      for (let y = 0; y < 3; y++) {
+        for (let z = 0; z < 3; z++) {
+          if (!cube[x][y][z]) {//nicht komplett
+            fertig = false;
+            return
+          }//if
+        }//for z
+      }//for y
+    }//for x
+    if (fertig) {
+      alert("FERTIG!!!")
+    }
+  } //pruefen()
+
+  private static rotateX(teil: Teil) {
+    let gX = teil.wuerfel[0].position.x
+    let kX = teil.wuerfel[0].position.x
+    let kZ = teil.wuerfel[0].position.z
+
+    teil.wuerfel.forEach(w => {
+      if (w.position.x > gX) {
+        gX = w.position.x
+      }
+      if (w.position.x < kX) {
+        kX = w.position.x
+      }
+      if (w.position.z < kZ) {
+        kZ = w.position.z
+      }
+    })
+
+    teil.wuerfel.forEach(w => {
+
+      let posX = w.position.x
+      let posZ = w.position.z
+      alert(posZ)
+      switch (posZ) {
+        case kZ:
+          w.position.x = kX
+          break
+        case kZ + 10:
+          w.position.x = kX + 10
+          break
+        case kZ + 20:
+          w.position.x = kX + 20
+          break
+
+        default:
+          break
+      }
+
+      switch (posX) {
+        case gX:
+          w.position.z = kZ
+          break
+        case gX - 10:
+          w.position.z = kZ + 10
+          break
+        case gX - 20:
+          w.position.z = kZ + 20
+          break
+
+        default:
+          break
+      }
+
+    })
+
+
   }
 }
