@@ -1,13 +1,13 @@
 <nb-card>
     <nb-card-body class="example-items-col">
         <input type="text" nbInput fullWidth status="primary" placeholder="Username" [(ngModel)]="username">
-        <nb-card style="color: red;" *ngIf="checkUsername()"><!--{{userwarn}} --></nb-card>
-        <input type="email" nbInput fullWidth status="primary" placeholder="Email Addresse"[(ngModel)]="email">
-        <nb-card style="color: red;" *ngIf="checkEmail()"><!--{{emailwarn}}--></nb-card>
+        <nb-card style="color: red;" *ngIf="checkUsername()">{{userwarn}}</nb-card>
+        <input type="email" nbInput fullWidth status="primary" placeholder="Email Addresse" [(ngModel)]="email">
+        <nb-card style="color: red;" *ngIf="checkEmail()">{{emailwarn}}</nb-card>
         <input type="password" nbInput fullWidth status="primary" placeholder="Password" [(ngModel)]="password">
-        <nb-card style="color: red;" *ngIf="checkPassword()"><!--{{passwordwarn}}--></nb-card>
+        <nb-card style="color: red;" *ngIf="checkPassword()">{{passwordwarn}}</nb-card>
         <input type="password" nbInput fullWidth status="primary" placeholder="Confirm Password" [(ngModel)]="conpassword">
-        <nb-card style="color: red;" *ngIf="checkConPwd()"><!--{{conpwdwarn}}--></nb-card>
+        <nb-card style="color: red;" *ngIf="checkConPwd()">{{conpwdwarn}}</nb-card>
         <nb-checkbox status="primary">Agree to <a href="#">Terms & Conditions</a></nb-checkbox>
         <button nbButton status="primary">Register</button>
     </nb-card-body>
