@@ -38,14 +38,15 @@ io.on('connection', function(socket) {
     })
 
     socket.on('login', function(usr) {
-        console.log('User: ' + usr);
+        console.log('User: ' + usr.username);
         users.push(usr);
         sockets.push(socket);
 
         let sql = "select password from player where username = '" + usr.username + "'";
 
         db.query(sql, function(err, result) {
-            if (err) socket.emit('returnLogin', 'error, not found');
+            //if (err) socket.emit('returnLogin', 'error, not found');
+            if (err) console.log(err);
 
             if (result == usr.password) {
                 socket.emit('returnLogin', 'logged in');

@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
 
   username: String = "";
   password: String = "";
-
+  
   warning: String = "";
 
   constructor(private http: HttpService) {
