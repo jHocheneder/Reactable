@@ -1,14 +1,19 @@
 <nb-card>
-    <nb-card-body class="example-items-col">
-        <input type="text" nbInput fullWidth status="primary" placeholder="Username" [(ngModel)]="username">
-        <nb-card style="color: red;" *ngIf="checkUsername()"><!--{{userwarn}} --></nb-card>
-        <input type="email" nbInput fullWidth status="primary" placeholder="Email Addresse"[(ngModel)]="email">
-        <nb-card style="color: red;" *ngIf="checkEmail()"><!--{{emailwarn}}--></nb-card>
-        <input type="password" nbInput fullWidth status="primary" placeholder="Passwordd" [(ngModel)]="password">
-        <nb-card style="color: red;" *ngIf="checkPassword()"><!--{{passwordwarn}}--></nb-card>
-        <input type="password" nbInput fullWidth status="primary" placeholder="Confirm Password" [(ngModel)]="conpassword">
-        <nb-card style="color: red;" *ngIf="checkConPwd()"><!--{{conpwdwarn}}--></nb-card>
-        <nb-checkbox status="primary">Agree to <a href="#">Terms & Conditions</a></nb-checkbox>
-        <button nbButton status="primary">Register</button>
+    <nb-card-body class="example-items-col" >
+        <h1 id="titler" class="titler">Register</h1>
+        <form (ngSubmit)="register()" aria-labelledby="titler">
+            <input type="text" name="username" nbInput fullWidth status="primary" placeholder="Username" [(ngModel)]="username">
+            <div style="color: red;" *ngIf="checkUsername()">{{userwarn}}</div>
+            <input type="email" nbInput name="email"fullWidth status="primary" placeholder="Email Addresse" [(ngModel)]="email">
+            <div style="color: red;" *ngIf="checkEmail()">{{emailwarn}}</div>
+            <input type="password" nbInput name="password" fullWidth status="primary" placeholder="Password" [(ngModel)]="password">
+            <div style="color: red;" *ngIf="checkPassword()">{{passwordwarn}}</div>
+            <input type="password" nbInput name="conpassword" fullWidth status="primary" placeholder="Confirm Password" [(ngModel)]="conpassword">
+            <div style="color: red;" *ngIf="checkConPwd()">{{conpwdwarn}}</div>
+            <nb-checkbox status="primary" name="terms" [(ngModel)]="terms">Agree to <a href="#">Terms & Conditions</a></nb-checkbox>
+            <input style="text-align: right;" type="submit" nbButton status="primary">
+            <div style="color: red;" *ngIf="checkterms && !terms">Sie müssen zustimmen, um sich registrieren zu können.</div>
+        </form>
+        
     </nb-card-body>
 </nb-card>

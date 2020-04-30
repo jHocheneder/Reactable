@@ -1,9 +1,12 @@
 <h1>Login</h1>
 <nb-card>
     <nb-card-body class="example-items-col">
-        <input type="text" nbInput fullWidth status="primary" placeholder="Username">
-        <input type="password" nbInput fullWidth status="primary" placeholder="Password">
-        <button nbButton status="primary" (click)="login()">Login</button>
-        <div style="color: red;">{{warning}}</div>
+        <h1 id="title" class="title">Login</h1>
+        <form (ngSubmit)="login()" aria-labelledby="title">
+            <input type="text" name="username" nbInput fullWidth status="primary" required minlength="3" maxlength="20" placeholder="Username" [(ngModel)]="username">
+            <input type="password" name="passowrd" nbInput fullWidth status="primary" minlength="8" placeholder="Password" [(ngModel)]="password">
+            <input type="submit" nbButton status="primary">
+            <div style="color: red;">{{warning}}</div>
+        </form>
     </nb-card-body>
 </nb-card>

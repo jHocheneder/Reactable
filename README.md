@@ -1,6 +1,6 @@
 # Reactable
-Bevor der Server gestartet wird, muss eine Commandozeile geöffnet werden (nicht in dem Projekt). In diesem müssen anschließend folgende 
-Befehle ausgeführt werden:
+Bevor der Server gestartet wird, muss eine Commandozeile geÃ¶ffnet werden (nicht in dem Projekt). In diesem mÃ¼ssen anschlieÃŸend folgende 
+Befehle ausgefÃ¼hrt werden:
 
 npm install express
 npm install socketio

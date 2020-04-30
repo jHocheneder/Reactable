@@ -1,294 +1,351 @@
-import * as BABYLON from '@babylonjs/core/Legacy/legacy';
-import * as BABYLONMat from '@babylonjs/materials';
-//import * as BABYLONMat from 'babylonjs-materials';
+import * as BABYLON from '@babylonjs/core/Legacy/legacy'
+import * as BABYLONMat from '@babylonjs/materials'
+import { Teil } from './datatypes/teil'
+
 export class Playground {
-  
+  private static engine: BABYLON.Engine
+  private static canvas: HTMLCanvasElement
 
-  // private static scene : BABYLON.Scene;
-  private static engine: BABYLON.Engine;
-  private static canvas: HTMLCanvasElement;
-
-  public static CreateScene(/*engine: BABYLON.Engine, canvas: HTMLCanvasElement*/)/*: BABYLON.Scene*/ {
-
-    this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement;
-    this.engine = new BABYLON.Engine(this.canvas, true, { preserveDrawingBuffer: true, stencil: true });
+  public static CreateScene() {
+    this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
+    this.engine = new BABYLON.Engine(this.canvas, true, { preserveDrawingBuffer: true, stencil: true })
 
     //Scene:
-    let scene = new BABYLON.Scene(this.engine);
+    let scene = new BABYLON.Scene(this.engine)
 
-    var light = new BABYLON.HemisphericLight(
+    let light = new BABYLON.HemisphericLight(
       "HemiLight",
-      new BABYLON.Vector3(0, 10, 5),
+      new BABYLON.Vector3(0, 20, 10),
       scene
-    );
+    )
 
-    var camera = new BABYLON.ArcRotateCamera(
+    let camera = new BABYLON.ArcRotateCamera(
       "Camera",
       0,
       0.8,
       100,
       new BABYLON.Vector3(0, 0, 0),
       scene
-    );
-    camera.attachControl(this.canvas, true);
+    )
+    camera.attachControl(this.canvas, true)
 
-    scene.clearColor = new BABYLON.Color4(0.0, 0.0, 0.0);
+    scene.clearColor = new BABYLON.Color4(0.0, 0.0, 0.0)
 
-    var box = [];
+    //Wuerfelteile generieren
+    let teilDT: Array<Teil> = []
+    const box = []
+    let teilID = 0
+
     for (let i = 0; i < 27; i++) {
-      box[i] = BABYLON.Mesh.CreateBox('Box' + i, 10.0, scene);
+      box[i] = BABYLON.Mesh.CreateBox('Box' + i, 10.0, scene)
       if (i === 2) {
-        box[i - 2].position.x -= 10;
-        box[i - 1].position.z = 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
-          box[i],
-          box[i - 1],
-          box[i - 2]
-        ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
-          scene
-        );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
-        wuerfel.material = materialBox;
-        wuerfel.position.x = 40;
-        wuerfel.position.y -= 40;
+        //Teil definieren
+        teilDT[teilID] = new Teil(teilID, scene)
+
+        //boxen zum Teil positionieren
+        box[i - 2].position.x -= 10
+        box[i - 1].position.z += 10
+
+        //Material hinzufügen
+        box[i].material = box[i - 1].material = box[i - 2].material = teilDT[teilID].material
+
+        //Teil positionieren
+        box[i].position.x += 40
+        box[i].position.y -= 40
+        box[i - 1].position.x += 40
+        box[i - 1].position.y -= 40
+        box[i - 2].position.x += 40
+        box[i - 2].position.y -= 40
+
+        //wuerfel zum teil hinzufügen
+        teilDT[teilID].wuerfel = [box[i], box[i - 1], box[i - 2]]
+
+        //teilID erhöhen
+        teilID += 1
       }
 
       if (i == 6) {
-        box[i - 1].position.x = -10;
-        box[i - 2].position.z -= -10;
-        box[i - 3].position.z = 10;
-        box[i - 3].position.x -= -10;
-        box[i - 3].position.x = 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
-          box[i],
-          box[i - 1],
-          box[i - 2],
-          box[i - 3]
-        ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
-          scene
-        );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
-        wuerfel.material = materialBox;
-        wuerfel.position.x -= 40;
-        wuerfel.position.y -= 40;
+        //Teil definieren
+        teilDT[teilID] = new Teil(teilID, scene)
+
+        //boxen zum Teil positionieren
+        box[i - 1].position.x -= 10
+        box[i - 2].position.z = box[i - 3].position.x = box[i - 3].position.z = 10
+
+        //Material hinzufügen
+        box[i].material = box[i - 1].material = box[i - 2].material = box[i - 3].material = teilDT[teilID].material
+
+        //Teil positionieren
+        box[i].position.x -= 40
+        box[i].position.y -= 40
+        box[i - 1].position.x -= 40
+        box[i - 1].position.y -= 40
+        box[i - 2].position.x -= 40
+        box[i - 2].position.y -= 40
+        box[i - 3].position.x -= 40
+        box[i - 3].position.y -= 40
+
+        //wuerfel zum teil hinzufügen
+        teilDT[teilID].wuerfel = [box[i], box[i - 1], box[i - 2], box[i - 3]]
+
+        //teilID erhöhen
+        teilID += 1
       }
 
       if (i == 10) {
-        box[i - 2].position.x -= 10;
-        box[i - 1].position.z = 10;
-        box[i - 3].position.y = 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
-          box[i],
-          box[i - 1],
-          box[i - 2],
-          box[i - 3]
-        ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
-          scene
-        );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
-        wuerfel.material = materialBox;
-        wuerfel.position.x = 50;
+        //Teil definieren
+        teilDT[teilID] = new Teil(teilID, scene)
+
+        //boxen zum Teil positionieren
+        box[i - 2].position.x -= 10
+        box[i - 1].position.z = box[i - 3].position.y = 10
+
+        //Material hinzufügen
+        box[i].material = box[i - 1].material = box[i - 2].material = box[i - 3].material = teilDT[teilID].material
+
+        //Teil positionieren
+        box[i].position.x += 50
+        box[i - 1].position.x += 50
+        box[i - 2].position.x += 50
+        box[i - 3].position.x += 50
+
+        //wuerfel zum teil hinzufügen
+        teilDT[teilID].wuerfel = [box[i], box[i - 1], box[i - 2], box[i - 3]]
+
+        //teilID erhöhen
+        teilID += 1
       }
 
       if (i == 14) {
-        box[i - 2].position.x -= 10;
-        box[i - 1].position.z = 10;
-        box[i - 3].position.y = 10;
-        box[i - 3].position.x -= 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
-          box[i],
-          box[i - 1],
-          box[i - 2],
-          box[i - 3]
-        ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
-          scene
-        );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
-        wuerfel.material = materialBox;
-        wuerfel.position.x -= 50;
+        //Teil definieren
+        teilDT[teilID] = new Teil(teilID, scene)
+
+        //boxen zum Teil positionieren
+        box[i - 2].position.x -= 10
+        box[i - 1].position.z += 10
+        box[i - 3].position.y += 10
+        box[i - 3].position.x -= 10
+
+        //Material hinzufügen
+        box[i].material = box[i - 1].material = box[i - 2].material = box[i - 3].material = teilDT[teilID].material
+
+        //Teil positionieren
+        box[i].position.x -= 50
+        box[i - 1].position.x -= 50
+        box[i - 2].position.x -= 50
+        box[i - 3].position.x -= 50
+
+        //wuerfel zum teil hinzufügen
+        teilDT[teilID].wuerfel = [box[i], box[i - 1], box[i - 2], box[i - 3]]
+
+        //teilID erhöhen
+        teilID += 1
       }
 
       if (i == 18) {
-        box[i - 2].position.x -= 10;
-        box[i - 1].position.x = 10;
-        box[i - 3].position.x = 10;
-        box[i - 3].position.z = 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
-          box[i],
-          box[i - 1],
-          box[i - 2],
-          box[i - 3]
-        ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
-          scene
-        );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
-        wuerfel.material = materialBox;
-        wuerfel.position.z = 40;
+        //Teil definieren
+        teilDT[teilID] = new Teil(teilID, scene)
+
+        //boxen zum Teil positionieren
+        box[i - 2].position.x -= 10
+        box[i - 1].position.x = 10
+        box[i - 3].position.x = 10
+        box[i - 3].position.z = 10
+
+        //Material hinzufügen
+        box[i].material = box[i - 1].material = box[i - 2].material = box[i - 3].material = teilDT[teilID].material
+
+        //Teil positionieren
+        box[i].position.z += 40
+        box[i - 1].position.z += 40
+        box[i - 2].position.z += 40
+        box[i - 3].position.z += 40
+
+        //wuerfel zum teil hinzufügen
+        teilDT[teilID].wuerfel = [box[i], box[i - 1], box[i - 2], box[i - 3]]
+
+        //teilID erhöhen
+        teilID += 1
       }
 
       if (i == 22) {
-        box[i - 1].position.y = 10;
-        box[i - 2].position.z = 10;
-        box[i - 3].position.z = 10;
-        box[i - 3].position.x = 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
-          box[i],
-          box[i - 1],
-          box[i - 2],
-          box[i - 3]
-        ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
-          scene
-        );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
-        wuerfel.material = materialBox;
-        wuerfel.position.z -= 40;
+        //Teil definieren
+        teilDT[teilID] = new Teil(teilID, scene)
+
+        //boxen zum Teil positionieren
+        box[i - 1].position.y = 10
+        box[i - 2].position.z = 10
+        box[i - 3].position.z = 10
+        box[i - 3].position.x = 10
+
+        //Material hinzufügen
+        box[i].material = box[i - 1].material = box[i - 2].material = box[i - 3].material = teilDT[teilID].material
+
+        //Teil positionieren
+        box[i].position.z -= 40
+        box[i - 1].position.z -= 40
+        box[i - 2].position.z -= 40
+        box[i - 3].position.z -= 40
+
+        //wuerfel zum teil hinzufügen
+        teilDT[teilID].wuerfel = [box[i], box[i - 1], box[i - 2], box[i - 3]]
+
+        //teilID erhöhen
+        teilID += 1
       }
 
       if (i == 26) {
-        box[i - 2].position.x -= 10;
-        box[i - 1].position.x = 10;
-        box[i - 3].position.z = 10;
-        var wuerfel = BABYLON.Mesh.MergeMeshes([
-          box[i],
-          box[i - 1],
-          box[i - 2],
-          box[i - 3]
-        ]);
-        var materialBox = new BABYLON.StandardMaterial(
-          "texture" + i,
-          scene
-        );
-        materialBox.diffuseColor = new BABYLON.Color3(
-          Math.random(),
-          Math.random(),
-          Math.random()
-        );
-        wuerfel.material = materialBox;
-        wuerfel.position.z -= 30;
-        wuerfel.position.y -= 40;
+        //Teil definieren
+        teilDT[teilID] = new Teil(teilID, scene)
+
+        //boxen zum Teil positionieren
+        box[i - 2].position.x -= 10
+        box[i - 1].position.x = 10
+        box[i - 3].position.z = 10
+
+        //Material hinzufügen
+        box[i].material = box[i - 1].material = box[i - 2].material = box[i - 3].material = teilDT[teilID].material
+
+        //Teil positionieren
+        box[i].position.z -= 30
+        box[i - 1].position.z -= 30
+        box[i - 2].position.z -= 30
+        box[i - 3].position.z -= 30
+        box[i].position.y -= 40
+        box[i - 1].position.y -= 40
+        box[i - 2].position.y -= 40
+        box[i - 3].position.y -= 40
+
+        //wuerfel zum teil hinzufügen
+        teilDT[teilID].wuerfel = [box[i], box[i - 1], box[i - 2], box[i - 3]]
+
+        //teilID erhöhen
+        teilID += 1
       }
     }
 
     // show axis
-    var size = 25;
-    var axis = this.showAxis(size, scene);
-
-
+    let axisSize = 25
+    let axis = this.showAxis(axisSize, scene)
 
     //grid
-    var gridBox = BABYLON.Mesh.CreateBox("boxGrid", 30, scene, false);
-    gridBox.isPickable = false;
-    var gridmat = new BABYLONMat.GridMaterial("grid", scene);
-    gridmat.mainColor = new BABYLON.Color3(0, 1, 1);
-    gridmat.opacity = 0.5;
-    gridmat.gridRatio = 10;
-    gridmat.gridOffset = new BABYLON.Vector3(5, 5, 5);
-
-    gridBox.material = gridmat;
+    let gridBox = BABYLON.Mesh.CreateBox("boxGrid", 30, scene, false)
+    gridBox.isPickable = false
+    let gridmat = new BABYLONMat.GridMaterial("grid", scene)
+    gridmat.mainColor = new BABYLON.Color3(0, 1, 1)
+    gridmat.opacity = 0.5
+    gridmat.gridRatio = 10
+    gridmat.gridOffset = new BABYLON.Vector3(5, 5, 5)
+    gridBox.material = gridmat
 
     //bewegen
-    var selected = null;
-    var safe = null;
+    let selected = null
+    let selTeil: Teil = null
+    const selMat = new BABYLON.StandardMaterial('selectedMat', scene)
+    selMat.diffuseColor = new BABYLON.Color3(1, 1, 1) //white
+
+    //Mesh wählen
     scene.onPointerObservable.add(function (evt) {
-      if (selected) {
-        selected.material.alpha = 1;
-        selected = null;
+      if (selected) { //deselect
+        selected = null
       }
+      if (selTeil) { //deselect
+        selTeil.wuerfel.forEach(w => {
+          w.material = selTeil.material
+        })
+      }
+
       if (
         evt.pickInfo.hit &&
         evt.pickInfo.pickedMesh &&
         evt.event.button === 0
-      ) {
-        selected = evt.pickInfo.pickedMesh;
+      ) { //selected
 
-        console.log("picked Info", evt.pickInfo.pickedMesh.name);
-        selected.material.alpha = 0.8;
+        //mesh zuweisen
+        selected = evt.pickInfo.pickedMesh
+
+        //Teil finden
+        teilDT.forEach(t => {
+          t.wuerfel.forEach(w => {
+            //gleicher würfel?
+            if (selected === w) {
+              selTeil = t
+              return
+            }
+          })
+        })
+
+        //neues Material
+        if (selTeil) {
+          selTeil.wuerfel.forEach(w => {
+            w.material = selMat
+          })
+        }
+
+        console.log("picked Info", evt.pickInfo.pickedMesh.name)
 
         scene.registerBeforeRender(() => {
-          
+
           if (selected) {
             if (isWPressed) {
-              selected.position.z += 10;
-              isWPressed = false;
+              selTeil.wuerfel.forEach(w => {
+                w.position.z += 10
+              })
+              isWPressed = false
             }
 
             if (isSPressed) {
-              selected.position.z -= 10;
-              isSPressed = false;
+              selTeil.wuerfel.forEach(w => {
+                w.position.z -= 10
+              })
+              isSPressed = false
             }
 
             if (isAPressed) {
-              selected.position.x -= 10;
-              isAPressed = false;
+              selTeil.wuerfel.forEach(w => {
+                w.position.x -= 10
+              })
+              isAPressed = false
             }
 
             if (isDPressed) {
-              selected.position.x += 10;
-              isDPressed = false;
+              selTeil.wuerfel.forEach(w => {
+                w.position.x += 10
+              })
+              isDPressed = false
             }
 
             if (isRPressed) {
-              selected.position.y += 10;
-              isRPressed = false;
+              selTeil.wuerfel.forEach(w => {
+                w.position.y += 10
+              })
+              isRPressed = false
             }
 
             if (isFPressed) {
-              selected.position.y -= 10;
-              isFPressed = false;
+              selTeil.wuerfel.forEach(w => {
+                w.position.y -= 10
+              })
+              isFPressed = false
             }
 
             if (isXPressed) {
-              selected.rotation.x += BABYLON.Tools.ToRadians(90);
-              isXPressed = false;
+              Playground.rotateX(selTeil)
+              isXPressed = false
             }
 
             if (isYPressed) {
-              selected.rotation.y += BABYLON.Tools.ToRadians(90);
-              isYPressed = false;
+              Playground.rotateY(selTeil)
+              isYPressed = false
             }
 
             if (isZPressed) {
-              selected.rotation.z += BABYLON.Tools.ToRadians(90);
-              isZPressed = false;
+              Playground.rotateZ(selTeil)
+              isZPressed = false
             }
+            Playground.pruefen(teilDT)
           }
-        });
+        })
       }
     }, BABYLON.PointerEventTypes.POINTERUP);
 
@@ -385,14 +442,14 @@ export class Playground {
     var zChar = this.makeTextPlane("Z", "blue", size / 10, scene);
     zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
 
-      axisX.isPickable = false;
-      axisY.isPickable = false;
-      axisZ.isPickable = false;
-      
-      yChar.isPickable = false;
-      xChar.isPickable = false;
-      zChar.isPickable = false;
- 
+    axisX.isPickable = false;
+    axisY.isPickable = false;
+    axisZ.isPickable = false;
+
+    yChar.isPickable = false;
+    xChar.isPickable = false;
+    zChar.isPickable = false;
+
   }//showAxis(size)
 
   private static makeTextPlane(text, color, size, scene) {
@@ -442,5 +499,212 @@ export class Playground {
     window.addEventListener("resize", function () {
       engine.resize();
     });
+  }
+  private static pruefen(teilDT: Array<Teil>) {
+    let fertig = true;
+    let cube =
+      [
+        [[false, false, false], [false, false, false], [false, false, false]],
+        [[false, false, false], [false, false, false], [false, false, false]],
+        [[false, false, false], [false, false, false], [false, false, false]]
+      ] //nix drin = false
+
+    teilDT.forEach(t => {
+      t.wuerfel.forEach(w => {
+        if (w.position.x <= 10 && w.position.x >= -10
+          && w.position.y <= 10 && w.position.y >= -10
+          && w.position.z <= 10 && w.position.z >= -10) {
+
+          cube[(w.position.x + 10) / 10][(w.position.y + 10) / 10][(w.position.z + 10) / 10] = true
+        }
+
+      })
+    })
+
+
+    for (let x = 0; x < 3; x++) {
+      for (let y = 0; y < 3; y++) {
+        for (let z = 0; z < 3; z++) {
+          if (!cube[x][y][z]) {//nicht komplett
+            fertig = false;
+            return
+          }//if
+        }//for z
+      }//for y
+    }//for x
+    if (fertig) {
+      alert("FERTIG!!!")
+    }
+  } //pruefen()
+
+  private static rotateY(teil: Teil) {
+    let gX = teil.wuerfel[0].position.x
+    let kX = teil.wuerfel[0].position.x
+    let kZ = teil.wuerfel[0].position.z
+
+    teil.wuerfel.forEach(w => {
+      if (w.position.x > gX) {
+        gX = w.position.x
+      }
+      if (w.position.x < kX) {
+        kX = w.position.x
+      }
+      if (w.position.z < kZ) {
+        kZ = w.position.z
+      }
+    })
+
+    teil.wuerfel.forEach(w => {
+
+      let posX = w.position.x
+      let posZ = w.position.z
+
+      switch (posZ) {
+        case kZ:
+          w.position.x = kX
+          break
+        case kZ + 10:
+          w.position.x = kX + 10
+          break
+        case kZ + 20:
+          w.position.x = kX + 20
+          break
+
+        default:
+          break
+      }
+
+      switch (posX) {
+        case gX:
+          w.position.z = kZ
+          break
+        case gX - 10:
+          w.position.z = kZ + 10
+          break
+        case gX - 20:
+          w.position.z = kZ + 20
+          break
+
+        default:
+          break
+      }
+
+    })
+
+
+  }
+
+  private static rotateX(teil: Teil) {
+    let gY = teil.wuerfel[0].position.y
+    let kY = teil.wuerfel[0].position.y
+    let kZ = teil.wuerfel[0].position.z
+
+    teil.wuerfel.forEach(w => {
+      if (w.position.y > gY) {
+        gY = w.position.y
+      }
+      if (w.position.y < kY) {
+        kY = w.position.y
+      }
+      if (w.position.z < kZ) {
+        kZ = w.position.z
+      }
+    })
+
+    teil.wuerfel.forEach(w => {
+
+      let posY = w.position.y
+      let posZ = w.position.z
+
+      switch (posZ) {
+        case kZ:
+          w.position.y = kY
+          break
+        case kZ + 10:
+          w.position.y = kY + 10
+          break
+        case kZ + 20:
+          w.position.y = kY + 20
+          break
+
+        default:
+          break
+      }
+
+      switch (posY) {
+        case gY:
+          w.position.z = kZ
+          break
+        case gY - 10:
+          w.position.z = kZ + 10
+          break
+        case gY - 20:
+          w.position.z = kZ + 20
+          break
+
+        default:
+          break
+      }
+
+    })
+
+
+  }
+
+  private static rotateZ(teil: Teil) {
+    let gX = teil.wuerfel[0].position.x
+    let kX = teil.wuerfel[0].position.x
+    let kY = teil.wuerfel[0].position.y
+
+    teil.wuerfel.forEach(w => {
+      if (w.position.x > gX) {
+        gX = w.position.x
+      }
+      if (w.position.x < kX) {
+        kX = w.position.x
+      }
+      if (w.position.y < kY) {
+        kY = w.position.y
+      }
+    })
+
+    teil.wuerfel.forEach(w => {
+
+      let posX = w.position.x
+      let posY = w.position.y
+
+      switch (posY) {
+        case kY:
+          w.position.x = kX
+          break
+        case kY + 10:
+          w.position.x = kX + 10
+          break
+        case kY + 20:
+          w.position.x = kX + 20
+          break
+
+        default:
+          break
+      }
+
+      switch (posX) {
+        case gX:
+          w.position.y = kY
+          break
+        case gX - 10:
+          w.position.y = kY + 10
+          break
+        case gX - 20:
+          w.position.y = kY + 20
+          break
+
+        default:
+          break
+      }
+
+    })
+
+
   }
 }

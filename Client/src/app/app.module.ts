@@ -10,7 +10,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import {
   NbChatModule,
@@ -27,6 +27,8 @@ import {
 } from '@nebular/theme';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+//services
+import { HttpService } from './services/http.service';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, RegisterComponent],
@@ -55,6 +57,7 @@ import { RegisterComponent } from './register/register.component';
     }),
     CoreModule.forRoot(),
   ],
+  providers: [HttpService],  //services
   bootstrap: [AppComponent],
 })
 export class AppModule {
