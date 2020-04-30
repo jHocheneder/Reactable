@@ -20,7 +20,10 @@ export class RegisterComponent implements OnInit {
   passwordwarn: String = "";
   conpwdwarn: String = "";
 
+  checkterms: Boolean = false;
+
   registered: string = "";
+
 
 
   constructor(public http: HttpService) {
@@ -75,8 +78,9 @@ export class RegisterComponent implements OnInit {
 
   register(){
     console.log(sha512("sdf"));
-    console.log("test")
-    if(!this.checkUsername() && !this.checkEmail() && !this.checkPassword() && !this.checkConPwd()){
+    console.log("test");
+    console.log(this.terms)
+    if(!this.checkUsername() && !this.checkEmail() && !this.checkPassword() && !this.checkConPwd() && this.terms){
       const loginData = { 
         "username" : this.username,
         "email" : this.email, 
@@ -84,6 +88,11 @@ export class RegisterComponent implements OnInit {
       };
       console.log(loginData);
       this.http.register(loginData);
+    }
+    else{
+      if(!this.terms){
+        this.checkterms = true;
+      }
     }
   }
 
