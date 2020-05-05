@@ -244,6 +244,14 @@ export class Playground {
     const selMat = new BABYLON.StandardMaterial('selectedMat', scene)
     selMat.diffuseColor = new BABYLON.Color3(1, 1, 1) //white
 
+    let firstselect = true;
+    scene.onPointerObservable.add(function (evt){
+      if(evt.pickInfo.pickedMesh && firstselect){
+        firstselect = false;
+        console.log("First select")
+      }
+    })
+
     //Mesh wählen
     scene.onPointerObservable.add(function (evt) {
       if (selected) { //deselect
