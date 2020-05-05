@@ -1,10 +1,13 @@
 import * as BABYLON from '@babylonjs/core/Legacy/legacy'
 import * as BABYLONMat from '@babylonjs/materials'
 import { Teil } from './datatypes/teil'
+import { HttpService } from './services/http.service'
 
 export class Playground {
   private static engine: BABYLON.Engine
   private static canvas: HTMLCanvasElement
+
+  private http: HttpService;
 
   public static CreateScene() {
     this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
@@ -243,6 +246,14 @@ export class Playground {
     let selTeil: Teil = null
     const selMat = new BABYLON.StandardMaterial('selectedMat', scene)
     selMat.diffuseColor = new BABYLON.Color3(1, 1, 1) //white
+
+    let firstselect = true;
+    scene.onPointerObservable.add(function (evt){
+      if(evt.pickInfo.pickedMesh && firstselect){
+        firstselect = false;
+        console.log("First select")
+      }
+    })
 
     //Mesh wählen
     scene.onPointerObservable.add(function (evt) {
