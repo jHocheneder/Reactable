@@ -31,6 +31,11 @@ export class Playground {
 
     scene.clearColor = new BABYLON.Color4(0.0, 0.0, 0.0)
 
+    //test counter
+    let sec = this.makeTextPlane("00", "white", 10, scene)
+    sec.position = new BABYLON.Vector3(0, 0,0)
+
+
     //Wuerfelteile generieren
     let teilDT: Array<Teil> = []
     const box = []
@@ -243,14 +248,6 @@ export class Playground {
     let selTeil: Teil = null
     const selMat = new BABYLON.StandardMaterial('selectedMat', scene)
     selMat.diffuseColor = new BABYLON.Color3(1, 1, 1) //white
-
-    let firstselect = true;
-    scene.onPointerObservable.add(function (evt){
-      if(evt.pickInfo.pickedMesh && firstselect){
-        firstselect = false;
-        console.log("First select")
-      }
-    })
 
     //Mesh wählen
     scene.onPointerObservable.add(function (evt) {
