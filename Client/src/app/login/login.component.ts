@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { sha512 } from 'js-sha512';
 
-
+import { UserData } from '../@core/data/users';
+import { map, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
@@ -16,8 +18,11 @@ export class LoginComponent implements OnInit {
   warning: String = "";
   loggedIn: String = "";
 
-
-  constructor(private http: HttpService) {
+  private destroy$: Subject<void> = new Subject<void>();
+  user: any;
+  
+  constructor(private http: HttpService,
+    private userService: UserData) {
 
   }
 
@@ -26,6 +31,10 @@ export class LoginComponent implements OnInit {
       .returnLogin()
       .subscribe((msg: string) => {
         this.loggedIn = msg;
+
+        this.userService.getUsers()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((users: any) => this.user = users.maxi);
       });
   }
 
