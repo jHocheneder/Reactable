@@ -31,11 +31,6 @@ export class Playground {
 
     scene.clearColor = new BABYLON.Color4(0.0, 0.0, 0.0)
 
-    //test counter
-    let sec = this.makeTextPlane("00", "white", 10, scene)
-    sec.position = new BABYLON.Vector3(0, 0,0)
-
-
     //Wuerfelteile generieren
     let teilDT: Array<Teil> = []
     const box = []
