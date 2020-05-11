@@ -12,11 +12,8 @@ export class DashboardComponent {
   hours = 0;
   minutes = 0;
   seconds = 0;
-  //benutzer: Profil = new Profil();
 
   ngOnInit() {
-    //  this.benutzer.id = 0;
-    // document.getElementById("Slogan").innerHTML = "solve the puzzle"
     Playground.CreateScene();
     setInterval(() => {
       this.seconds++;
