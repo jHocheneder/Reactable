@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
       Code licensed under MIT.
     </span>
     <div class="socials">
-      <a href="#" target="_blank" class="ion ion-social-github"></a>
+      <a href="https://github.com/jHocheneder/Reactable" target="_blank" class="ion ion-social-github"></a>
       <a href="#" target="_blank" class="ion ion-social-facebook"></a>
       <a href="#" target="_blank" class="ion ion-social-twitter"></a>
       <a href="#" target="_blank" class="ion ion-social-linkedin"></a>
