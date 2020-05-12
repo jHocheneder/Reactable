@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
         "username" : this.username, 
         "password": sha512(this.password+"")  
       };
-      this.http.login(loginData);
+      this.http.gameStart();
     }
     else{
       if(this.username.length<3){

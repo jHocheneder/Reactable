@@ -68,6 +68,10 @@ io.on('connection', function(socket) {
         });
     })
 
+    socket.on('gamestart', function(gamestart) {
+
+    })
+
     socket.on('disconnect', function() {
         console.log('user disconnected');
 
