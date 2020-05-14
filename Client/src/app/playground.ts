@@ -36,6 +36,14 @@ export class Playground {
     const box = []
     let teilID = 0
 
+    let firstselect = true;
+    scene.onPointerObservable.add(function (evt){
+      if(evt.pickInfo.pickedMesh && firstselect){
+        firstselect = false;
+        console.log("First select")
+      }
+    })
+
     for (let i = 0; i < 27; i++) {
       box[i] = BABYLON.Mesh.CreateBox('Box' + i, 10.0, scene)
       if (i === 2) {
