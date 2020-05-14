@@ -14,8 +14,7 @@ export class LoginComponent implements OnInit {
   password: String = "";
   
   warning: String = "";
-  loggedIn: String = "";
-
+  userId: number;
 
   constructor(private http: HttpService) {
 
@@ -24,8 +23,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.http
       .returnLogin()
-      .subscribe((msg: string) => {
-        this.loggedIn = msg;
+      .subscribe((id: number) => {
+        this.userId = id;
       });
   }
 
@@ -36,7 +35,7 @@ export class LoginComponent implements OnInit {
         "username" : this.username, 
         "password": sha512(this.password+"")  
       };
-      this.http.gameStart();
+      this.http.login(loginData);
     }
     else{
       if(this.username.length<3){

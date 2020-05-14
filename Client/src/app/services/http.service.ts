@@ -39,8 +39,8 @@ export class HttpService {
 
   public returnLogin() {
     return Observable.create((subscriber) => {
-        this.socket.on('returnLogin', (msg) => {
-            subscriber.next(msg);
+        this.socket.on('returnLogin', (id) => {
+            subscriber.next(id);
         });
     });
   }
@@ -57,17 +57,17 @@ export class HttpService {
     });
   }
 
-  public gameStart() {
+  public gameStart(userId) {
     let timeStamp = new Date();
-    let tomorrow = new Date();
 
-    tomorrow.setTime(tomorrow.getTime() + 1000);
-    console.log(timeStamp);
-    console.log(tomorrow);
-    let sec = (tomorrow.getTime() - timeStamp.getTime()) / 1000
-    let min = Math.floor(sec / 60)
-    let hour = Math.floor(min / 60)
-    console.log(hour + ":" + min + ":" + sec);
-    this.socket.emit('gamestart', timeStamp);
+    console.log(timeStamp)
+
+    let gameStart = {
+      start : timeStamp,
+      userId: userId,
+      modellId: 1
+    };
+    
+    this.socket.emit('gameStart', gameStart);
   }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Playground } from '../../playground';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -13,6 +14,10 @@ export class DashboardComponent {
   minutes = 0;
   seconds = 0;
   //benutzer: Profil = new Profil();
+
+  constructor (private http: HttpService) {
+
+  }
 
   ngOnInit() {
     //  this.benutzer.id = 0;
@@ -29,5 +34,7 @@ export class DashboardComponent {
         this.minutes = 0;
       }
     }, 1000);
+
+    this.http.gameStart(5);
   }
 }
