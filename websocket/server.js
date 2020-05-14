@@ -42,14 +42,14 @@ io.on('connection', function(socket) {
         users.push(usr);
         sockets.push(socket);
 
-        let sql = "select password from player where username = '" + usr.username + "'";
+        let sql = "select id, password from player where username = '" + usr.username + "'";
 
         db.query(sql, function(err, result) {
             //if (err) socket.emit('returnLogin', 'error, not found');
             if (err) console.log(err);
 
             if (result[0].password == usr.password) {
-                socket.emit('returnLogin', 'logged in');
+                socket.emit('returnLogin', result[0].id);
             } else {
                 socket.emit('returnLogin', 'error');
             }
@@ -66,6 +66,44 @@ io.on('connection', function(socket) {
 
             socket.emit('returnRegister', 'got Registered');
         });
+    })
+
+    socket.on('gameStart', function(gamestart) {
+        let sql = "insert into game (createtime, userid, modellid) values ('" + gamestart.start + "', " + gamestart.userId + ", " + gamestart.modellId + ");";
+
+        console.log(sql)
+
+        db.query(sql, function(err, result) {
+            //if (err) socket.emit('returnGameStart', 'error');
+            if (err) console.log(err);
+
+            console.log("Gamestart inserted");
+
+            socket.emit('returnGamestart', 'Timer started');
+        });
+    })
+
+    socket.on('gameFinished', function(gameEnd) {
+        //userid ermitteln
+        let select = 'select (UNIX_TIMESTAMP() - UNIX_TIMESTAMP(createtime)) "time" from game where userId = ' + gameEnd.userId;
+
+        db.query(select, function(err, result) {
+            if (err) socket.emit('returnGameFinished', 'error');
+
+            console.log(result[0].time);
+
+            let insert = "insert into game (time) values (" + result[0].time + ")";
+
+            db.query(insert, function(err, res) {
+                if (err) socket.emit('returnGameFinished', 'error insert');
+
+                console.log("time inserted");
+
+                socket.emit('returnGameFinished', result[0].time);
+            })
+        });
+
+
     })
 
     socket.on('disconnect', function() {

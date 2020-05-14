@@ -34,30 +34,40 @@ export class HttpService {
   }
 
   public login(user) {
-    console.log(user);
     this.emit('login', user);
   }
 
   public returnLogin() {
     return Observable.create((subscriber) => {
-        this.socket.on('returnLogin', (msg) => {
-            console.log(msg);
-            subscriber.next(msg);
+        this.socket.on('returnLogin', (id) => {
+            subscriber.next(id);
         });
     });
   }
 
   public register(user) {
-    console.log(user);
     this.socket.emit('register', user);
   }
 
   public returnRegister() {
     return Observable.create((subscriber) => {
       this.socket.on('returnRegister', (msg) => {
-        console.log(msg);
         subscriber.next(msg);
       });
     });
+  }
+
+  public gameStart(userId) {
+    let timeStamp = new Date();
+
+    console.log(timeStamp)
+
+    let gameStart = {
+      start : timeStamp,
+      userId: userId,
+      modellId: 1
+    };
+    
+    this.socket.emit('gameStart', gameStart);
   }
 }

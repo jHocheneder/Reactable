@@ -12,6 +12,8 @@ import { AnalyticsService } from './@core/utils/analytics.service';
 })
 export class AppComponent implements OnInit {
 
+  usernameLoggedIn : string = ""
+
   constructor(private analytics: AnalyticsService) {
   }
 
