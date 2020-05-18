@@ -1,5 +1,7 @@
-import { Component } from '@angular/core'
-import { Playground } from '../../playground'
+
+import { Component } from '@angular/core';
+import { Playground } from '../../playground';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -13,6 +15,10 @@ export class DashboardComponent {
   minutes = 0
   seconds = 0
 
+  constructor (private http: HttpService) {
+
+  }
+
   ngOnInit() {
     Playground.CreateScene()
     setInterval(() => {
@@ -25,7 +31,10 @@ export class DashboardComponent {
         this.hours++
         this.minutes = 0
       }
-    }, 1000)
+
+    }, 1000);
+
+    this.http.gameStart(5);
   }
 
   isOpen(): Boolean {

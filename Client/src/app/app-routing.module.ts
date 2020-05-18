@@ -8,6 +8,7 @@ import {
 } from '@nebular/auth';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
         path: 'register',
         component: RegisterComponent,
       },
+      { 
+        path: 'profile', 
+        component: ProfileComponent,
+      },
       {
         path: 'logout',
         component: NbLogoutComponent,
@@ -46,7 +51,7 @@ const routes: Routes = [
     ],
   },
   { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  { path: '**', redirectTo: 'pages' }
 ];
 
 const config: ExtraOptions = {

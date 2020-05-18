@@ -29,9 +29,10 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 //services
 import { HttpService } from './services/http.service';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, ProfileComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
