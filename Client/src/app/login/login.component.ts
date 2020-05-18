@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
         "password": sha512(this.password+"")  
       };
       this.http.login(loginData);
+      this.http.searchOpponent({search: 'Fra'})
     }
     else{
       if(this.username.length<3){

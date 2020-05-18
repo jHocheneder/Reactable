@@ -45,8 +45,7 @@ io.on('connection', function(socket) {
         let sql = "select id, password from player where username = '" + usr.username + "'";
 
         db.query(sql, function(err, result) {
-            //if (err) socket.emit('returnLogin', 'error, not found');
-            if (err) console.log(err);
+            if (err) throw err;
 
             if (result[0].password == usr.password) {
                 socket.emit('returnLogin', result[0].id);
@@ -94,10 +93,6 @@ io.on('connection', function(socket) {
                     });
                 })
             }
-
-
-
-
         })
     })
 
@@ -128,15 +123,25 @@ io.on('connection', function(socket) {
         console.log(select);
 
         db.query(select, function(err, result) {
-            if (err) throw socket.emit('returnUpdatedUser', 'error');
+            if (err) throw err;
 
             let insert = "update player set password = '" + user.password + "', username = '" + user.username + "' where id = " + user.userId;
 
             db.query(insert, function(err, result) {
-                if (err) throw socket.emit('returnUpdatedUser', 'error updated');
+                if (err) throw err;
 
                 socket.emit('returnUpdatedUser', 'updated');
             })
+        })
+    })
+
+    socket.on('searchOpponent', function(user) {
+        let select = "select username from player where lower(username) like lower('" + user.search + "%')"
+
+        db.query(select, function(err, result) {
+            if (err) throw err;
+
+            console.log(result)
         })
     })
 
