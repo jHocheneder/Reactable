@@ -105,12 +105,14 @@ io.on('connection', function(socket) {
     })
 
     socket.on('updateUser', function(user) {
-        let select = 'select password from player where userId = ' + user.userId + '';
+        let select = 'select password from player where id = ' + user.userId;
+
+        console.log(select);
 
         db.query(select, function(err, result) {
             if (err) throw socket.emit('returnUpdatedUser', 'error');
 
-            let insert = "update player set password = '" + user.password + "' where userId = " + user.userId;
+            let insert = "update player set password = '" + user.password + "', username = '" + user.username + "' where id = " + user.userId;
 
             db.query(insert, function(err, result) {
                 if (err) throw socket.emit('returnUpdatedUser', 'error updated');

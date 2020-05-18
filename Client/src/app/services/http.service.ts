@@ -82,4 +82,12 @@ export class HttpService {
     console.log(user);
     this.socket.emit('updateUser', user);
   }
+
+  public returnUpdatedUser() {
+    return Observable.create((subscriber) => {
+      this.socket.on('returnUpdatedUser', (msg) => {
+        console.log(msg);
+      })
+    })
+  }
 }
