@@ -48,7 +48,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       home: true
     }, 
     { 
-      title: 'Log out' 
+      title: 'Log out',
+      link: '/auth/logout'
     } 
   ];
 
