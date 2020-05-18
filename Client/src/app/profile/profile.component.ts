@@ -10,15 +10,15 @@ import { sha512 } from 'js-sha512';
 })
 export class ProfileComponent implements OnInit {
 
-  username: String = "";
-  password: String = "";
-  conpassword: String = "";
+  username: string = "";
+  password: string = "";
+  conpassword: string = "";
 
-  userwarn: String = "";
-  passwordwarn: String = "";
-  conpwdwarn: String = "";
+  userwarn: string = "";
+  passwordwarn: string = "";
+  conpwdwarn: string = "";
 
-  loggedIn: Boolean = false;
+  loggedIn: boolean = false;
 
 
   constructor(public router: Router, public http: HttpService) { 
@@ -33,6 +33,15 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.http
+    .returnLogin()
+    .subscribe((msg: string) => {
+      if (msg == 'error, not found') {
+      } else {
+        localStorage.setItem('username', this.username);
+        this.router.navigate(['pages']);
+      }
+    });
 
     if(localStorage.getItem('username') != null){
       this.username = localStorage.getItem('username');
