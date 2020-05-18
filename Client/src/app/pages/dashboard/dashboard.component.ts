@@ -14,7 +14,7 @@ export class DashboardComponent {
   hours = 0
   minutes = 0
   seconds = 0
-
+  
   constructor (private http: HttpService) {
 
   }
@@ -22,16 +22,18 @@ export class DashboardComponent {
   ngOnInit() {
     Playground.CreateScene()
     setInterval(() => {
-      this.seconds++
-      if (this.seconds == 60) {
-        this.minutes++
-        this.seconds = 0
+      Playground.seconds++
+      if (Playground.seconds == 60) {
+        Playground.minutes++
+        Playground.seconds = 0
       }
-      if (this.minutes == 60) {
-        this.hours++
-        this.minutes = 0
+      if (Playground.minutes == 60) {
+        Playground.hours++
+        Playground.minutes = 0
       }
-
+      this.hours = Playground.hours
+      this.minutes = Playground.minutes
+      this.seconds = Playground.seconds
     }, 1000);
 
     this.http.gameStart(5);

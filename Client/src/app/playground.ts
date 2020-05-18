@@ -6,6 +6,9 @@ export class Playground {
   private static engine: BABYLON.Engine
   private static canvas: HTMLCanvasElement
   public static win: Boolean = false
+  public static hours = 0
+  public static minutes = 0
+  public static seconds = 0
 
   public static CreateScene() {
     this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
