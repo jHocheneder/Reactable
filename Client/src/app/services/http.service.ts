@@ -86,7 +86,7 @@ export class HttpService {
   public returnUpdatedUser() {
     return Observable.create((subscriber) => {
       this.socket.on('returnUpdatedUser', (msg) => {
-        console.log(msg);
+        subscriber.next(msg);
       })
     })
   }
