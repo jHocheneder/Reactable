@@ -11,7 +11,6 @@ import { Subject } from 'rxjs';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  private help = false;
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
@@ -93,22 +92,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuService.navigateHome();
     return false;
   }
-/*
-<nb-card *ngIf=getHelp() type="rotate-layout">
-                <nb-card-header style="position: absolute;top:0;left:50%;z-index:1000;">
-                  <nb-badge text="new" status="success" position="top right"></nb-badge>
-                  <nb-badge text="99+" status="danger" position="top left"></nb-badge>
-                </nb-card-header>
-                <nb-card-body>
-                  Card body.
-                </nb-card-body>
-              </nb-card>
-*/
-  collapse() {
-    console.log(this.help)
-    this.help = !this.help
-  }
-  getHelp(){
-    return this.help
-  }
+
 }

@@ -22,19 +22,6 @@
     <nb-action class="control-item">
       <nb-search type="rotate-layout"></nb-search>
     </nb-action>
-    <nb-action class="control-item" icon="question-mark-outline">
-      <nb-card *ngIf="getHelp()">
-        <nb-card-header
-          style="position: absolute; top: 0; left: 50%; z-index: 1000;"
-        >
-          <nb-badge text="new" status="success" position="top right"></nb-badge>
-          <nb-badge text="99+" status="danger" position="top left"></nb-badge>
-        </nb-card-header>
-        <nb-card-body>
-          Card body.
-        </nb-card-body>
-      </nb-card>
-    </nb-action>
     <nb-action class="control-item" icon="email-outline"></nb-action>
     <nb-action class="control-item" icon="bell-outline"></nb-action>
     <nb-action class="user-action" *nbIsGranted="['view', 'user']">

@@ -1,4 +1,15 @@
 <div class="row">
   <canvas id="renderCanvas"></canvas>
   <div id="zeit">{{ hours }}:{{ minutes }}:{{ seconds }}</div>
+  <nb-card id="geschafftDiv"  *ngIf="isOpen()">
+    <nb-card-header><nb-icon icon="close-outline"></nb-icon></nb-card-header>
+    <nb-card-body>
+      <h1>Herzlichen Glückwunsch!</h1>
+      <p>
+        Würfel in einer Zeit von<br>
+        <span status="primary">{{ hours }} Stunden {{ minutes }} Minuten und {{ seconds }} Sekunden</span><br>
+        zusammengebaut!
+      </p>
+    </nb-card-body>
+  </nb-card>
 </div>

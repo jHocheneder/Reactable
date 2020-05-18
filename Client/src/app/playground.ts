@@ -5,6 +5,7 @@ import { Teil } from './datatypes/teil'
 export class Playground {
   private static engine: BABYLON.Engine
   private static canvas: HTMLCanvasElement
+  public static win: Boolean = false
 
   public static CreateScene() {
     this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
@@ -533,7 +534,11 @@ export class Playground {
       }//for y
     }//for x
     if (fertig) {
-      alert("FERTIG!!!")
+      console.log("FERTIG!!!")
+      setTimeout(() => { 
+        this.win = true
+      }, 500)
+      
     }
   } //pruefen()
 
