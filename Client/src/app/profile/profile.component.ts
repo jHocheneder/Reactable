@@ -71,6 +71,7 @@ export class ProfileComponent implements OnInit {
   update(){
     if(!this.checkUsername() && !this.checkPassword() && !this.checkConPwd()){
       const loginData = { 
+        "userId" : localStorage.getItem('userId'),
         "username" : this.username,
         "password": sha512(this.password+"") 
       };
