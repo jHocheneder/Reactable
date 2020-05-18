@@ -76,7 +76,8 @@ export class ProfileComponent implements OnInit {
         "password": sha512(this.password+"") 
       };
       console.log(loginData);
-      //this.http.update(loginData);
+      this.http.updateUser(loginData);
+      this.router.navigate(['pages']);
     }
   }
 
