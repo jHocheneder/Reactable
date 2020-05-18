@@ -69,7 +69,7 @@ io.on('connection', function(socket) {
     })
 
     socket.on('gameStart', function(gamestart) {
-        let sql = "insert into game (createtime, userid, modellid) values ('" + gamestart.start + "', " + gamestart.userId + ", " + gamestart.modellId + ");";
+        let sql = "insert into game (createtime, userid, modellid) values (NOW(), " + gamestart.userId + ", " + gamestart.modellId + ");";
 
         console.log(sql)
 
@@ -92,7 +92,7 @@ io.on('connection', function(socket) {
 
             console.log(result[0].time);
 
-            let insert = "insert into game (time) values (" + result[0].time + ")";
+            let insert = "update game set time = '" + result[0].time + "' where userId = " + gameEnd.userId;
 
             db.query(insert, function(err, res) {
                 if (err) socket.emit('returnGameFinished', 'error insert');
@@ -102,8 +102,22 @@ io.on('connection', function(socket) {
                 socket.emit('returnGameFinished', result[0].time);
             })
         });
+    })
 
+    socket.on('updateUser', function(user) {
+        let select = 'select password from player where userId = ' + user.userId + '';
 
+        db.query(select, function(err, result) {
+            if (err) throw socket.emit('returnUpdatedUser', 'error');
+
+            let insert = "update player set password = '" + user.password + "' where userId = " + user.userId;
+
+            db.query(insert, function(err, result) {
+                if (err) throw socket.emit('returnUpdatedUser', 'error updated');
+
+                socket.emit('returnUpdatedUser', 'updated');
+            })
+        })
     })
 
     socket.on('disconnect', function() {

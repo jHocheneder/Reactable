@@ -1,10 +1,12 @@
 import * as BABYLON from '@babylonjs/core/Legacy/legacy'
 import * as BABYLONMat from '@babylonjs/materials'
 import { Teil } from './datatypes/teil'
+import { HttpService } from './services/http.service'
 
 export class Playground {
   private static engine: BABYLON.Engine
   private static canvas: HTMLCanvasElement
+  static http: HttpService
 
   public static CreateScene() {
     this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
@@ -541,7 +543,9 @@ export class Playground {
       }//for y
     }//for x
     if (fertig) {
-      alert("FERTIG!!!")
+      if (localStorage.getItem('username') != null) {
+        this.http.gameFinished(localStorage.getItem('userId'));
+      }
     }
   } //pruefen()
 

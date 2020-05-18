@@ -5,6 +5,7 @@ import { sha512 } from 'js-sha512';
 import { UserData } from '../@core/data/users';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
@@ -12,17 +13,16 @@ import { Subject } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
 
-  username: String = "";
-  password: String = "";
+  username: string = "";
+  password: string = "";
   
-  warning: String = "";
-  loggedIn: String = "";
+  warning: string = "";
 
   private destroy$: Subject<void> = new Subject<void>();
   user: any;
   
-  constructor(private http: HttpService,
-    private userService: UserData) {
+  constructor(private http: HttpService, 
+    private router: Router) {
 
   }
 
@@ -30,11 +30,13 @@ export class LoginComponent implements OnInit {
     this.http
       .returnLogin()
       .subscribe((msg: string) => {
-        this.loggedIn = msg;
-
-        this.userService.getUsers()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((users: any) => this.user = users.maxi);
+        if (msg == 'error, not found') {
+          
+        } else {
+          localStorage.setItem('username', this.username);
+          localStorage.setItem('userId', msg);
+          this.router.navigate(['pages']);
+        }
       });
   }
 
