@@ -69,18 +69,36 @@ io.on('connection', function(socket) {
     })
 
     socket.on('gameStart', function(gamestart) {
-        let sql = "insert into game (createtime, userid, modellid) values (NOW(), " + gamestart.userId + ", " + gamestart.modellId + ");";
+        let select = "select time from game where userId = " + gamestart.userId;
+        let insert = "insert into game (createtime, userid, modellid) values (NOW(), " + gamestart.userId + ", " + gamestart.modellId + ");";
+        let deleteEntry = "delete from game where userId = " + gamestart.userId + " and time = '00:00:00'";
 
-        console.log(sql)
+        db.query(select, function(err, result) {
+            if (err) throw err;
 
-        db.query(sql, function(err, result) {
-            //if (err) socket.emit('returnGameStart', 'error');
-            if (err) console.log(err);
+            if (result[0] == undefined) {
 
-            console.log("Gamestart inserted");
+                db.query(insert, function(err, result) {
+                    if (err) throw err;
 
-            socket.emit('returnGamestart', 'Timer started');
-        });
+                    socket.emit('returnGamestart', 'Timer started');
+                });
+            } else {
+                db.query(deleteEntry, function(err, result) {
+                    if (err) throw err;
+
+                    db.query(insert, function(err, result) {
+                        if (err) throw err;
+
+                        socket.emit('returnGamestart', 'Timer started');
+                    });
+                })
+            }
+
+
+
+
+        })
     })
 
     socket.on('gameFinished', function(gameEnd) {
