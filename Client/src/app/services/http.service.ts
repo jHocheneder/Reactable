@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class HttpService {
-
+  
   socket: any;
   readonly url: string = "ws://localhost:3000";
 
@@ -58,16 +58,28 @@ export class HttpService {
   }
 
   public gameStart(userId) {
-    let timeStamp = new Date();
-
-    console.log(timeStamp)
-
     let gameStart = {
-      start : timeStamp,
       userId: userId,
       modellId: 1
     };
     
     this.socket.emit('gameStart', gameStart);
+  }
+
+  public gameFinished(userId) {
+    let timeStamp = new Date();
+
+    console.log(timeStamp)
+
+    let gameEnd = {
+      userId: userId
+    }
+
+    this.socket.emit('gameFinished', gameEnd);
+  }
+
+  public updateUser(user) {
+    console.log(user);
+    this.socket.emit('updateUser', user);
   }
 }

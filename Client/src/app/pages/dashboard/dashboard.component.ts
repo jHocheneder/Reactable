@@ -35,6 +35,8 @@ export class DashboardComponent {
       }
     }, 1000);
 
-    this.http.gameStart(5);
+    if (localStorage.getItem('username') != null) {
+      this.http.gameStart(localStorage.getItem('userId'));
+    }
   }
 }
