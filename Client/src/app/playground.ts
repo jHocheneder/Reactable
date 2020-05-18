@@ -1,14 +1,18 @@
 import * as BABYLON from '@babylonjs/core/Legacy/legacy'
 import * as BABYLONMat from '@babylonjs/materials'
 import { Teil } from './datatypes/teil'
+import { HttpService } from './services/http.service'
 
 export class Playground {
   private static engine: BABYLON.Engine
   private static canvas: HTMLCanvasElement
+
   public static win: Boolean = false
   public static hours = 0
   public static minutes = 0
   public static seconds = 0
+
+  static http: HttpService
 
   public static CreateScene() {
     this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
@@ -41,8 +45,8 @@ export class Playground {
     let teilID = 0
 
     let firstselect = true;
-    scene.onPointerObservable.add(function (evt){
-      if(evt.pickInfo.pickedMesh && firstselect){
+    scene.onPointerObservable.add(function (evt) {
+      if (evt.pickInfo.pickedMesh && firstselect) {
         firstselect = false;
         console.log("First select")
       }
@@ -546,10 +550,16 @@ export class Playground {
     }//for x
     if (fertig) {
       console.log("FERTIG!!!")
-      setTimeout(() => { 
+      
+      if (localStorage.getItem('username') != null) {
+        this.http.gameFinished(localStorage.getItem('userId'));
+      }
+      setTimeout(() => {
         this.win = true
       }, 500)
-      
+
+
+
     }
   } //pruefen()
 

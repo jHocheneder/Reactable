@@ -36,7 +36,9 @@ export class DashboardComponent {
       this.seconds = Playground.seconds
     }, 1000);
 
-    this.http.gameStart(5);
+    if (localStorage.getItem('username') != null) {
+      this.http.gameStart(localStorage.getItem('userId'));
+    }
   }
 
   isOpen(): Boolean {
