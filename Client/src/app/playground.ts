@@ -11,8 +11,8 @@ export class Playground {
   public static hours = 0
   public static minutes = 0
   public static seconds = 0
-
   static http: HttpService
+
 
   public static CreateScene() {
     this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
@@ -359,7 +359,16 @@ export class Playground {
               Playground.rotateZ(selTeil)
               isZPressed = false
             }
-            Playground.pruefen(teilDT)
+            let fertig = Playground.pruefen(teilDT)
+            if (fertig) {
+              selected = null
+              console.log(teilDT[0].id)
+              setTimeout(() => {
+                this.win = true
+                teilDT = null
+                teilID = 0
+              }, 500)
+            }
           }
         })
       }
@@ -516,7 +525,7 @@ export class Playground {
       engine.resize();
     });
   }
-  private static pruefen(teilDT: Array<Teil>) {
+  private static pruefen(teilDT: Array<Teil>): Boolean {
     let fertig = true;
     let cube =
       [
@@ -537,7 +546,6 @@ export class Playground {
       })
     })
 
-
     for (let x = 0; x < 3; x++) {
       for (let y = 0; y < 3; y++) {
         for (let z = 0; z < 3; z++) {
@@ -550,16 +558,16 @@ export class Playground {
     }//for x
     if (fertig) {
       console.log("FERTIG!!!")
-      
+
       if (localStorage.getItem('username') != null) {
         this.http.gameFinished(localStorage.getItem('userId'));
       }
-      setTimeout(() => {
-        this.win = true
-      }, 500)
+
+      return true
 
 
-
+    } else {
+      return false
     }
   } //pruefen()
 

@@ -14,14 +14,21 @@ export class DashboardComponent {
   hours = 0
   minutes = 0
   seconds = 0
-  
-  constructor (private http: HttpService) {
+
+  constructor(private http: HttpService) {
 
   }
 
   ngOnInit() {
+    this.start()
+  }
+
+  start() {
     Playground.CreateScene()
-    setInterval(() => {
+    let counter = setInterval(() => {
+      if (Playground.win) {
+        clearInterval(counter)
+      }
       Playground.seconds++
       if (Playground.seconds == 60) {
         Playground.minutes++
@@ -40,13 +47,18 @@ export class DashboardComponent {
       this.http.gameStart(localStorage.getItem('userId'));
     }
   }
-
   isOpen(): Boolean {
     return Playground.win
   }
 
-  open(){
-    Playground.win = !Playground.win
+  close() {
+    Playground.win = false
+    Playground.hours = 0
+    Playground.minutes = 0
+    Playground.seconds = 0
+    Playground.CreateScene()
+    this.start()
+    console.log(Playground.win)
   }
 
 }
