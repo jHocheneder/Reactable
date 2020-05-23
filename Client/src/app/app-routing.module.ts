@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LogoutComponent } from './logout/logout.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 const routes: Routes = [
   {
@@ -49,8 +50,13 @@ const routes: Routes = [
         path: 'reset-password',
         component: NbResetPasswordComponent,
       },
+      { 
+        path: 'searchResults/:names', 
+        component: SearchResultsComponent
+      },
     ],
   },
+  
   { path: '', redirectTo: 'pages', pathMatch: 'full' },
   { path: '**', redirectTo: 'pages' }
 ];
