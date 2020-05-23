@@ -23,7 +23,8 @@ import {
   NbCardModule,
   NbInputModule,
   NbButtonModule,
-  NbCheckboxModule
+  NbCheckboxModule,
+  NbUserModule
 } from '@nebular/theme';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -46,6 +47,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
     NbInputModule,
     NbButtonModule,
     NbCheckboxModule,
+    NbUserModule,
 
     ThemeModule.forRoot(),
 

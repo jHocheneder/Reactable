@@ -92,7 +92,6 @@ export class HttpService {
   }
 
   public searchOpponent(user) {
-    console.log(user);
     //user muss den suchbegriff der Suche enthalten
     //am server werden alle Leute die like "Suchbegriff%" sind, zurückgegeben
     //Nice wär, wenn ma des dann in an Pop-Up Fenster darstellen könnten. Maybe mit den Usernamen und daneben einen "herausfordern" - Button

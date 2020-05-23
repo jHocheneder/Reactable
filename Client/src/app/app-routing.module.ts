@@ -51,7 +51,7 @@ const routes: Routes = [
         component: NbResetPasswordComponent,
       },
       { 
-        path: 'searchResults/:names', 
+        path: 'searchResults', 
         component: SearchResultsComponent
       },
     ],

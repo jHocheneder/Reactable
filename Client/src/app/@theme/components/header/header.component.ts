@@ -56,29 +56,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ];
 
   constructor(private sidebarService: NbSidebarService, private menuService: NbMenuService, private themeService: NbThemeService, private userService: UserData, private breakpointService: NbMediaBreakpointsService, private searchService: NbSearchService, private http: HttpService, private router: Router) {
-      this.searchService.onSearchSubmit().subscribe((data: any) => {
-        const searchData = { 
-          "search" : data.term
-        };
-
-        const testnames = [
-          {"name": 'Jakob'},
-          {"name": 'Maxi'},
-          {"name": 'Marco'},
-          {"name": 'Laura'}
-        ]
-        console.log('Navigate')
-        this.router.navigate(['auth/searchResults', testnames/*this.http.searchOpponent(searchData)*/])
-      })
-
+    this.searchService.onSearchSubmit().subscribe((data: any) => {
+      const searchData = { 
+        "search" : data.term
+      };
+      
+      this.http.searchOpponent(searchData)
+    })
   }
 
   ngOnInit() {
+    this.http
+      .returnFoundOpponent()
+      .subscribe((users: Array<string>) => {
+        console.log(users[0]);
+        const options = {queryParams: {names: users}};
+        console.log(options)
+        this.router.navigate(['auth/searchResults'], options)
+      });
+
     this.currentTheme = this.themeService.currentTheme;
 
-    /*this.userService.getUsers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.maxi);*/
     let name;
     if(localStorage.getItem('username') == null){
       name = 'Username';

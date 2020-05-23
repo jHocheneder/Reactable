@@ -38,13 +38,6 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['pages']);
         }
       });
-
-    this.http
-      .returnFoundOpponent()
-      .subscribe((users: Array<string>) => {
-        console.log(users)
-        console.log('here we are')
-      });
   }
 
   login(){
@@ -55,7 +48,6 @@ export class LoginComponent implements OnInit {
         "password": sha512(this.password+"")  
       };
       this.http.login(loginData);
-      this.http.searchOpponent({search: 'Fr'})
     }
     else{
       if(this.username.length<3){

@@ -138,19 +138,24 @@ io.on('connection', function(socket) {
     socket.on('searchOpponent', function(user) {
         let select = "select username from player where lower(username) like lower('" + user.search + "%')"
         let users = [];
+        let i;
 
         db.query(select, function(err, result) {
             if (err) throw err;
 
             console.log(result)
 
-            for (let i = 0; i < result.length; i++) {
+            console.log('1')
+
+            for (i = 0; i < result.length; i++) {
                 users.push(result[i].username)
             }
 
             console.log(users)
 
-            socket.emit('returnFoundOpponent', result);
+            if (i == result.length) {
+                socket.emit('returnFoundOpponent', users);
+            }
         })
     })
 
