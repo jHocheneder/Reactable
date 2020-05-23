@@ -98,4 +98,12 @@ export class HttpService {
     //Nice wär, wenn ma des dann in an Pop-Up Fenster darstellen könnten. Maybe mit den Usernamen und daneben einen "herausfordern" - Button
     this.socket.emit('searchOpponent', user);
   }
+
+  public returnFoundOpponent() {
+    return Observable.create((subscriber) => {
+      this.socket.on('returnFoundOpponent', (users) => {
+        subscriber.next(users);
+      })
+    })
+  }
 }
