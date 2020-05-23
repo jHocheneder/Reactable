@@ -68,7 +68,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
           {"name": 'Laura'}
         ]
         console.log('Navigate')
-        this.router.navigate(['auth/searchResults', testnames/*this.http.searchOpponent(searchData)*/])
+
+        const options = {queryParams: {names: ['chuck', 'norris', 'vs', 'keanu', 'reeves']}};
+        this.router.navigate(['auth/searchResults/'], options/*this.http.searchOpponent(searchData)*/)
       })
 
   }

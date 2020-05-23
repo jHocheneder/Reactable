@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SearchResultsComponent implements OnInit {
 
-  private names: [any]
+  private names: string[]
   private data: any;
 
   constructor(private router: ActivatedRoute) {
@@ -16,11 +16,9 @@ export class SearchResultsComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.data = this.router.params.subscribe(params => {
-      this.names = params['names'];
-    })
+    this.router.queryParamMap.subscribe(params => this.names = params.getAll('names'));
+    
     console.log(this.names);
-    console.log(this.data);
   }
 
 }
