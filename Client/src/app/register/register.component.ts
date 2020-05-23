@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { sha512 } from 'js-sha512';
 import { HttpService } from '../services/http.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'register',
@@ -26,7 +27,7 @@ export class RegisterComponent implements OnInit {
 
 
 
-  constructor(public http: HttpService) {
+  constructor(public http: HttpService, private router: Router) {
 
   }
 
@@ -88,6 +89,7 @@ export class RegisterComponent implements OnInit {
       };
       console.log(loginData);
       this.http.register(loginData);
+      this.router.navigate(['pages']);
     }
     else{
       if(!this.terms){

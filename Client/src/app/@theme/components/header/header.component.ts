@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService, NbSearchService } from '@nebular/theme';
 
 import { UserData } from '../../../@core/data/users';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { HttpService } from '../../../services/http.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -53,11 +55,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } 
   ];
 
-  constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private themeService: NbThemeService,
-              private userService: UserData,
-              private breakpointService: NbMediaBreakpointsService) {
+  constructor(private sidebarService: NbSidebarService, private menuService: NbMenuService, private themeService: NbThemeService, private userService: UserData, private breakpointService: NbMediaBreakpointsService, private searchService: NbSearchService, private http: HttpService, private router: Router) {
+      this.searchService.onSearchSubmit().subscribe((data: any) => {
+        const searchData = { 
+          "search" : data.term
+        };
+
+        const testnames = [
+          {"name": 'Jakob'},
+          {"name": 'Maxi'},
+          {"name": 'Marco'},
+          {"name": 'Laura'}
+        ]
+        console.log('Navigate')
+        this.router.navigate(['auth/searchResults', testnames/*this.http.searchOpponent(searchData)*/])
+      })
+
   }
 
   ngOnInit() {
