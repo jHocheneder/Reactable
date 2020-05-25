@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { Playground } from '../../playground';
 import { HttpService } from '../../services/http.service';
@@ -9,34 +10,55 @@ import { HttpService } from '../../services/http.service';
 
 })
 export class DashboardComponent {
-  title = 'Reactable';
-  hours = 0;
-  minutes = 0;
-  seconds = 0;
-  //benutzer: Profil = new Profil();
+  title = 'Reactable'
+  hours = 0
+  minutes = 0
+  seconds = 0
 
-  constructor (private http: HttpService) {
+  constructor(private http: HttpService) {
 
   }
 
   ngOnInit() {
-    //  this.benutzer.id = 0;
-    // document.getElementById("Slogan").innerHTML = "solve the puzzle"
-    Playground.CreateScene();
-    setInterval(() => {
-      this.seconds++;
-      if (this.seconds == 60) {
-        this.minutes++;
-        this.seconds = 0;
+    this.start()
+  }
+
+  start() {
+    Playground.CreateScene()
+    let counter = setInterval(() => {
+      if (Playground.win) {
+        clearInterval(counter)
       }
-      if (this.minutes == 60) {
-        this.hours++;
-        this.minutes = 0;
+      Playground.seconds++
+      if (Playground.seconds == 60) {
+        Playground.minutes++
+        Playground.seconds = 0
       }
+      if (Playground.minutes == 60) {
+        Playground.hours++
+        Playground.minutes = 0
+      }
+      this.hours = Playground.hours
+      this.minutes = Playground.minutes
+      this.seconds = Playground.seconds
     }, 1000);
 
     if (localStorage.getItem('username') != null) {
       this.http.gameStart(localStorage.getItem('userId'));
     }
   }
+  isOpen(): Boolean {
+    return Playground.win
+  }
+
+  close() {
+    Playground.win = false
+    Playground.hours = 0
+    Playground.minutes = 0
+    Playground.seconds = 0
+    Playground.CreateScene()
+    this.start()
+    console.log(Playground.win)
+  }
+
 }

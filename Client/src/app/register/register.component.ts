@@ -40,8 +40,8 @@ export class RegisterComponent implements OnInit {
       });
   }
 
-  checkUsername(){
-    if(this.username.length<3 || this.username.length>25){
+  checkUsername() {
+    if (this.username.length < 3 || this.username.length > 25) {
       this.userwarn = "Der Username muss zwischen 3 und 25 Zeichen lang sein."
       return true;
     }
@@ -49,50 +49,50 @@ export class RegisterComponent implements OnInit {
     return false;
   }
 
-  checkEmail(){
-      if(this.email.includes("@") && this.email.includes(".", this.email.indexOf("@")+2)){
-        if(this.email.indexOf("@")>0 && this.email.length > this.email.indexOf(".", this.email.indexOf("@")+2)+2){
-          return false;
-        }
-
-        return true;
+  checkEmail() {
+    if (this.email.includes("@") && this.email.includes(".", this.email.indexOf("@") + 2)) {
+      if (this.email.indexOf("@") > 0 && this.email.length > this.email.indexOf(".", this.email.indexOf("@") + 2) + 2) {
+        return false;
       }
+
       return true;
+    }
+    return true;
   }
-  checkPassword(){
-    if(this.password.length<8){
+  checkPassword() {
+    if (this.password.length < 8) {
       this.passwordwarn = "Das Passwort muss mindestens 8 Zeichen lang sein."
       return true;
     }
     return false;
   }
 
-  checkConPwd(){
-    if(this.conpassword === this.password){
+  checkConPwd() {
+    if (this.conpassword === this.password) {
       return false;
     }
-    else{
+    else {
       this.conpwdwarn = "Die Passwörter stimmen nicht überein!";
       return true;
     }
   }
 
-  register(){
+  register() {
     console.log(sha512("sdf"));
     console.log("test");
     console.log(this.terms)
-    if(!this.checkUsername() && !this.checkEmail() && !this.checkPassword() && !this.checkConPwd() && this.terms){
-      const loginData = { 
-        "username" : this.username,
-        "email" : this.email, 
-        "password": sha512(this.password+"") 
+    if (!this.checkUsername() && !this.checkEmail() && !this.checkPassword() && !this.checkConPwd() && this.terms) {
+      const loginData = {
+        "username": this.username,
+        "email": this.email,
+        "password": sha512(this.password + "")
       };
       console.log(loginData);
       this.http.register(loginData);
       this.router.navigate(['pages']);
     }
-    else{
-      if(!this.terms){
+    else {
+      if (!this.terms) {
         this.checkterms = true;
       }
     }

@@ -6,7 +6,13 @@ import { HttpService } from './services/http.service'
 export class Playground {
   private static engine: BABYLON.Engine
   private static canvas: HTMLCanvasElement
+
+  public static win: Boolean = false
+  public static hours = 0
+  public static minutes = 0
+  public static seconds = 0
   static http: HttpService
+
 
   public static CreateScene() {
     this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
@@ -39,8 +45,8 @@ export class Playground {
     let teilID = 0
 
     let firstselect = true;
-    scene.onPointerObservable.add(function (evt){
-      if(evt.pickInfo.pickedMesh && firstselect){
+    scene.onPointerObservable.add(function (evt) {
+      if (evt.pickInfo.pickedMesh && firstselect) {
         firstselect = false;
         console.log("First select")
       }
@@ -353,7 +359,16 @@ export class Playground {
               Playground.rotateZ(selTeil)
               isZPressed = false
             }
-            Playground.pruefen(teilDT)
+            let fertig = Playground.pruefen(teilDT)
+            if (fertig) {
+              selected = null
+              console.log(teilDT[0].id)
+              setTimeout(() => {
+                this.win = true
+                teilDT = null
+                teilID = 0
+              }, 500)
+            }
           }
         })
       }
@@ -510,7 +525,7 @@ export class Playground {
       engine.resize();
     });
   }
-  private static pruefen(teilDT: Array<Teil>) {
+  private static pruefen(teilDT: Array<Teil>): Boolean {
     let fertig = true;
     let cube =
       [
@@ -531,7 +546,6 @@ export class Playground {
       })
     })
 
-
     for (let x = 0; x < 3; x++) {
       for (let y = 0; y < 3; y++) {
         for (let z = 0; z < 3; z++) {
@@ -543,9 +557,17 @@ export class Playground {
       }//for y
     }//for x
     if (fertig) {
+      console.log("FERTIG!!!")
+
       if (localStorage.getItem('username') != null) {
         this.http.gameFinished(localStorage.getItem('userId'));
       }
+
+      return true
+
+
+    } else {
+      return false
     }
   } //pruefen()
 
