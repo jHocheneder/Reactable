@@ -45,8 +45,7 @@ io.on('connection', function(socket) {
         let sql = "select id, password from player where username = '" + usr.username + "'";
 
         db.query(sql, function(err, result) {
-            //if (err) socket.emit('returnLogin', 'error, not found');
-            if (err) console.log(err);
+            if (err) throw err;
 
             if (result[0].password == usr.password) {
                 socket.emit('returnLogin', result[0].id);
@@ -69,18 +68,32 @@ io.on('connection', function(socket) {
     })
 
     socket.on('gameStart', function(gamestart) {
-        let sql = "insert into game (createtime, userid, modellid) values (NOW(), " + gamestart.userId + ", " + gamestart.modellId + ");";
+        let select = "select time from game where userId = " + gamestart.userId;
+        let insert = "insert into game (createtime, userid, modellid) values (NOW(), " + gamestart.userId + ", " + gamestart.modellId + ");";
+        let deleteEntry = "delete from game where userId = " + gamestart.userId + " and time = '00:00:00'";
 
-        console.log(sql)
+        db.query(select, function(err, result) {
+            if (err) throw err;
 
-        db.query(sql, function(err, result) {
-            //if (err) socket.emit('returnGameStart', 'error');
-            if (err) console.log(err);
+            if (result[0] == undefined) {
 
-            console.log("Gamestart inserted");
+                db.query(insert, function(err, result) {
+                    if (err) throw err;
 
-            socket.emit('returnGamestart', 'Timer started');
-        });
+                    socket.emit('returnGamestart', 'Timer started');
+                });
+            } else {
+                db.query(deleteEntry, function(err, result) {
+                    if (err) throw err;
+
+                    db.query(insert, function(err, result) {
+                        if (err) throw err;
+
+                        socket.emit('returnGamestart', 'Timer started');
+                    });
+                })
+            }
+        })
     })
 
     socket.on('gameFinished', function(gameEnd) {
@@ -105,18 +118,44 @@ io.on('connection', function(socket) {
     })
 
     socket.on('updateUser', function(user) {
-        let select = 'select password from player where userId = ' + user.userId + '';
+        let select = 'select password from player where id = ' + user.userId;
+
+        console.log(select);
 
         db.query(select, function(err, result) {
-            if (err) throw socket.emit('returnUpdatedUser', 'error');
+            if (err) throw err;
 
-            let insert = "update player set password = '" + user.password + "' where userId = " + user.userId;
+            let insert = "update player set password = '" + user.password + "', username = '" + user.username + "' where id = " + user.userId;
 
             db.query(insert, function(err, result) {
-                if (err) throw socket.emit('returnUpdatedUser', 'error updated');
+                if (err) throw err;
 
                 socket.emit('returnUpdatedUser', 'updated');
             })
+        })
+    })
+
+    socket.on('searchOpponent', function(user) {
+        let select = "select username from player where lower(username) like lower('" + user.search + "%')"
+        let users = [];
+        let i;
+
+        db.query(select, function(err, result) {
+            if (err) throw err;
+
+            console.log(result)
+
+            console.log('1')
+
+            for (i = 0; i < result.length; i++) {
+                users.push(result[i].username)
+            }
+
+            console.log(users)
+
+            if (i == result.length) {
+                socket.emit('returnFoundOpponent', users);
+            }
         })
     })
 

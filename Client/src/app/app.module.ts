@@ -23,16 +23,19 @@ import {
   NbCardModule,
   NbInputModule,
   NbButtonModule,
-  NbCheckboxModule
+  NbCheckboxModule,
+  NbUserModule
 } from '@nebular/theme';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 //services
 import { HttpService } from './services/http.service';
 import { ProfileComponent } from './profile/profile.component';
+import { LogoutComponent } from './logout/logout.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, ProfileComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, ProfileComponent, LogoutComponent, SearchResultsComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -44,6 +47,7 @@ import { ProfileComponent } from './profile/profile.component';
     NbInputModule,
     NbButtonModule,
     NbCheckboxModule,
+    NbUserModule,
 
     ThemeModule.forRoot(),
 
