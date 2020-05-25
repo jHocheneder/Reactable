@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService, NbSearchService } from '@nebular/theme';
 
 import { UserData } from '../../../@core/data/users';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { HttpService } from '../../../services/http.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -11,6 +13,7 @@ import { Subject } from 'rxjs';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
@@ -40,7 +43,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-
   userMenu = [ 
     { 
       title: 'Profile',
@@ -48,23 +50,41 @@ export class HeaderComponent implements OnInit, OnDestroy {
       home: true
     }, 
     { 
-      title: 'Log out' 
+      title: 'Log out',
+      link: '/auth/logout'
     } 
   ];
 
-  constructor(private sidebarService: NbSidebarService,
-    private menuService: NbMenuService,
-    private themeService: NbThemeService,
-    private userService: UserData,
-    private breakpointService: NbMediaBreakpointsService) {
+  constructor(private sidebarService: NbSidebarService, private menuService: NbMenuService, private themeService: NbThemeService, private userService: UserData, private breakpointService: NbMediaBreakpointsService, private searchService: NbSearchService, private http: HttpService, private router: Router) {
+    this.searchService.onSearchSubmit().subscribe((data: any) => {
+      const searchData = { 
+        "search" : data.term
+      };
+      
+      this.http.searchOpponent(searchData)
+    })
   }
 
   ngOnInit() {
+    this.http
+      .returnFoundOpponent()
+      .subscribe((users: Array<string>) => {
+        console.log(users[0]);
+        const options = {queryParams: {names: users}};
+        console.log(options)
+        this.router.navigate(['auth/searchResults'], options)
+      });
+
     this.currentTheme = this.themeService.currentTheme;
 
-    this.userService.getUsers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.maxi);
+    let name;
+    if(localStorage.getItem('username') == null){
+      name = 'Username';
+    }
+    else {
+      name = localStorage.getItem('username');
+    }
+    this.user = {name: name}
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
@@ -89,7 +109,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   changeTheme(themeName: string) {
     this.themeService.changeTheme(themeName);
-
+    
   }
 
   toggleSidebar(): boolean {
@@ -102,5 +122,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuService.navigateHome();
     return false;
   }
-
 }
