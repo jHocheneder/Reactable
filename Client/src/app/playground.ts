@@ -359,16 +359,12 @@ export class Playground {
               Playground.rotateZ(selTeil)
               isZPressed = false
             }
-            let fertig = Playground.pruefen(teilDT)
-            if (fertig) {
+            if (!this.win) { pruefen(teilDT) } else {
               selected = null
-              console.log(teilDT[0].id)
-              setTimeout(() => {
-                this.win = true
-                teilDT = null
-                teilID = 0
-              }, 500)
+              teilDT = null
+              teilID = null
             }
+
           }
         })
       }
@@ -419,7 +415,68 @@ export class Playground {
       }
     });
     this.build(this.engine, scene);
+
+    function pruefen(teilDT: Array<Teil>) {
+      let fertig = true;
+      let cube =
+        [
+          [[false, false, false], [false, false, false], [false, false, false]],
+          [[false, false, false], [false, false, false], [false, false, false]],
+          [[false, false, false], [false, false, false], [false, false, false]]
+        ] //nix drin = false
+  
+      teilDT.forEach(t => {
+        t.wuerfel.forEach(w => {
+          if (w.position.x <= 10 && w.position.x >= -10
+            && w.position.y <= 10 && w.position.y >= -10
+            && w.position.z <= 10 && w.position.z >= -10) {
+  
+            cube[(w.position.x + 10) / 10][(w.position.y + 10) / 10][(w.position.z + 10) / 10] = true
+          }
+  
+        })
+      })
+  
+      for (let x = 0; x < 3; x++) {
+        for (let y = 0; y < 3; y++) {
+          for (let z = 0; z < 3; z++) {
+            if (!cube[x][y][z]) {//nicht komplett
+              fertig = false;
+              return
+            }//if
+          }//for z
+        }//for y
+      }//for x
+      if (fertig) {
+        console.log("FERTIG!!!")
+  
+        if (fertig) {
+  
+          console.log(teilDT[0].id)
+          setTimeout(() => {
+            Playground.win = true
+            teilDT = null
+            reset()
+          }, 500)
+        }
+  
+        if (localStorage.getItem('username') != null) {
+          this.http.gameFinished(localStorage.getItem('userId'));
+        }
+  
+  
+  
+      } else {
+        return false
+      }
+    } //pruefen()
+
     // return scene;
+    function reset() {
+      selected = null
+      teilDT = null
+      teilID = null
+    }
   }
 
   private static showAxis(size, scene) {//.isPickable = false;
@@ -525,51 +582,6 @@ export class Playground {
       engine.resize();
     });
   }
-  private static pruefen(teilDT: Array<Teil>): Boolean {
-    let fertig = true;
-    let cube =
-      [
-        [[false, false, false], [false, false, false], [false, false, false]],
-        [[false, false, false], [false, false, false], [false, false, false]],
-        [[false, false, false], [false, false, false], [false, false, false]]
-      ] //nix drin = false
-
-    teilDT.forEach(t => {
-      t.wuerfel.forEach(w => {
-        if (w.position.x <= 10 && w.position.x >= -10
-          && w.position.y <= 10 && w.position.y >= -10
-          && w.position.z <= 10 && w.position.z >= -10) {
-
-          cube[(w.position.x + 10) / 10][(w.position.y + 10) / 10][(w.position.z + 10) / 10] = true
-        }
-
-      })
-    })
-
-    for (let x = 0; x < 3; x++) {
-      for (let y = 0; y < 3; y++) {
-        for (let z = 0; z < 3; z++) {
-          if (!cube[x][y][z]) {//nicht komplett
-            fertig = false;
-            return
-          }//if
-        }//for z
-      }//for y
-    }//for x
-    if (fertig) {
-      console.log("FERTIG!!!")
-
-      if (localStorage.getItem('username') != null) {
-        this.http.gameFinished(localStorage.getItem('userId'));
-      }
-
-      return true
-
-
-    } else {
-      return false
-    }
-  } //pruefen()
 
   private static rotateY(teil: Teil) {
     let gX = teil.wuerfel[0].position.x
@@ -741,4 +753,5 @@ export class Playground {
 
 
   }
+  
 }
