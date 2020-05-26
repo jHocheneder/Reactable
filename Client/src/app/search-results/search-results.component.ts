@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SearchResultsComponent implements OnInit {
 
-  private names: string[]
+  public names: string[]
   private data: any;
 
   constructor(private router: ActivatedRoute) {
