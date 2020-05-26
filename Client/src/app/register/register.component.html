@@ -1,6 +1,6 @@
 <nb-card>
     <nb-card-body class="example-items-col" >
-        <h1 id="titler" class="titler">Register</h1>
+        <h1 id="title" class="titler">Register</h1>
         <form (ngSubmit)="register()" aria-labelledby="titler">
             <input type="text" name="username" nbInput fullWidth status="primary" placeholder="Username" [(ngModel)]="username">
             <div style="color: red;" *ngIf="checkUsername()">{{userwarn}}</div>
