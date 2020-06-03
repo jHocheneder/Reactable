@@ -1,7 +1,8 @@
 <nb-card>
-    <nb-card-body class="example-items-col">
+    <nb-card-body class="example-items-col" style="display: flex;  flex-wrap: wrap;">
         <div *ngFor="let name of names">
-            <nb-user size="large" [name]="name" style="margin-top: 5%;"></nb-user>
+            <nb-user size="large" [name]="name" style="margin: 10px;"></nb-user>
+            <button style="margin: 10px" nbButton status="success"> Einladen</button>
         </div>
     </nb-card-body>
 </nb-card>
