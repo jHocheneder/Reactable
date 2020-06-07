@@ -12,14 +12,12 @@ export class HttpService {
   //readonly url: string = "ws://localhost:3000";
 
   constructor() {
-    localStorage.clear();
     this.socket = io(this.url)
   }
 
   listen(eventName: string) {
     return new Observable((subscriber) => {
       this.socket.on(eventName, (data) => {
-        subscriber.next(data);
       })
     });
   }
