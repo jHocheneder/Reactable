@@ -55,14 +55,22 @@ io.on('connection', function(socket) {
 
             console.log("1 person inserted");
 
-            socket.emit('returnRegister', 'got Registered');
+            let sql = "select id from player where username = '" + usr.username + "'";
+
+            db.query(sql, function(err, result) {
+                if (err) throw err;
+
+                if (result[0] != null) {
+                    socket.emit('returnLogin', result[0].id);
+                }
+            });
         });
     })
 
     socket.on('gameStart', function(gamestart) {
         let select = "select time from game where userId = " + gamestart.userId;
         let insert = "insert into game (createtime, userid, modellid) values (NOW(), " + gamestart.userId + ", " + gamestart.modellId + ");";
-        let deleteEntry = "delete from game where userId = " + gamestart.userId + " and time = '00:00:00'";
+        let deleteEntry = "delete from game where userId = " + gamestart.userId + " and time is null";
 
         if (gamestart.userId != null && gamestart.modellId != null) {
             db.query(select, function(err, result) {

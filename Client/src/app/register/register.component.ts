@@ -10,18 +10,18 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  username: String = "";
-  email: String = "";
-  password: String = "";
-  conpassword: String = "";
-  terms: Boolean = false;
+  username: string = "";
+  email: string = "";
+  password: string = "";
+  conpassword: string = "";
+  terms: boolean = false;
 
-  userwarn: String = "";
-  emailwarn: String = "Ungültige Email";
-  passwordwarn: String = "";
-  conpwdwarn: String = "";
+  userwarn: string = "";
+  emailwarn: string = "Ungültige Email";
+  passwordwarn: string = "";
+  conpwdwarn: string = "";
 
-  checkterms: Boolean = false;
+  checkterms: boolean = false;
 
   registered: string = "";
 
@@ -35,8 +35,13 @@ export class RegisterComponent implements OnInit {
     this.http
       .returnRegister()
       .subscribe((msg: string) => {
-        console.log(msg);
-        this.registered = msg;
+        if (msg != 'error') {
+          console.log(msg)
+          console.log(this.username)
+          localStorage.setItem('username', this.username);
+          localStorage.setItem('userId', msg);
+          this.router.navigate(['pages']);
+        }
       });
   }
 
