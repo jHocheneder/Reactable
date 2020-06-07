@@ -30,8 +30,7 @@ export class LoginComponent implements OnInit {
     this.http
       .returnLogin()
       .subscribe((msg: string) => {
-        if (msg != 'error, not found') {
-          console.log(msg);
+        if (msg != 'error') {
           localStorage.setItem('username', this.username);
           localStorage.setItem('userId', msg);
           this.router.navigate(['pages']);
