@@ -357,7 +357,12 @@ export class Playground {
               Playground.rotateZ(selTeil)
               isZPressed = false
             }
-            if (!this.win) { pruefen(teilDT) } else {
+            if (!this.win) {
+              if(!completed){
+                pruefen(teilDT) 
+              }
+                
+            } else {
               selected = null
               teilDT = null
               teilID = null
@@ -378,6 +383,8 @@ export class Playground {
     let isXPressed = false;
     let isYPressed = false;
     let isZPressed = false;
+
+    let completed = false;
 
     document.addEventListener("keydown", e => {
       if (selected) {
@@ -447,7 +454,7 @@ export class Playground {
       }//for x
       if (fertig) {
         console.log("FERTIG!!!")
-  
+        completed = true;
         if (fertig) {
   
           console.log(teilDT[0].id)
