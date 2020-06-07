@@ -11,13 +11,12 @@ export class Playground {
   public static hours = 0
   public static minutes = 0
   public static seconds = 0
-  static http: HttpService
 
 
   public static CreateScene() {
     this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
     this.engine = new BABYLON.Engine(this.canvas, true, { preserveDrawingBuffer: true, stencil: true })
-    this.http
+
     //Scene:
     let scene = new BABYLON.Scene(this.engine)
 
@@ -259,7 +258,7 @@ export class Playground {
     let selTeil: Teil = null
     const selMat = new BABYLON.StandardMaterial('selectedMat', scene)
     selMat.diffuseColor = new BABYLON.Color3(1, 1, 1) //white
-
+    let http: HttpService = new HttpService();
     //Mesh wählen
     scene.onPointerObservable.add(function (evt) {
       if (selected) { //deselect
@@ -299,9 +298,9 @@ export class Playground {
         }
 
         console.log("picked Info", evt.pickInfo.pickedMesh.name)
-
+        
         scene.registerBeforeRender(() => {
-
+          
           if (selected) {
             if (isWPressed) {
               selTeil.wuerfel.forEach(w => {
@@ -359,7 +358,7 @@ export class Playground {
               Playground.rotateZ(selTeil)
               isZPressed = false
             }
-            if (!this.win) { pruefen(teilDT) } else {
+            if (!this.win) { pruefen(teilDT, http) } else {
               selected = null
               teilDT = null
               teilID = null
@@ -415,9 +414,8 @@ export class Playground {
       }
     });
     this.build(this.engine, scene);
-
-    function pruefen(teilDT: Array<Teil>) {
-      let http : HttpService;
+    let first = true;
+    function pruefen(teilDT: Array<Teil>, http: HttpService) {
       let fertig = true;
       let cube =
         [
@@ -464,7 +462,6 @@ export class Playground {
         if (localStorage.getItem('username') != null) {
           http.gameFinished(localStorage.getItem('userId'));
         }
-  
   
   
       } else {
