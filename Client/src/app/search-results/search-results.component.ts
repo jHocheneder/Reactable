@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpService } from '../services/http.service';
 
 @Component({
   selector: 'search-results',
@@ -11,13 +12,18 @@ export class SearchResultsComponent implements OnInit {
   public names: string[]
   private data: any;
 
-  constructor(private router: ActivatedRoute) {
+  constructor(private router: ActivatedRoute, private http: HttpService, private rout: Router) {
     console.log('results')
    }
 
   ngOnInit() {
     this.router.queryParamMap.subscribe(params => this.names = params.getAll('names'));
     console.log(this.names);
+  }
+
+  invitePlayer(name) {
+    this.http.invitePlayer(name)
+    this.rout.navigate(['pages'])
   }
 
 }

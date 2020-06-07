@@ -12,6 +12,7 @@ export class HttpService {
   //readonly url: string = "ws://localhost:3000";
 
   constructor() {
+    localStorage.clear();
     this.socket = io(this.url)
   }
 
@@ -104,6 +105,28 @@ export class HttpService {
     return Observable.create((subscriber) => {
       this.socket.on('returnFoundOpponent', (users) => {
         subscriber.next(users);
+      })
+    })
+  }
+
+  public invitePlayer(username) {
+    let users = {
+      username: localStorage.getItem('username'),
+      usernameOpponent: username,
+      id: localStorage.getItem('userId'),
+      modelid: 1,
+      room: localStorage.getItem('username') + Math.floor(Math.random()*10)
+    }
+
+    console.log('Hello')
+
+    this.socket.emit('invitePlayer', users);
+  }
+
+  public returnInvitation() {
+    return Observable.create((subscriber) => {
+      this.socket.on('returnInvitation', (inv) => {
+        subscriber.next(inv);
       })
     })
   }

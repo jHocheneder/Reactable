@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `multiplayer` (
   `modelid` int(11) NOT NULL,
   `time` time DEFAULT NULL,
   `createtime` timestamp NULL DEFAULT NULL,
-  `winner` int(11) NOT NULL,
+  `winner` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `player1` (`player1`),
   KEY `player2` (`player2`),

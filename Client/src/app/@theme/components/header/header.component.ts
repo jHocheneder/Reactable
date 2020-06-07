@@ -75,6 +75,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.router.navigate(['auth/searchResults'], options)
       });
 
+    this.http
+      .returnInvitation()
+      .subscribe((msg) => {
+        console.log(msg);
+      })
+
     this.currentTheme = this.themeService.currentTheme;
 
     let name;
