@@ -31,8 +31,8 @@ export class LoginComponent implements OnInit {
       .returnLogin()
       .subscribe((msg: string) => {
         if (msg != 'error') {
-          localStorage.setItem('username', this.username);
-          localStorage.setItem('userId', msg);
+          sessionStorage.setItem('username', this.username);
+          sessionStorage.setItem('userId', msg);
           this.router.navigate(['pages']);
         }
       });
