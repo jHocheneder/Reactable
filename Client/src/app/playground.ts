@@ -17,7 +17,7 @@ export class Playground {
   public static CreateScene() {
     this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
     this.engine = new BABYLON.Engine(this.canvas, true, { preserveDrawingBuffer: true, stencil: true })
-
+    this.http
     //Scene:
     let scene = new BABYLON.Scene(this.engine)
 
@@ -417,6 +417,7 @@ export class Playground {
     this.build(this.engine, scene);
 
     function pruefen(teilDT: Array<Teil>) {
+      let http : HttpService;
       let fertig = true;
       let cube =
         [
@@ -461,7 +462,7 @@ export class Playground {
         }
   
         if (localStorage.getItem('username') != null) {
-          this.http.gameFinished(localStorage.getItem('userId'));
+          http.gameFinished(localStorage.getItem('userId'));
         }
   
   

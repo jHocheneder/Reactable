@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 export class HttpService {
   
   socket: any;
-  readonly url: string = "ws://localhost:3000";
+  readonly url: string = "ws://vm112.htl-leonding.ac.at:8080";
+  //readonly url: string = "ws://localhost:3000";
 
   constructor() {
     this.socket = io(this.url)
@@ -62,6 +63,8 @@ export class HttpService {
       userId: userId,
       modellId: 1
     };
+    
+    console.log(gameStart)
     
     this.socket.emit('gameStart', gameStart);
   }
