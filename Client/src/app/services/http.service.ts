@@ -12,6 +12,7 @@ export class HttpService {
   //readonly url: string = "ws://localhost:3000";
 
   constructor() {
+    localStorage.clear();
     this.socket = io(this.url)
   }
 

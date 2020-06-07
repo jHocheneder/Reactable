@@ -27,16 +27,6 @@ io.on('connection', function(socket) {
         io.to(socket.handshake.query.room).emit('connectedToRoom', 'You are in ' + socket.handshake.query.room);
     }
 
-    socket.on('invite Gamer', function(usr) {
-        console.log('Invited User: ' + usr);
-        socket.broadcast.emit('invitePlayer', usr);
-    })
-
-    socket.on('join Room', function(roomName) {
-        socket.join(roomName);
-        io.to(roomName).emit('connectedToRoom', 'You are in ' + roomName);
-    })
-
     socket.on('login', function(usr) {
         console.log('User: ' + usr.username);
         users.push(usr);
@@ -47,10 +37,12 @@ io.on('connection', function(socket) {
         db.query(sql, function(err, result) {
             if (err) throw err;
 
-            if (result[0].password == usr.password) {
-                socket.emit('returnLogin', result[0].id);
-            } else {
-                socket.emit('returnLogin', 'error');
+            if (result[0] != null) {
+                if (result[0].password == usr.password) {
+                    socket.emit('returnLogin', result[0].id);
+                } else {
+                    socket.emit('returnLogin', 'error');
+                }
             }
         });
     })
@@ -72,28 +64,30 @@ io.on('connection', function(socket) {
         let insert = "insert into game (createtime, userid, modellid) values (NOW(), " + gamestart.userId + ", " + gamestart.modellId + ");";
         let deleteEntry = "delete from game where userId = " + gamestart.userId + " and time = '00:00:00'";
 
-        db.query(select, function(err, result) {
-            if (err) throw err;
+        if (gamestart.userId != null && gamestart.modellId != null) {
+            db.query(select, function(err, result) {
+                if (err) throw err;
 
-            if (result[0] == undefined) {
-
-                db.query(insert, function(err, result) {
-                    if (err) throw err;
-
-                    socket.emit('returnGamestart', 'Timer started');
-                });
-            } else {
-                db.query(deleteEntry, function(err, result) {
-                    if (err) throw err;
+                if (result[0] == null) {
 
                     db.query(insert, function(err, result) {
                         if (err) throw err;
 
                         socket.emit('returnGamestart', 'Timer started');
                     });
-                })
-            }
-        })
+                } else {
+                    db.query(deleteEntry, function(err, result) {
+                        if (err) throw err;
+
+                        db.query(insert, function(err, result) {
+                            if (err) throw err;
+
+                            socket.emit('returnGamestart', 'Timer started');
+                        });
+                    })
+                }
+            })
+        }
     })
 
     socket.on('gameFinished', function(gameEnd) {
