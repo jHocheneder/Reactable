@@ -38,13 +38,13 @@ export class ProfileComponent implements OnInit {
     .subscribe((msg: string) => {
       if (msg == 'error, not found') {
       } else {
-        localStorage.setItem('username', this.username);
+        sessionStorage.setItem('username', this.username);
         this.router.navigate(['pages']);
       }
     });
 
-    if(localStorage.getItem('username') != null){
-      this.username = localStorage.getItem('username');
+    if(sessionStorage.getItem('username') != null){
+      this.username = sessionStorage.getItem('username');
       this.loggedIn = true;
     }
     
@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit {
   update(){
     if(!this.checkUsername() && !this.checkPassword() && !this.checkConPwd()){
       const loginData = { 
-        "userId" : localStorage.getItem('userId'),
+        "userId" : sessionStorage.getItem('userId'),
         "username" : this.username,
         "password": sha512(this.password+"") 
       };
