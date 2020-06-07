@@ -13,7 +13,7 @@ export class Playground {
   public static seconds = 0
 
 
-  public static CreateScene() {
+  public static CreateScene(http : HttpService) {
     this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
     this.engine = new BABYLON.Engine(this.canvas, true, { preserveDrawingBuffer: true, stencil: true })
 
@@ -258,7 +258,6 @@ export class Playground {
     let selTeil: Teil = null
     const selMat = new BABYLON.StandardMaterial('selectedMat', scene)
     selMat.diffuseColor = new BABYLON.Color3(1, 1, 1) //white
-    let http: HttpService = new HttpService();
     //Mesh wählen
     scene.onPointerObservable.add(function (evt) {
       if (selected) { //deselect
@@ -358,7 +357,7 @@ export class Playground {
               Playground.rotateZ(selTeil)
               isZPressed = false
             }
-            if (!this.win) { pruefen(teilDT, http) } else {
+            if (!this.win) { pruefen(teilDT) } else {
               selected = null
               teilDT = null
               teilID = null
@@ -415,7 +414,7 @@ export class Playground {
     });
     this.build(this.engine, scene);
     let first = true;
-    function pruefen(teilDT: Array<Teil>, http: HttpService) {
+    function pruefen(teilDT: Array<Teil>) {
       let fertig = true;
       let cube =
         [

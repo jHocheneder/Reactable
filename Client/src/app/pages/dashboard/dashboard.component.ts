@@ -24,7 +24,7 @@ export class DashboardComponent {
   }
 
   start() {
-    Playground.CreateScene()
+    Playground.CreateScene(this.http)
     let counter = setInterval(() => {
       if (Playground.win) {
         clearInterval(counter)
@@ -56,7 +56,7 @@ export class DashboardComponent {
     Playground.hours = 0
     Playground.minutes = 0
     Playground.seconds = 0
-    Playground.CreateScene()
+    Playground.CreateScene(this.http)
     this.start()
     console.log(Playground.win)
   }

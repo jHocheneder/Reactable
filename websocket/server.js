@@ -29,8 +29,7 @@ io.on('connection', function(socket) {
 
     socket.on('login', function(usr) {
         console.log('User: ' + usr.username);
-        users.push(usr);
-        sockets.push(socket);
+        sockets[username].push(socket);
 
         let sql = "select id, password from player where username = '" + usr.username + "'";
 
