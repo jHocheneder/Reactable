@@ -8,12 +8,11 @@ import { Observable } from 'rxjs';
 export class HttpService {
   
   socket: any;
-  private bool = true;
   readonly url: string = "ws://vm112.htl-leonding.ac.at:8080";
   //readonly url: string = "ws://localhost:3000";
 
   constructor() {
-    sessionStorage.clear();
+    localStorage.clear();
     this.socket = io(this.url)
   }
 

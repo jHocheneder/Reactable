@@ -78,11 +78,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.currentTheme = this.themeService.currentTheme;
 
     let name;
-    if(sessionStorage.getItem('username') == null){
+    if(localStorage.getItem('username') == null){
       name = 'Username';
     }
     else {
-      name = sessionStorage.getItem('username');
+      name = localStorage.getItem('username');
     }
     this.user = {name: name}
 

@@ -459,8 +459,8 @@ export class Playground {
           }, 500)
         }
   
-        if (sessionStorage.getItem('username') != null) {
-          http.gameFinished(sessionStorage.getItem('userId'));
+        if (localStorage.getItem('username') != null) {
+          http.gameFinished(localStorage.getItem('userId'));
         }
   
   

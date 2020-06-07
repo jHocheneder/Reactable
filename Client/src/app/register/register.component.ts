@@ -38,8 +38,8 @@ export class RegisterComponent implements OnInit {
         if (msg != 'error') {
           console.log(msg)
           console.log(this.username)
-          sessionStorage.setItem('username', this.username);
-          sessionStorage.setItem('userId', msg);
+          localStorage.setItem('username', this.username);
+          localStorage.setItem('userId', msg);
           this.router.navigate(['pages']);
         }
       });
