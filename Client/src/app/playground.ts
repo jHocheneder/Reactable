@@ -259,6 +259,8 @@ export class Playground {
     const selMat = new BABYLON.StandardMaterial('selectedMat', scene)
     selMat.diffuseColor = new BABYLON.Color3(1, 1, 1) //white
     let http: HttpService = new HttpService();
+    let firstwin = true;
+
     //Mesh wählen
     scene.onPointerObservable.add(function (evt) {
       if (selected) { //deselect
@@ -358,7 +360,12 @@ export class Playground {
               Playground.rotateZ(selTeil)
               isZPressed = false
             }
-            if (!this.win) { pruefen(teilDT, http) } else {
+            if (!this.win) {
+              if(!completed){
+                pruefen(teilDT, http) 
+              }
+                
+            } else {
               selected = null
               teilDT = null
               teilID = null
@@ -379,6 +386,8 @@ export class Playground {
     let isXPressed = false;
     let isYPressed = false;
     let isZPressed = false;
+
+    let completed = false;
 
     document.addEventListener("keydown", e => {
       if (selected) {
@@ -414,7 +423,6 @@ export class Playground {
       }
     });
     this.build(this.engine, scene);
-    let first = true;
     function pruefen(teilDT: Array<Teil>, http: HttpService) {
       let fertig = true;
       let cube =
@@ -448,7 +456,7 @@ export class Playground {
       }//for x
       if (fertig) {
         console.log("FERTIG!!!")
-  
+        completed = true;
         if (fertig) {
   
           console.log(teilDT[0].id)
