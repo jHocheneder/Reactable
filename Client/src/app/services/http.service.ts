@@ -64,6 +64,8 @@ export class HttpService {
       modellId: 1
     };
     
+    console.log(gameStart)
+    
     this.socket.emit('gameStart', gameStart);
   }
 
