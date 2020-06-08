@@ -33,9 +33,10 @@ import { HttpService } from './services/http.service';
 import { ProfileComponent } from './profile/profile.component';
 import { LogoutComponent } from './logout/logout.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { InvitationsComponent } from './invitations/invitations.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, ProfileComponent, LogoutComponent, SearchResultsComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, ProfileComponent, LogoutComponent, SearchResultsComponent, InvitationsComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
