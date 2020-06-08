@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   templateUrl: './help.component.html',
 })
 export class HelpComponent {
-  today: number = Date.now();
+  
 }
