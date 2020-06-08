@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+  invitation: Array<JSON> = new Array<JSON>();
 
   themes = [
     {
@@ -78,7 +79,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.http
       .returnInvitation()
       .subscribe((msg) => {
-        console.log(msg);
+        this.invitation.push(msg);
       })
 
     this.currentTheme = this.themeService.currentTheme;
