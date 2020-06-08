@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { StatisticComponent } from './statistic/statistic.component';
 import { AboutComponent } from './about/about.component';
+import { HelpComponent } from './help/help.component';
 
 const routes: Routes = [{
   path: '',
@@ -22,6 +23,10 @@ const routes: Routes = [{
     {
       path: 'about',
       component: AboutComponent,
+    },
+    {
+      path: 'help',
+      component: HelpComponent,
     },
     {
       path: '',
