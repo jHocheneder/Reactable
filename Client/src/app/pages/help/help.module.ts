@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbCardModule, NbAccordionModule, NbIconModule} from '@nebular/theme';
+import { NbCardModule, NbAccordionModule, NbIconModule, NbButtonModule, NbInputModule} from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { HelpComponent } from './help.component';
@@ -10,6 +10,8 @@ import { HelpComponent } from './help.component';
     ThemeModule,
     NbAccordionModule,
     NbIconModule,
+    NbButtonModule,
+    NbInputModule
   ],
   declarations: [
     HelpComponent,
