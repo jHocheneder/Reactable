@@ -31,7 +31,7 @@ export class DashboardComponent {
   }
 
   start() {
-    Playground.CreateScene(this.http)
+    Playground.CreateScene(this.http, this.data)
     this.counter = setInterval(() => {
       if (Playground.win) {
         clearInterval(this.counter)
