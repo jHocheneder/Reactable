@@ -14,20 +14,26 @@ export class DashboardComponent {
   hours = 0
   minutes = 0
   seconds = 0
+  started = false
+  counter
 
   constructor(private http: HttpService) {
 
   }
 
+
   ngOnInit() {
-    this.start()
+    if(!this.started){
+      this.start()
+      this.started = true
+    }
   }
 
   start() {
     Playground.CreateScene(this.http)
-    let counter = setInterval(() => {
+    this.counter = setInterval(() => {
       if (Playground.win) {
-        clearInterval(counter)
+        clearInterval(this.counter)
       }
       Playground.seconds++
       if (Playground.seconds == 60) {
@@ -59,6 +65,10 @@ export class DashboardComponent {
     Playground.CreateScene(this.http)
     this.start()
     console.log(Playground.win)
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.counter)
   }
 
 }
