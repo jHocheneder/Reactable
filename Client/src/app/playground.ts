@@ -2,7 +2,8 @@ import * as BABYLON from '@babylonjs/core/Legacy/legacy'
 import * as BABYLONMat from '@babylonjs/materials'
 import { Teil } from './datatypes/teil'
 import { HttpService } from './services/http.service'
-
+import { DataService } from './services/data.service'
+  import { from } from 'rxjs'
 export class Playground {
   private static engine: BABYLON.Engine
   private static canvas: HTMLCanvasElement
@@ -13,7 +14,14 @@ export class Playground {
   public static seconds = 0
 
 
-  public static CreateScene(http : HttpService) {
+  
+  
+  
+  
+  
+  
+  public static CreateScene(http : HttpService, data : DataService) {
+    
     this.canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
     this.engine = new BABYLON.Engine(this.canvas, true, { preserveDrawingBuffer: true, stencil: true })
 
@@ -385,35 +393,35 @@ export class Playground {
     let isZPressed = false;
 
     let completed = false;
-
+    console.log(data.yup);
     document.addEventListener("keydown", e => {
       if (selected) {
-        switch (e.keyCode) {
-          case 87:
+        switch (e.key) {
+          case data.zup:
             isWPressed = true;
             break;
-          case 83:
+          case data.zdown:
             isSPressed = true;
             break;
-          case 65:
+          case data.xdown:
             isAPressed = true;
             break;
-          case 68:
+          case data.xup:
             isDPressed = true;
             break;
-          case 82:
+          case data.yup:
             isRPressed = true;
             break;
-          case 70:
+          case data.ydown:
             isFPressed = true;
             break;
-          case 88:
+          case 'x':
             isXPressed = true;
             break;
-          case 89:
+          case 'y':
             isYPressed = true;
             break;
-          case 90:
+          case 'z':
             isZPressed = true;
             break;
         }
