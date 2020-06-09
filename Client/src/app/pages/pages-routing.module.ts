@@ -8,6 +8,8 @@ import { StatisticComponent } from './statistic/statistic.component';
 import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
 
+import { OptionsComponent } from './options/options.component';
+
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
@@ -19,6 +21,10 @@ const routes: Routes = [{
     {
       path: 'statistic',
       component: StatisticComponent,
+    },
+    {
+      path: 'options',
+      component: OptionsComponent,
     },
     {
       path: 'about',

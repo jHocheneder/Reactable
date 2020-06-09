@@ -6,6 +6,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AboutModule } from './about/about.module';
 import { HelpModule } from './help/help.module';
+import { OptionsModule } from './options/options.module';
 
 import { StatisticModule } from './statistic/statistic.module';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -18,7 +19,8 @@ import { PagesRoutingModule } from './pages-routing.module';
     DashboardModule,
     StatisticModule,
     AboutModule,
-    HelpModule
+    HelpModule,
+    OptionsModule
   ],
   declarations: [
     PagesComponent,
