@@ -11,6 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LogoutComponent } from './logout/logout.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { InvitationsComponent } from './invitations/invitations.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,10 @@ const routes: Routes = [
       { 
         path: 'searchResults', 
         component: SearchResultsComponent
+      },
+      { 
+        path: 'invitations', 
+        component: InvitationsComponent
       },
     ],
   },

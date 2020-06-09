@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+  invitation: JSON[] = new Array<JSON>();
 
   themes = [
     {
@@ -78,7 +79,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.http
       .returnInvitation()
       .subscribe((msg) => {
-        console.log(msg);
+        this.invitation.push(msg);
       })
 
     this.currentTheme = this.themeService.currentTheme;
@@ -106,6 +107,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+  }
+
+  showInvitations(){
+    let names: string[] = new Array<string>();
+    this.invitation.forEach(l => {
+      names.push(l.parse('room'))
+      console.log(l.parse('room'))
+      })
+    
+    //const inv = {queryParams: {name: this.invitation.forEach(i => {}), room: this.invitation}};
+    //this.router.navigate(['auth/invitations'], inv)
   }
 
   ngOnDestroy() {

@@ -11,7 +11,7 @@ export class LogoutComponent implements OnInit {
   constructor(public router: Router) { }
 
   ngOnInit() {
-    localStorage.clear
+    localStorage.clear();
     this.router.navigate(['pages']);
   }
 
