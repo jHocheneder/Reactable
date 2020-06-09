@@ -2,6 +2,7 @@
 import { Component } from '@angular/core';
 import { Playground } from '../../playground';
 import { HttpService } from '../../services/http.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -15,16 +16,16 @@ export class DashboardComponent {
   minutes = 0
   seconds = 0
 
-  constructor(private http: HttpService) {
+  constructor(private http: HttpService, private data: DataService) {
 
   }
 
-  ngOnInit() {
-    this.start()
+  ngOnInit() {    
+      this.start()         
   }
 
   start() {
-    Playground.CreateScene(this.http)
+    Playground.CreateScene(this.http, this.data)
     let counter = setInterval(() => {
       if (Playground.win) {
         clearInterval(counter)
@@ -56,7 +57,7 @@ export class DashboardComponent {
     Playground.hours = 0
     Playground.minutes = 0
     Playground.seconds = 0
-    Playground.CreateScene(this.http)
+    Playground.CreateScene(this.http, this.data)
     this.start()
     console.log(Playground.win)
   }
