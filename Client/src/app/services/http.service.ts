@@ -95,9 +95,6 @@ export class HttpService {
   }
 
   public searchOpponent(user) {
-    //user muss den suchbegriff der Suche enthalten
-    //am server werden alle Leute die like "Suchbegriff%" sind, zurückgegeben
-    //Nice wär, wenn ma des dann in an Pop-Up Fenster darstellen könnten. Maybe mit den Usernamen und daneben einen "herausfordern" - Button
     this.socket.emit('searchOpponent', user);
   }
 
@@ -110,17 +107,17 @@ export class HttpService {
   }
 
   public invitePlayer(username) {
-    let users = {
-      username: localStorage.getItem('username'),
-      usernameOpponent: username,
-      id: localStorage.getItem('userId'),
-      modelid: 1,
-      room: localStorage.getItem('username') + Math.floor(Math.random()*10)
+    if (!(localStorage.getItem('username') == null || localStorage.getItem('userId') == null)) {
+      let users = {
+        username: localStorage.getItem('username'),
+        usernameOpponent: username,
+        id: localStorage.getItem('userId'),
+        modelid: 1,
+        room: localStorage.getItem('username') + Math.floor(Math.random()*10)
+      }
+  
+      this.socket.emit('invitePlayer', users);
     }
-
-    console.log('Hello')
-
-    this.socket.emit('invitePlayer', users);
   }
 
   public returnInvitation() {
