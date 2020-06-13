@@ -31,6 +31,7 @@ export class DashboardComponent {
     this.http.countdown().subscribe((msg) => {
       if(msg == 'Go') {
         console.log(msg)
+        clearInterval(this.counter)
         this.start()
       } else {
         console.log(msg)
