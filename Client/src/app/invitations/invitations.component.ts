@@ -34,6 +34,7 @@ export class InvitationsComponent implements OnInit {
   }
 
   accept(room: string){
+    localStorage.setItem('multiplayer', 'true')
     this.http.connectGame(room);
     this.rout.navigate(['pages']);
   }
