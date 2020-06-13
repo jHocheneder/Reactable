@@ -127,4 +127,19 @@ export class HttpService {
       })
     })
   }
+
+  public connectGame(room) {
+    if (!(localStorage.getItem('username') == null || localStorage.getItem('userId') == null)) {
+      console.log(room)
+      this.socket.emit('connectGame', room);
+    }   
+  }
+
+  public countdown() {
+    return Observable.create((subscriber) => {
+      this.socket.on('countdown', (msg) => {
+        subscriber.next(msg);
+      })
+    })
+  }
 }
