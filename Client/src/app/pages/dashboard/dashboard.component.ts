@@ -81,4 +81,11 @@ export class DashboardComponent {
     clearInterval(this.counter)
   }
 
+  multiplayer(){
+    if(localStorage.getItem('multiplayer')== 'true'){
+      return true;
+    }
+    return false;
+  }
+
 }
