@@ -22,12 +22,20 @@ export class DashboardComponent {
 
   }
 
-
   ngOnInit() {
     if(!this.started){
       this.start()
       this.started = true
     }
+
+    this.http.countdown().subscribe((msg) => {
+      if(msg == 'Go') {
+        console.log(msg)
+        this.start()
+      } else {
+        console.log(msg)
+      }
+    })
   }
 
   start() {

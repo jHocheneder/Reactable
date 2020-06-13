@@ -12,13 +12,6 @@ export class Playground {
   public static hours = 0
   public static minutes = 0
   public static seconds = 0
-
-
-  
-  
-  
-  
-  
   
   public static CreateScene(http : HttpService, data : DataService) {
     

@@ -35,6 +35,7 @@ export class InvitationsComponent implements OnInit {
 
   accept(room: string){
     this.http.connectGame(room);
+    this.rout.navigate(['pages']);
   }
 
 }
