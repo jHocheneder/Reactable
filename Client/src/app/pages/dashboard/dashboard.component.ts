@@ -17,7 +17,6 @@ export class DashboardComponent {
   seconds = 0
   started = false
   counter
-  static refreshed = false
 
   constructor(private http: HttpService, private data: DataService) {
 
@@ -32,10 +31,8 @@ export class DashboardComponent {
     this.http.countdown().subscribe((msg) => {
       if(msg == 'Go') {
         console.log(msg)
-        if (!DashboardComponent.refreshed) {
-          this.close()
-          DashboardComponent.refreshed = true
-        }
+        clearInterval(this.counter)
+        this.start()
       } else {
         console.log(msg)
       }
