@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Playground } from '../../playground';
 import { HttpService } from '../../services/http.service';
 import { DataService } from '../../services/data.service';
+import { throws } from 'assert';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -16,7 +17,7 @@ export class DashboardComponent {
   minutes = 0
   seconds = 0
   started = false
-  counter
+  counter : NodeJS.Timer
 
   constructor(private http: HttpService, private data: DataService) {
 
@@ -31,8 +32,12 @@ export class DashboardComponent {
     this.http.countdown().subscribe((msg) => {
       if(msg == 'Go') {
         console.log(msg)
-        clearInterval(this.counter)
-        this.start()
+        this.hours = 0
+        this.minutes = 0
+        this.seconds = 0
+        Playground.hours = 0
+        Playground.minutes = 0
+        Playground.seconds = 0
       } else {
         console.log(msg)
       }
