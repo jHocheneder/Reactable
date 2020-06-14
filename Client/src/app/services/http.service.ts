@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class HttpService {
-  
+
   socket: any;
   readonly url: string = "ws://vm112.htl-leonding.ac.at:8080";
   //readonly url: string = "ws://localhost:3000";
@@ -128,10 +128,23 @@ export class HttpService {
     })
   }
 
+  public returnGameId() {
+    return Observable.create((subscriber) => {
+      this.socket.on('returnGameId', (gameId) => {
+        localStorage.setItem('gameId', gameId);
+      })
+    })
+  }
+
   public connectGame(room) {
     if (!(localStorage.getItem('username') == null || localStorage.getItem('userId') == null)) {
       console.log(room)
-      this.socket.emit('connectGame', room);
+      let data = {
+        room: room,
+        gameId: localStorage.getItem('gameId')
+      }
+
+      this.socket.emit('connectGame', data);
     }   
   }
 
@@ -141,5 +154,30 @@ export class HttpService {
         subscriber.next(msg);
       })
     })
+  }
+  
+  public multiplayerGameFinished(userId, gameId) {
+    let data = {
+      userId: userId,
+      gameId: gameId
+    }
+
+    this.socket.emit('multiplayerGameFinished', data);
+  }
+
+  public multiplayerGameEnd() {
+    return Observable.create((subscriber) => {
+      this.socket.on('multiplayerGameEnd', (username) => {
+        if (username == localStorage.getItem('username')) {
+          subscriber.next('<b>Herzlichen Glückwunsch!</b><br>Du hast gewonnen.');
+        } else {
+          subscriber.next('<b>Du hast verloren</b>. Dein Gegner war leider schneller als du.<br>Beeil dich beim nächsten Mal, um der Gewinner zu sein.');
+        }
+      })
+    })
+  }
+
+  public leaveRoom(room) {
+    this.socket.emit('leaveRoom', room);
   }
 }

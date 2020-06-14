@@ -47,6 +47,10 @@ export class DashboardComponent {
         this.countdown = msg
       }
     })
+
+    this.http.multiplayerGameEnd().subscriber((msg) => {
+      console.log(msg)
+    })
   }
 
   start() {

@@ -168,14 +168,22 @@ io.on('connection', function(socket) {
                 db.query(insert, function(err, result) {
                     if (err) throw err;
 
-                    socket.join(users.room);
+                    select = "select id from multiplayer where player1 = " + users.id + " and player2 = " + opponentId + " and time is null"
 
-                    let msg = {
-                        username: users.username,
-                        room: users.room
-                    }
+                    db.query(select, function(err, result) {
+                        if (err) throw err;
 
-                    socket.broadcast.to(sockets[users.usernameOpponent].id).emit('returnInvitation', msg);
+                        socket.join(users.room);
+
+                        let msg = {
+                            username: users.username,
+                            room: users.room,
+                            gameId: result[0].id
+                        }
+
+                        socket.to(sockets[users.usernameOpponent].id).emit('returnInvitation', msg);
+                        socket.emit('returnGameId', result[0].id);
+                    })
                 })
             })
         })
@@ -188,6 +196,33 @@ io.on('connection', function(socket) {
         setTimeout(function() { io.in(room).emit('countdown', '2') }, 6000);
         setTimeout(function() { io.in(room).emit('countdown', '1') }, 7000);
         setTimeout(function() { io.in(room).emit('countdown', 'Go') }, 8000);
+
+        let update = "update game set createtime = NOW() where id = " + data.gameId;
+
+        db.query(update, function(err, result) {
+            if (err) throw err;
+        })
+
+    })
+
+    socket.on('multiplayerGameFinished', function(data) {
+        let insert = "update multiplayer set time = (UNIX_TIMESTAMP() - UNIX_TIMESTAMP(createtime), winner = " + data.userId + " where id = " + data.gameId
+
+        db.query(insert, function(err, result) {
+            if (err) throw err;
+
+            let select = "select username from player where id = " + data.userId
+
+            db.query(select, function(err, result) {
+                if (err) throw err;
+
+                io.in(data.room).emit('multiplayerGameEnd', result[0].username);
+            })
+        })
+    })
+
+    socket.on('leaveRoom', function(room) {
+        socket.leave(room);
     })
 
     socket.on('disconnect', function() {
