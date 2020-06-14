@@ -107,13 +107,14 @@ export class HttpService {
   }
 
   public invitePlayer(username) {
+    let room = localStorage.setItem('room', localStorage.getItem('username') + Math.floor(Math.random()*10));
     if (!(localStorage.getItem('username') == null || localStorage.getItem('userId') == null)) {
       let users = {
         username: localStorage.getItem('username'),
         usernameOpponent: username,
         id: localStorage.getItem('userId'),
         modelid: 1,
-        room: localStorage.getItem('username') + Math.floor(Math.random()*10)
+        room: room
       }
   
       this.socket.emit('invitePlayer', users);
