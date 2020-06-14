@@ -40,6 +40,7 @@ export class InvitationsComponent implements OnInit {
   accept(room: string, gameId: string){
     localStorage.setItem('multiplayer', 'true')
     localStorage.setItem('gameId', gameId)
+    localStorage.setItem('room', room);
     this.http.connectGame(room);
     this.rout.navigate(['pages']);
   }

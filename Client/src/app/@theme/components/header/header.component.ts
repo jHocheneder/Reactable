@@ -183,6 +183,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return false;
   }
   leave(){
+    this.http.leaveRoom(localStorage.getItem('room'));
+    localStorage.setItem('room', null)
     localStorage.setItem("multiplayer", 'false');
   }
 }
