@@ -50,6 +50,8 @@ export class DashboardComponent {
 
     this.http.multiplayerGameEnd().subscribe((msg) => {
       console.log(msg)
+      this.countdown = msg;
+      clearInterval(this.counter);
     })
   }
 
