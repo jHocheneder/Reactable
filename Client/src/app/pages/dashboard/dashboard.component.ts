@@ -4,6 +4,7 @@ import { Playground } from '../../playground';
 import { HttpService } from '../../services/http.service';
 import { DataService } from '../../services/data.service';
 import { throws } from 'assert';
+import { throwIfAlreadyLoaded } from '../../@core/module-import-guard';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -19,6 +20,8 @@ export class DashboardComponent {
   started = false
   counter : NodeJS.Timer
 
+  countdown = 'Connecting...'
+
   constructor(private http: HttpService, private data: DataService) {
 
   }
@@ -32,6 +35,7 @@ export class DashboardComponent {
     this.http.countdown().subscribe((msg) => {
       if(msg == 'Go') {
         console.log(msg)
+        this.countdown = msg
         this.hours = 0
         this.minutes = 0
         this.seconds = 0
@@ -40,6 +44,7 @@ export class DashboardComponent {
         Playground.seconds = 0
       } else {
         console.log(msg)
+        this.countdown = msg
       }
     })
   }
@@ -87,7 +92,10 @@ export class DashboardComponent {
   }
 
   multiplayer(){
-    if(localStorage.getItem('multiplayer')== 'true'){
+    if(localStorage.getItem('multiplayer')=='true'){
+      if(this.countdown == 'Go'){
+        return false;
+      }
       return true;
     }
     return false;
