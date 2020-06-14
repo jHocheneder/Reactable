@@ -169,10 +169,8 @@ export class HttpService {
   public multiplayerGameEnd() {
     return Observable.create((subscriber) => {
       this.socket.on('multiplayerGameEnd', (username) => {
-        if (username == localStorage.getItem('username')) {
-          subscriber.next('<b>Herzlichen Glückwunsch!</b><br>Du hast gewonnen.');
-        } else {
-          subscriber.next('<b>Du hast verloren</b>. Dein Gegner war leider schneller als du.<br>Beeil dich beim nächsten Mal, um der Gewinner zu sein.');
+        if (username != localStorage.getItem('username')) {
+          subscriber.next('Du hast verloren. Dein Gegner war leider schneller als du. Beeil dich beim nächsten Mal, um der Gewinner zu sein.');
         }
       })
     })
