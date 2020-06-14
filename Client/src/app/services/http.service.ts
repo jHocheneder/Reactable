@@ -170,7 +170,7 @@ export class HttpService {
     return Observable.create((subscriber) => {
       this.socket.on('multiplayerGameEnd', (username) => {
         if (username != localStorage.getItem('username')) {
-          subscriber.next('Du hast verloren. Dein Gegner war leider schneller als du. Beeil dich beim nächsten Mal, um der Gewinner zu sein.');
+          subscriber.next('verloren');
         }
       })
     })
