@@ -42,6 +42,10 @@ export class DashboardComponent {
         console.log(msg)
       }
     })
+
+    this.http.multiplayerGameEnd().subscriber((msg) => {
+      console.log(msg)
+    })
   }
 
   start() {

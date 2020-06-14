@@ -1,4 +1,5 @@
 export interface Invitation {
     username: string,
-    room: string
+    room: string,
+    gameId: string
 }

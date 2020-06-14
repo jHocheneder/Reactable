@@ -130,12 +130,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   showInvitations(){
     let names: string[] = new Array<string>();
     let rooms: string[] = new Array<string>();
+    let gameId: string[] = new Array<string>();
     
     console.log(this.invitation)
 
     for(let i = 0; i<this.invitation.length; i++){
       names.push(this.invitation[i].username)
       rooms.push(this.invitation[i].room)
+      gameId.push(this.invitation[i].gameId)
     }
 
     /*this.invitation.forEach(l => {
@@ -149,7 +151,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     //}
     
 
-    const inv = {queryParams: {names: names, rooms: rooms}};
+    const inv = {queryParams: {names: names, rooms: rooms, gameId: gameId}};
     this.router.navigate(['auth/invitations'], inv)
   }
 

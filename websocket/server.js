@@ -168,14 +168,22 @@ io.on('connection', function(socket) {
                 db.query(insert, function(err, result) {
                     if (err) throw err;
 
-                    socket.join(users.room);
+                    select = "select id from multiplayer where player1 = " + users.id + " and player2 = " + opponentId + " and time is null"
 
-                    let msg = {
-                        username: users.username,
-                        room: users.room
-                    }
+                    db.query(select, function(err, result) {
+                        if (err) throw err;
 
-                    socket.broadcast.to(sockets[users.usernameOpponent].id).emit('returnInvitation', msg);
+                        socket.join(users.room);
+
+                        let msg = {
+                            username: users.username,
+                            room: users.room,
+                            gameId: result[0].id
+                        }
+
+                        socket.to(sockets[users.usernameOpponent].id).emit('returnInvitation', msg);
+                        socket.emit('returnGameId', result[0].id);
+                    })
                 })
             })
         })

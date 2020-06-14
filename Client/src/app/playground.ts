@@ -467,7 +467,11 @@ export class Playground {
         }
   
         if (localStorage.getItem('username') != null) {
-          http.gameFinished(localStorage.getItem('userId'));
+          if (localStorage.getItem('multiplayer') != null) {
+            http.gameFinished(localStorage.getItem('userId'));
+          } else {
+            http.multiplayerGameFinished(localStorage.getItem('userId'), localStorage.getItem('gameId'));
+          }
         }
   
   

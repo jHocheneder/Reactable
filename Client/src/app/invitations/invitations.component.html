@@ -2,7 +2,7 @@
     <nb-card-body class="example-items-col" style="display: flex;  flex-wrap: wrap;">
         <div *ngFor="let inv of invitations">
             <nb-user size="large" [name]="inv.username" [title]="inv.room" style="margin: 10px;"></nb-user>
-            <button style="margin: 10px" nbButton status="success" (click)="accept(inv.room)">Annehmen</button>
+            <button style="margin: 10px" nbButton status="success" (click)="accept(inv.room, inv.gameId)">Annehmen</button>
         </div>
     </nb-card-body>
 </nb-card>
