@@ -20,6 +20,8 @@ export class DashboardComponent {
   started = false
   counter : NodeJS.Timer
 
+  verloren = false;
+
   countdown = 'Connecting...'
 
   constructor(private http: HttpService, private data: DataService) {
@@ -50,9 +52,13 @@ export class DashboardComponent {
 
     this.http.multiplayerGameEnd().subscribe((msg) => {
       console.log(msg)
-      this.countdown = msg;
+      this.verloren = true;
       clearInterval(this.counter);
     })
+  }
+
+  exitverloren(){
+    this.verloren = false;
   }
 
   start() {
