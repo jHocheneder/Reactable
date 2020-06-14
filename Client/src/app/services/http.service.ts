@@ -176,4 +176,8 @@ export class HttpService {
       })
     })
   }
+
+  public leaveRoom(room) {
+    this.socket.emit('leaveRoom', room);
+  }
 }

@@ -196,6 +196,33 @@ io.on('connection', function(socket) {
         setTimeout(function() { io.in(room).emit('countdown', '2') }, 6000);
         setTimeout(function() { io.in(room).emit('countdown', '1') }, 7000);
         setTimeout(function() { io.in(room).emit('countdown', 'Go') }, 8000);
+
+        let update = "update game set createtime = NOW() where id = " + data.gameId;
+
+        db.query(update, function(err, result) {
+            if (err) throw err;
+        })
+
+    })
+
+    socket.on('multiplayerGameFinished', function(data) {
+        let insert = "update multiplayer set time = (UNIX_TIMESTAMP() - UNIX_TIMESTAMP(createtime), winner = " + data.userId + " where id = " + data.gameId
+
+        db.query(insert, function(err, result) {
+            if (err) throw err;
+
+            let select = "select username from player where id = " + data.userId
+
+            db.query(select, function(err, result) {
+                if (err) throw err;
+
+                io.in(data.room).emit('multiplayerGameEnd', result[0].username);
+            })
+        })
+    })
+
+    socket.on('leaveRoom', function(room) {
+        socket.leave(room);
     })
 
     socket.on('disconnect', function() {
