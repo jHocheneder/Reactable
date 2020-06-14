@@ -175,4 +175,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuService.navigateHome();
     return false;
   }
+
+  multiplayer() {
+    if(localStorage.getItem("multiplayer") == 'true'){
+      return true;
+    }
+    return false;
+  }
+  leave(){
+    localStorage.setItem("multiplayer", 'false');
+  }
 }

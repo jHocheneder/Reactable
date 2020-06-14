@@ -9,6 +9,8 @@
   <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
       <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
   </nb-select>
+
+  <button nbButton status="basic" *ngIf="multiplayer()" style="margin-left: 15px;" (click)="leave()">Leave</button>
 </div>
 
 <div class="header-container">
