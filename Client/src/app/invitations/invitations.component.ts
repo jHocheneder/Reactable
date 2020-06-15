@@ -14,7 +14,7 @@ export class InvitationsComponent implements OnInit {
   public rooms;
   public gameId;
 
-  private invitations: Array<Invitation> = new Array<Invitation>();
+  public invitations: Array<Invitation> = new Array<Invitation>();
 
   constructor(private router: ActivatedRoute, private http: HttpService, private rout: Router) { }
 
