@@ -12,6 +12,16 @@ export class DataService {
   public xdown: Number = 65;
   public zup: Number = 87;
   public zdown: Number = 83;*/
+ 
+
+  public binds = {
+     'ydown' : 'f',
+     'yup': 'r',
+     'xup': 'd',
+     'xdown': 'a',
+     'zup': 'w',
+     'zdown': 's'
+  };
 
   public ydown: String = 'f';
   public yup: String = 'r';
@@ -35,5 +45,14 @@ export class DataService {
     this.zup = 87;
     this.zdown = 83;*/
 
+   }
+
+   setDef(){
+    this.ydown = 'f';
+    this.yup = 'r';
+    this.xup = 'd';
+    this.xdown = 'a';
+    this.zup = 'w';
+    this.zdown = 's';
    }
 }

@@ -24,37 +24,62 @@ export class OptionsComponent {
   @HostListener("document:keypress", ["$event"])
   handleKeyboardEvent(event: KeyboardEvent) {
     let status = "success";
+
     if (this.ydownpressed) {
-      this.data.ydown = event.key;
-      this.ydownpressed = false;      
-      this.showToastS('success');
+      if(this.checkused(event.key)) {
+        this.data.ydown = event.key;
+        this.ydownpressed = false;      
+        this.showToastS('success');
+      } else {
+        this.showToastE('danger');
+      }
     }
     if (this.yuppressed) {
+      if(this.checkused(event.key)) {
       this.data.yup = event.key;
       this.yuppressed = false;       
       this.showToastS('success');
+      } else {
+        this.showToastE('danger');
+      }
     }
     if (this.xdownpressed) {
+      if(this.checkused(event.key)) {
       this.data.xdown = event.key;
       this.xdownpressed = false;       
       this.showToastS('success');
+      } else {
+        this.showToastE('danger');
+      }
     }
     if (this.xuppressed) {
+      if(this.checkused(event.key)) {
       this.data.xup = event.key;
       this.xuppressed = false;       
       this.showToastS('success');
+      } else {
+        this.showToastE('danger');
+      }
     }
     if (this.zdownpressed) {
+      if(this.checkused(event.key)) {
       this.data.zdown = event.key;
       this.zdownpressed = false;       
       this.showToastS('success');
+      } else {
+        this.showToastE('danger');
+      }
     }
     if (this.zuppressed) {
+      if(this.checkused(event.key)) {
       this.data.zup = event.key;
       this.zuppressed = false; 
       this.showToastS('success');
+      } else {
+        this.showToastE('danger');
+      }
     }
-    this.key = event.key;
+    
   }
 
   private index: number = 0;
@@ -62,6 +87,14 @@ export class OptionsComponent {
   @HostBinding('class')
   classes = 'example-items-rows';
 
+  checkused(e) {
+    let list: String[] = [e, this.data.yup, this.data.ydown, this.data.xup, this.data.xdown, this.data.zup, this.data.zdown];
+    
+    /*for (let entry of list) {       
+      if(entry)*/
+     return list.length === new Set(list).size;     
+  
+  }
  
 
   showToast(status) {
@@ -69,8 +102,17 @@ export class OptionsComponent {
   }
 
   showToastS(status) {
-    this.toastrService.show('Changed', `Changed Binding`, { status });
+    this.toastrService.show('to a ney key', `Changed Binding`, { status });
   }
+
+  showToastE(status) {
+    this.toastrService.show('Press another key', `Key is already used`, { status });
+  }
+
+  showToastR(status) {
+    this.toastrService.show('to default', `Reseted all binding`, { status });
+  }
+
 
   cbottn(val) {    
     this.showToast('primary');
@@ -94,5 +136,11 @@ export class OptionsComponent {
         this.zdownpressed = true;
         break;      
     }
+  }
+
+  setDefault() {
+    this.data.setDef();
+    this.showToastR('success');
+
   }
 }
