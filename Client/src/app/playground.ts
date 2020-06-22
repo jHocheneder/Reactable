@@ -12,13 +12,6 @@ export class Playground {
   public static hours = 0
   public static minutes = 0
   public static seconds = 0
-
-
-  
-  
-  
-  
-  
   
   public static CreateScene(http : HttpService, data : DataService) {
     
@@ -474,7 +467,11 @@ export class Playground {
         }
   
         if (localStorage.getItem('username') != null) {
-          http.gameFinished(localStorage.getItem('userId'));
+          if (localStorage.getItem('multiplayer') != 'true') {
+            http.gameFinished(localStorage.getItem('userId'));
+          } else {
+            http.multiplayerGameFinished(localStorage.getItem('userId'), localStorage.getItem('gameId'));
+          }
         }
   
   

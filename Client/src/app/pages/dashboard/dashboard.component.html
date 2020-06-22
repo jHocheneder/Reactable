@@ -12,4 +12,18 @@
       </p>
     </nb-card-body>
   </nb-card>
+  <nb-card id="geschafftDiv" (click)="exitverloren()" *ngIf="verloren">
+    <nb-card-header><nb-icon icon="close-outline"></nb-icon></nb-card-header>
+    <nb-card-body>
+      <h1>Du hast Verloren!</h1>
+      <p>
+        Dein Gegner war leider schneller als du.
+      </p>
+    </nb-card-body>
+  </nb-card>
+  <nb-card id="timerDiv" style="background: rgba(0,0,0,0.5)" *ngIf="multiplayer()">
+    <nb-card-body>
+      <p id="countdown">{{countdown}}</p>
+    </nb-card-body>
+  </nb-card>
 </div>

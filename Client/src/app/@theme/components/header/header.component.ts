@@ -6,18 +6,34 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { HttpService } from '../../../services/http.service';
 import { Router } from '@angular/router';
+import { Invitation } from '../../../invitation';
 
 @Component({
   selector: 'ngx-header',
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
+
+/*interface MyObj {
+  username: string;
+  room: string;
+}
+*/
 export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
-  invitation: JSON[] = new Array<JSON>();
+  //invitation: JSON[] = new Array<JSON>();
+  /*invitation: Invitation[] = [{
+    "username": "u",
+    "room":  "r"
+  }];*/
+  invitation: Array<Invitation> = new Array<Invitation>();
+  inv: any[];
+
+  
+  
 
   themes = [
     {
@@ -64,6 +80,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       
       this.http.searchOpponent(searchData)
     })
+    
   }
 
   ngOnInit() {
@@ -80,6 +97,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .returnInvitation()
       .subscribe((msg) => {
         this.invitation.push(msg);
+        console.log(this.invitation)
       })
 
     this.currentTheme = this.themeService.currentTheme;
@@ -111,13 +129,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   showInvitations(){
     let names: string[] = new Array<string>();
-    this.invitation.forEach(l => {
-      names.push(l.parse('room'))
-      console.log(l.parse('room'))
-      })
+    let rooms: string[] = new Array<string>();
+    let gameId: string[] = new Array<string>();
     
-    //const inv = {queryParams: {name: this.invitation.forEach(i => {}), room: this.invitation}};
-    //this.router.navigate(['auth/invitations'], inv)
+    console.log(this.invitation)
+
+    for(let i = 0; i<this.invitation.length; i++){
+      names.push(this.invitation[i].username)
+      rooms.push(this.invitation[i].room)
+      gameId.push(this.invitation[i].gameId)
+    }
+
+    /*this.invitation.forEach(l => {
+      singleinv = l.parse
+      console.log
+    })*/
+    //this.invitation[0].username
+
+    //for(let i = 0; i<this.invitation.length;i++){
+    //  names.push(this.invitation[i].room)
+    //}
+    
+
+    const inv = {queryParams: {names: names, rooms: rooms, gameId: gameId}};
+    this.router.navigate(['auth/invitations'], inv)
   }
 
   ngOnDestroy() {
@@ -139,5 +174,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
+  }
+
+  multiplayer() {
+    if(localStorage.getItem("multiplayer") == 'true'){
+      return true;
+    }
+    return false;
+  }
+  leave(){
+    this.http.leaveRoom(localStorage.getItem('room'));
+    localStorage.setItem('room', null)
+    localStorage.setItem("multiplayer", 'false');
   }
 }

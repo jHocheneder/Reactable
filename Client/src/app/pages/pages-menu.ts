@@ -8,12 +8,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'Statistic',
-    icon: 'pie-chart-outline',
-    link: '/pages/statistic',
-    home: true,
-  },
-  {
     title: 'Options',
     icon: 'options-2-outline',
     link: '/pages/options',
@@ -30,10 +24,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'people-outline',
     link: '/pages/about',
     home: true,
-  },
-  {
-    title: 'FEATURES',
-    group: true,
   },
   {
     title: 'Auth',

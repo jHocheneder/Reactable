@@ -6,8 +6,8 @@ let users = new Array();
 let sockets = new Array();
 let db = mysql.createConnection({
     host: 'localhost', //Datenbankverbindung verändern
-    user: 'reactable',
-    password: 'passme01',
+    user: 'root',
+    password: 'password',
     database: 'reactable'
 })
 
@@ -15,21 +15,16 @@ db.connect(function(err) {
     if (err) console.log(err)
 })
 
-http.listen(3000, function() {
+http.listen(8080, function() {
     console.log('listening on localhost:3000');
 });
 
 io.on('connection', function(socket) {
     console.log('a user connected');
 
-    if (socket.handshake.query.room != "") {
-        socket.join(socket.handshake.query.room);
-        io.to(socket.handshake.query.room).emit('connectedToRoom', 'You are in ' + socket.handshake.query.room);
-    }
-
     socket.on('login', function(usr) {
         console.log('User: ' + usr.username);
-        sockets[username].push(socket);
+        sockets[usr.username] = socket;
 
         let sql = "select id, password from player where username = '" + usr.username + "'";
 
@@ -46,13 +41,11 @@ io.on('connection', function(socket) {
         });
     })
 
-    socket.on("register", function(usr) {
+    socket.on('register', function(usr) {
         let sql = "insert into player (username, email, password) values ('" + usr.username + "', '" + usr.email + "', '" + usr.password + "');";
 
         db.query(sql, function(err, result) {
             if (err) socket.emit('returnRegister', 'error');
-
-            console.log("1 person inserted");
 
             let sql = "select id from player where username = '" + usr.username + "'";
 
@@ -60,7 +53,7 @@ io.on('connection', function(socket) {
                 if (err) throw err;
 
                 if (result[0] != null) {
-                    socket.emit('returnLogin', result[0].id);
+                    socket.emit('returnRegister', result[0].id);
                 }
             });
         });
@@ -69,9 +62,9 @@ io.on('connection', function(socket) {
     socket.on('gameStart', function(gamestart) {
         let select = "select time from game where userId = " + gamestart.userId;
         let insert = "insert into game (createtime, userid, modellid) values (NOW(), " + gamestart.userId + ", " + gamestart.modellId + ");";
-        let deleteEntry = "delete from game where userId = " + gamestart.userId + " and time is null";
+        let deleteEntry = "delete from game where userId = " + gamestart.userId + " and time is NULL";
 
-        if (gamestart.userId != null && gamestart.modellId != null) {
+        if (gamestart.userId != null) {
             db.query(select, function(err, result) {
                 if (err) throw err;
 
@@ -98,20 +91,15 @@ io.on('connection', function(socket) {
     })
 
     socket.on('gameFinished', function(gameEnd) {
-        //userid ermitteln
-        let select = 'select (UNIX_TIMESTAMP() - UNIX_TIMESTAMP(createtime)) "time" from game where userId = ' + gameEnd.userId;
+        let select = 'select (UNIX_TIMESTAMP() - UNIX_TIMESTAMP(createtime)) "time" from game where userId = ' + gameEnd.userId + ' and time is null';
 
         db.query(select, function(err, result) {
             if (err) socket.emit('returnGameFinished', 'error');
-
-            console.log(result[0].time);
 
             let insert = "update game set time = '" + result[0].time + "' where userId = " + gameEnd.userId;
 
             db.query(insert, function(err, res) {
                 if (err) socket.emit('returnGameFinished', 'error insert');
-
-                console.log("time inserted");
 
                 socket.emit('returnGameFinished', result[0].time);
             })
@@ -144,20 +132,97 @@ io.on('connection', function(socket) {
         db.query(select, function(err, result) {
             if (err) throw err;
 
-            console.log(result)
-
-            console.log('1')
-
             for (i = 0; i < result.length; i++) {
                 users.push(result[i].username)
             }
-
-            console.log(users)
 
             if (i == result.length) {
                 socket.emit('returnFoundOpponent', users);
             }
         })
+    })
+
+    socket.on('invitePlayer', function(users) {
+        let select = "select id from player where username = '" + users.usernameOpponent + "'";
+
+        db.query(select, function(err, result) {
+            if (err) throw err;
+
+            let opponentId = result[0].id;
+
+            select = "select id from multiplayer where player1 = " + users.id + " and player2 = " + opponentId + " and time is null";
+
+            db.query(select, function(err, result) {
+                if (err) throw err;
+
+                if (result[0] != null) {
+                    let del = "delete from multiplayer where player1 = " + users.id + " and player2 = " + opponentId;
+
+                    db.query(del, function(err, result) {
+                        if (err) throw err;
+                    })
+                }
+
+                let insert = "insert into multiplayer (player1, player2, modelid) values (" + users.id + ", " + opponentId + ", " + users.modelid + ");"
+
+                db.query(insert, function(err, result) {
+                    if (err) throw err;
+
+                    select = "select id from multiplayer where player1 = " + users.id + " and player2 = " + opponentId + " and time is null"
+
+                    db.query(select, function(err, result) {
+                        if (err) throw err;
+
+                        socket.join(users.room);
+
+                        let msg = {
+                            username: users.username,
+                            room: users.room,
+                            gameId: result[0].id
+                        }
+
+                        socket.to(sockets[users.usernameOpponent].id).emit('returnInvitation', msg);
+                        socket.emit('returnGameId', result[0].id);
+                    })
+                })
+            })
+        })
+    })
+
+    socket.on('connectGame', function(room) {
+        socket.join(room);
+
+        setTimeout(function() { io.in(room).emit('countdown', '3') }, 5000);
+        setTimeout(function() { io.in(room).emit('countdown', '2') }, 6000);
+        setTimeout(function() { io.in(room).emit('countdown', '1') }, 7000);
+        setTimeout(function() { io.in(room).emit('countdown', 'Go') }, 8000);
+
+        let update = "update game set createtime = NOW() where id = " + data.gameId;
+
+        db.query(update, function(err, result) {
+            if (err) throw err;
+        })
+
+    })
+
+    socket.on('multiplayerGameFinished', function(data) {
+        let insert = "update multiplayer set time = (UNIX_TIMESTAMP() - UNIX_TIMESTAMP(createtime), winner = " + data.userId + " where id = " + data.gameId
+
+        db.query(insert, function(err, result) {
+            if (err) throw err;
+
+            let select = "select username from player where id = " + data.userId
+
+            db.query(select, function(err, result) {
+                if (err) throw err;
+
+                io.in(data.room).emit('multiplayerGameEnd', result[0].username);
+            })
+        })
+    })
+
+    socket.on('leaveRoom', function(room) {
+        socket.leave(room);
     })
 
     socket.on('disconnect', function() {

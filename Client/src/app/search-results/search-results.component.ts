@@ -22,6 +22,7 @@ export class SearchResultsComponent implements OnInit {
   }
 
   invitePlayer(name) {
+    localStorage.setItem('multiplayer', 'true')
     this.http.invitePlayer(name)
     this.rout.navigate(['pages'])
   }

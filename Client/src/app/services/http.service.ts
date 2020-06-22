@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class HttpService {
-  
+
   socket: any;
   readonly url: string = "ws://vm112.htl-leonding.ac.at:8080";
   //readonly url: string = "ws://localhost:3000";
@@ -95,9 +95,6 @@ export class HttpService {
   }
 
   public searchOpponent(user) {
-    //user muss den suchbegriff der Suche enthalten
-    //am server werden alle Leute die like "Suchbegriff%" sind, zurückgegeben
-    //Nice wär, wenn ma des dann in an Pop-Up Fenster darstellen könnten. Maybe mit den Usernamen und daneben einen "herausfordern" - Button
     this.socket.emit('searchOpponent', user);
   }
 
@@ -110,17 +107,18 @@ export class HttpService {
   }
 
   public invitePlayer(username) {
-    let users = {
-      username: localStorage.getItem('username'),
-      usernameOpponent: username,
-      id: localStorage.getItem('userId'),
-      modelid: 1,
-      room: localStorage.getItem('username') + Math.floor(Math.random()*10)
+    let room = localStorage.setItem('room', localStorage.getItem('username') + Math.floor(Math.random()*10));
+    if (!(localStorage.getItem('username') == null || localStorage.getItem('userId') == null)) {
+      let users = {
+        username: localStorage.getItem('username'),
+        usernameOpponent: username,
+        id: localStorage.getItem('userId'),
+        modelid: 1,
+        room: room
+      }
+  
+      this.socket.emit('invitePlayer', users);
     }
-
-    console.log('Hello')
-
-    this.socket.emit('invitePlayer', users);
   }
 
   public returnInvitation() {
@@ -129,5 +127,56 @@ export class HttpService {
         subscriber.next(inv);
       })
     })
+  }
+
+  public returnGameId() {
+    return Observable.create((subscriber) => {
+      this.socket.on('returnGameId', (gameId) => {
+        localStorage.setItem('gameId', gameId);
+      })
+    })
+  }
+
+  public connectGame(room) {
+    if (!(localStorage.getItem('username') == null || localStorage.getItem('userId') == null)) {
+      console.log(room)
+      let data = {
+        room: room,
+        gameId: localStorage.getItem('gameId')
+      }
+
+      this.socket.emit('connectGame', data);
+    }   
+  }
+
+  public countdown() {
+    return Observable.create((subscriber) => {
+      this.socket.on('countdown', (msg) => {
+        subscriber.next(msg);
+      })
+    })
+  }
+  
+  public multiplayerGameFinished(userId, gameId) {
+    let data = {
+      userId: userId,
+      gameId: gameId
+    }
+
+    this.socket.emit('multiplayerGameFinished', data);
+  }
+
+  public multiplayerGameEnd() {
+    return Observable.create((subscriber) => {
+      this.socket.on('multiplayerGameEnd', (username) => {
+        if (username != localStorage.getItem('username')) {
+          subscriber.next('verloren');
+        }
+      })
+    })
+  }
+
+  public leaveRoom(room) {
+    this.socket.emit('leaveRoom', room);
   }
 }
